@@ -9,17 +9,14 @@
 class Players
 {
     private:
-        // TODO: Does LinkedList need to take a generic type so we're able
-        // to declare what type of element is in linkedList? 
+        // TODO: This needs to be correctly implemented, this is just a placeholder
         LinkedList players;
-        
-        // Points to the node in the linked list in which the current player 
-        // us stored. Will require updating with each nextPlayer() call
         Node* currentPlayer;
 
     public:
         Players();
 
+        // Returns the next player in the LinkedList
         Player nextPlayer();
         
 
