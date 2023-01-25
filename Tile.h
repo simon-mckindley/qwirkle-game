@@ -1,16 +1,32 @@
-
 #ifndef ASSIGN2_TILE_H
 #define ASSIGN2_TILE_H
 
-// Define a Colour type
+#include "TileCodes.h"
+
+// Define a Colour type.
 typedef char Colour;
 
-// Define a Shape type
+// Define a shape type.
 typedef int Shape;
 
 class Tile
 {
 public:
+    // Default Constructor
+    Tile();
+
+    // Constructor
+    Tile(Colour colour, Shape shape);
+
+    // Accessors
+    Colour getColour();
+    Shape getShape();
+
+    // Mutators
+    void setColour(Colour colour);
+    void setShape(Shape shape);
+
+private:
     Colour colour;
     Shape shape;
 };
