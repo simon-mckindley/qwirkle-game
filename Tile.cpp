@@ -1,5 +1,8 @@
 #include "Tile.h"
 
+// TODO: X and 0 are placeholder values, should be replaced with a NULL
+Tile::Tile() : colour('X'), shape(0) {}
+
 Tile::Tile(Colour colour, Shape shape) : colour(colour), shape(shape) {}
 
 Colour Tile::getColour()

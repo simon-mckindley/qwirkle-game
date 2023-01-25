@@ -48,11 +48,19 @@ Tile *LinkedList::drawTile()
 
         return tile;
     }
+    else {
+
+        // TODO: Placeholder value consider replacing. 
+        // What should be returned if nullptr?
+        Tile *tile = new Tile();
+        return tile;
+    }
 }
 
 // Remove and return the tile chosen by the player.
 Tile *LinkedList::removeTile(Tile *tile)
 {
+    return new Tile();
 }
 
 // Deallocate LinkedList memory.
