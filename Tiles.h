@@ -6,30 +6,27 @@
 
 class Tiles
 {
-    private:
-        LinkedList tiles;
+private:
+    LinkedList tiles;
 
-    public:
+public:
+    // Default constructor
+    Tiles();
 
-        // Default constructor
-        Tiles();
+    // Constructor for loadGame function()
+    // May need refactoring when implementing loadGame()
+    Tiles(LinkedList tiles);
 
-        // Constructor for loadGame function()
-        // May need refactoring when implementing loadGame()
-        Tiles(LinkedList tiles);
+    // Add Tile to the Tiles object
+    void addTile(Tile tile);
 
-        // Add Tile to the Tiles object
-        void addTile(Tile tile);
-
-        // Remove a tile from the tiles object
-        // Must retain order of list
-        // 
-        // TODO: If we need to retain the order of the list, and
-        // we have duplicates of a tile, does it matter which of 
-        // the duplicates is removed from the list? Unsure.
-        void removeTile(Tile tile);
-
-
-}
+    // Remove a tile from the tiles object
+    // Must retain order of list
+    //
+    // TODO: If we need to retain the order of the list, and
+    // we have duplicates of a tile, does it matter which of
+    // the duplicates is removed from the list? Unsure.
+    void removeTile(Tile tile);
+};
 
 #endif // ASSIGN2_TILES_H

@@ -8,18 +8,21 @@
 
 class Players
 {
-    private:
-        // TODO: This needs to be correctly implemented, this is just a placeholder
-        LinkedList players;
-        Node* currentPlayer;
+private:
+    // TODO: This needs to be correctly implemented, this is just a placeholder
+    LinkedList *players;
+    Node *currentPlayer;
 
-    public:
-        Players();
+public:
+    Players();
 
-        // Returns the next player in the LinkedList
-        Player nextPlayer();
-        
-
+    // Returns the next player in the LinkedList
+    Player nextPlayer()
+    {
+        // TODO
+        Player *mockPlayer = new Player();
+        return *mockPlayer;
+    }
 };
 
 #endif // ASSIGN2_PLAYERS_H

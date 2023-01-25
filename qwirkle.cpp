@@ -1,47 +1,46 @@
 #include "LinkedList.h"
+#include "Menu.h"
+#include "GameState.h"
 
 #include <iostream>
 #include <fstream>
 #include <string>
 
-void printMainMenu();
-void mainMenuOption(int userSelection);
+// TODO: Consider creating a gameState object with default values for
+// createGame, or load values into gameState with loadGame();
+// GameState createNewGame();
 void createNewGame();
+// GameState loadGameState();
 void loadGame();
+
+void mainMenuOption(int userSelection);
 void printCredits();
-bool isValidChoice(int userSelection);
 
 #define EXIT_SUCCESS 0
 
 int main(void)
 {
-    // No selection has been made yet
-    int userSelection = 0;
-
-    printMainMenu();
-    // Repeat until valid selection is made
+    // Initialize menu.
+    //
+    // TODO: Given C++ has no static classes, is there a better
+    // way to implement a stateless class than making it concrete and having
+    // to instantiating it?
+    int choice = 0;
+    Menu menu;
     do
     {
-        std::cout << "Select:" << std::endl;
-        std::cin >> userSelection;
-    } while (!isValidChoice(userSelection));
+        choice = menu.userSelection();
+        mainMenuOption(choice);
+    } while (true);
 
-    mainMenuOption(userSelection);
-
+    // Never actually reaches this
+    // TODO: Either bring the code back into qwirkle.cpp
+    // Or move the rest into Menu and have it return only a call to only a
+    // valid response?
     LinkedList *list = new LinkedList();
     delete list;
 
     return EXIT_SUCCESS;
-}
-
-void printMainMenu()
-{
-
-    std::cout << "---Main Menu---" << std::endl;
-    std::cout << "1. New Game" << std::endl;
-    std::cout << "2. Load Game" << std::endl;
-    std::cout << "3. Credits (Show student information)" << std::endl;
-    std::cout << "4. Quit" << std::endl;
 }
 
 void mainMenuOption(int userSelection)
@@ -71,25 +70,18 @@ void mainMenuOption(int userSelection)
     }
 }
 
+// GameState createNewGame()
 void createNewGame()
 {
     // TODO
+
+    //
     std::cout << "Starting a new game." << std::endl;
 
     std::string username;
     std::cout << "Select your username" << std::endl;
     std::cin >> username;
     std::cout << "Welcome, " << username << std::endl;
-}
-
-void loadGame()
-{
-    // TODO
-    std::cout << "Starting a new game." << std::endl;
-
-    std::string filename;
-    std::cout << "Enter the filename of the game you wish to load:" << std::endl;
-    std::cin >> filename;
 }
 
 void printCredits()
@@ -111,6 +103,17 @@ void printCredits()
 
     // Close the file
     MyReadFile.close();
+}
+
+// TODO: Consider replacing with a gameState method instead
+void loadGame()
+{
+    // TODO
+    std::cout << "Starting a new game." << std::endl;
+
+    std::string filename;
+    std::cout << "Enter the filename of the game you wish to load:" << std::endl;
+    std::cin >> filename;
 }
 
 bool isValidChoice(int userSelection)
