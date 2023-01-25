@@ -2,8 +2,6 @@
 
 Tile::Tile(Colour colour, Shape shape) : colour(colour), shape(shape) {}
 
-Tile::~Tile() {}
-
 Colour Tile::getColour()
 {
     return colour;

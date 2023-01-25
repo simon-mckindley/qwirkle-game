@@ -15,7 +15,6 @@ class Tile
 public:
     // Constructor
     Tile(Colour colour, Shape shape);
-    ~Tile();
 
     // Accessors
     Colour getColour();
