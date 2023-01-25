@@ -25,8 +25,8 @@ public:
     // Get the front tile from the list.
     Tile *drawTile();
 
-    // Remove a tile from hand.
-    Tile *removeTile(int target);
+    // Remove a tile from player hand.
+    Tile *removeTile(Tile *tile);
 
 private:
     Node *head;
