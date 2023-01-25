@@ -3,10 +3,18 @@
 
 Node::Node(Tile *tile, Node *next)
 {
-    // TODO
+    this->tile = new Tile(tile->getColour(), tile->getShape());
+    this->next = next;
 }
 
+Node::~Node()
+{
+    delete tile;
+}
+
+// Copy Constructor (Deep Copy).
 Node::Node(Node &other)
 {
-    // TODO
+    this->tile = new Tile(*(other.tile));
+    this->next = other.next;
 }
