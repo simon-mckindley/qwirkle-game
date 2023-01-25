@@ -1,114 +1,278 @@
-#include "LinkedList.h"
+// #include "LinkedList.h"
 
 #include <iostream>
 #include <fstream>
 #include <string>
 
 void printMainMenu();
-void mainMenuOption(int userSelection);
+void mainMenuOption(std::string userSelection);
 void createNewGame();
 void loadGame();
 void printCredits();
-bool isValidChoice(int userSelection);
+std::string getPlayerName();
+std::string getInput();
+void gamePlay();
+bool gamePlayOption();
+void printGameStatus();
 
 #define EXIT_SUCCESS 0
 
+// Menu options
+#define NEW_GAME "1"
+#define LOAD_GAME "2"
+#define CREDITS "3"
+#define QUIT "4"
+
 int main(void)
 {
-    // No selection has been made yet
-    int userSelection = 0;
+    std::string userSelection;
 
-    printMainMenu();
-    // Repeat until valid selection is made
+    std::cout << "\nWelcome to Qwirkle!"
+              << "\n-------------------"
+              << std::endl;
+
     do
     {
-        std::cout << "Select:" << std::endl;
-        std::cin >> userSelection;
-    } while (!isValidChoice(userSelection));
+        // Repeat until Quit is selected
+        printMainMenu();
 
-    mainMenuOption(userSelection);
+        userSelection = getInput();
 
-    LinkedList *list = new LinkedList();
-    delete list;
+        mainMenuOption(userSelection);
+
+    } while (userSelection != QUIT);
+
+    // LinkedList *list = new LinkedList();
+    // delete list;
 
     return EXIT_SUCCESS;
 }
 
 void printMainMenu()
 {
-
-    std::cout << "---Main Menu---" << std::endl;
-    std::cout << "1. New Game" << std::endl;
-    std::cout << "2. Load Game" << std::endl;
-    std::cout << "3. Credits (Show student information)" << std::endl;
-    std::cout << "4. Quit" << std::endl;
+    std::cout << "\n--- Main Menu ---\n"
+              << "1. New Game\n"
+              << "2. Load Game\n"
+              << "3. Credits\n"
+              << "4. Quit\n"
+              << std::endl;
 }
 
-void mainMenuOption(int userSelection)
+// Calls the correct method depending on the user option entered
+void mainMenuOption(std::string userSelection)
 {
-    switch (userSelection)
+    if (userSelection == NEW_GAME)
     {
-    case 1:
         createNewGame();
-        break;
-    case 2:
+    }
+    else if (userSelection == LOAD_GAME)
+    {
         loadGame();
-        break;
-    case 3:
+    }
+    else if (userSelection == CREDITS)
+    {
         printCredits();
-        break;
-    case 4:
-        std::cout << "Exiting game" << std::endl;
-        exit(0);
-        break;
-    default:
-        std::cout << "Valid choice not selected" << std::endl;
+    }
+    else if (userSelection == QUIT)
+    {
+        std::cout << "Exiting game...\nGoodbye" << std::endl;
+    }
+    else
+    {
+        std::cout << "Valid option not selected" << std::endl;
     }
 }
+
 void createNewGame()
 {
-    // TODO
-    std::cout << "Starting a new game." << std::endl;
+    std::cout << "\nStarting a new game." << std::endl;
 
-    std::string username;
-    std::cout << "Select your username" << std::endl;
-    std::cin >> username;
-    std::cout << "Welcome, " << username << std::endl;
+    std::string player1;
+    std::string player2;
+    std::cout << "\nEnter a name for Player 1 (Uppercase characters only)" << std::endl;
+    player1 = getPlayerName();
+    std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
+    player2 = getPlayerName();
+    std::cout << "\nWelcome, " << player1 << " and " << player2
+              << "\n\tLets Play!";
+
+    // TODO Initialise new game 2.3.10
+
+    gamePlay();
 }
 
 void loadGame()
 {
-    // TODO
-    std::cout << "Starting a new game." << std::endl;
+    std::cout << "\nLoad a saved game" << std::endl;
 
     std::string filename;
-    std::cout << "Enter the filename of the game you wish to load:" << std::endl;
-    std::cin >> filename;
+    std::cout << "\nEnter the filename from which to load a save game" << std::endl;
+    filename = getInput();
+    std::cout << "\nLoading game from > " << filename << std::endl;
+
+    // TODO Load game from file 2.2.2
+
+    std::cout << "\n.... game play starts" << std::endl;
 }
 
 void printCredits()
 {
-    std::cout << "--- Developers --- " << std::endl;
+    std::cout << "\n--------- Developers ---------\n"
+              << std::endl;
     // Create a text string, which is used to output the text file
     std::string myText;
+    int i = 1;
     // Read from the text file
     std::ifstream MyReadFile("credits.txt");
     // Use a while loop together with the getline() function to read the file line by line
     while (getline(MyReadFile, myText))
     {
         // Output the text from the file
-        std::cout << myText << std::endl;
+        if (i == 1)
+        {
+            std::cout << "Name: " << myText << std::endl;
+            i++;
+        }
+        else if (i == 2)
+        {
+            std::cout << "Student ID: " << myText << std::endl;
+            i++;
+        }
+        else if (i == 3)
+        {
+            std::cout << "Email: " << myText << "\n"
+                      << std::endl;
+            i = 1;
+        }
     }
     // Close the file
     MyReadFile.close();
+    std::cout << "------------------------------" << std::endl;
 }
 
-bool isValidChoice(int userSelection)
+// Accepts and validates player names
+std::string getPlayerName()
 {
-    // Is one of the 4 menu options
-    if (userSelection >= 1 && userSelection <= 4)
+    std::string name = "";
+    bool valid;
+    do
     {
-        return true;
+        valid = true;
+        name = getInput();
+        for (char c : name)
+        {
+            if (!isupper(c))
+            {
+                valid = false;
+                std::cout << "Invalid input" << std::endl;
+                break;
+            }
+        }
+
+    } while (!valid);
+
+    return name;
+}
+
+// General purpose user input function
+std::string getInput()
+{
+    std::string userSelection;
+    std::cout << "> ";
+    std::getline(std::cin, userSelection);
+
+    if (std::cin.eof())
+    {
+        // Exit for testing purposes
+        std::cout << "\nGoodbye" << std::endl;
+        exit(EXIT_SUCCESS);
     }
-    return false;
+
+    return userSelection;
+}
+
+// Main gameplay function
+void gamePlay()
+{
+    bool endGame = false;
+
+    do
+    {
+        std::cout << "\n\n<Player>"
+                  << ", it's your turn";
+        printGameStatus();
+        endGame = gamePlayOption();
+
+    } while (!endGame);
+}
+
+// Gets and validates user gameplay input
+bool gamePlayOption()
+{
+    bool invalid;
+    bool endGame = false;
+    std::string userInput;
+    do
+    {
+        invalid = false;
+        userInput = getInput();
+        int pos = userInput.find_first_of(" ");
+        if (pos != std::string::npos)
+        {
+            // Valid input: place, replace, save
+            std::string cmd = userInput.substr(0, pos);
+            if (cmd == "place")
+            {
+                std::string tile = userInput.substr(pos + 1, 2);
+                std::string location = userInput.substr(pos + 7);
+                std::cout << "Place:" << tile << ":" << location << std::endl;
+                // TODO validate tile and location
+            }
+            else if (cmd == "replace")
+            {
+                std::string tile = userInput.substr(pos + 1, 2);
+                std::cout << "Replace:" << tile << std::endl;
+                // TODO validate tile
+            }
+            else if (cmd == "save")
+            {
+                std::string fileName = userInput.substr(pos + 1);
+                std::cout << "File:" << fileName << std::endl;
+            }
+            else
+            {
+                std::cout << "Invalid input" << std::endl;
+                invalid = true;
+            }
+        }
+        else if (userInput == "quit")
+        {
+            endGame = true;
+        }
+        else
+        {
+            std::cout << "Invalid input" << std::endl;
+            invalid = true;
+        }
+
+    } while (invalid);
+
+    return endGame;
+}
+
+// Prints the game status a the start of each players turn
+void printGameStatus()
+{
+    std::cout << "\nScore for "
+              << "<Player1>"
+              << ": "
+              << "<9>";
+    std::cout << "\nScore for "
+              << "<Player2>"
+              << ": "
+              << "<9>";
+    std::cout << "\nPRINT BOARD HERE" << std::endl;
+    std::cout << "\nYour hand is:\n"
+              << "<hand>\n"
+              << std::endl;
 }

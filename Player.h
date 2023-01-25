@@ -1,7 +1,7 @@
 #ifndef ASSIGN2_PLAYER_H
 #define ASSIGN2_PLAYER_H
 
-// #include "Tiles.h"
+#include "Tiles.h"
 #include <string>
 
 class Player
@@ -9,7 +9,7 @@ class Player
     private: 
         std::string name;
         int score;
-        // Tiles playerHand;
+        Tiles playerHand;
 
     public:
         Player();

@@ -1,12 +1,9 @@
-#ifndef ASSIGN2_NODE_H
-#define ASSIGN2_NODE_H
-
 #include "Tile.h"
 #include <vector>
 
 using std::vector;
 
-class Board
+class GameBoard
 {
     private:
         // Each vector is a row, and the nested vector of tiles
@@ -15,11 +12,9 @@ class Board
 
     public:
         // Default constructor - Initializes as a 26 x 26 grid
-        Board();
+        GameBoard();
 
         // Constructor for loading a board - may require changes 
         // to suit loadGame() implementation
-        Board(vector<vector <Tile>> board);
+        GameBoard(vector<vector <Tile>> board);
 };
-
-#endif // ASSIGN2_NODE_H
