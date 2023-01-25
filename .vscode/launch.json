@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch App",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/qwirkle",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${fileDirname}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "lldb"
+    },
+    {
+      "name": "Run Tests",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "/usr/local/bin/ctest",
+      "args": ["--test-dir", "build", "--output-on-failure"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "lldb",
+      "preLaunchTask": "CMake: Build Project"
+    }
+  ]
+}
