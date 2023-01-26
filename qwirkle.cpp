@@ -1,6 +1,7 @@
 #include "LinkedList.h"
 #include "Menu.h"
 #include "GameState.h"
+#include "UserPrompt.h"
 
 #include <iostream>
 #include <fstream>
@@ -12,61 +13,54 @@
 void createNewGame();
 // GameState loadGameState();
 void loadGame();
-
-void mainMenuOption(int userSelection);
+void mainMenuOption(std::string userSelection);
 void printCredits();
 
 #define EXIT_SUCCESS 0
 
 int main(void)
 {
-    // Initialize menu.
-    //
-    // TODO: Given C++ has no static classes, is there a better
-    // way to implement a stateless class than making it concrete and having
-    // to instantiating it?
-    int choice = 0;
+    std::cout << "\nWelcome to Qwirkle!\n"
+              << "-------------------" << std::endl;
+
+    std::string choice;
     Menu menu;
+
     do
     {
         choice = menu.userSelection();
         mainMenuOption(choice);
-    } while (true);
 
-    // Never actually reaches this
-    // TODO: Either bring the code back into qwirkle.cpp
-    // Or move the rest into Menu and have it return only a call to only a
-    // valid response?
+    } while (choice != QUIT);
+
     LinkedList *list = new LinkedList();
     delete list;
 
     return EXIT_SUCCESS;
 }
 
-void mainMenuOption(int userSelection)
+// Calls the correct method depending on the user option entered
+void mainMenuOption(std::string userSelection)
 {
-    switch (userSelection)
+    if (userSelection == NEW_GAME)
     {
-
-    case 1:
         createNewGame();
-        break;
-
-    case 2:
+    }
+    else if (userSelection == LOAD_GAME)
+    {
         loadGame();
-        break;
-
-    case 3:
+    }
+    else if (userSelection == CREDITS)
+    {
         printCredits();
-        break;
-
-    case 4:
-        std::cout << "Exiting game" << std::endl;
-        exit(0);
-        break;
-
-    default:
-        std::cout << "Valid choice not selected" << std::endl;
+    }
+    else if (userSelection == QUIT)
+    {
+        std::cout << "Exiting game...\nGoodbye" << std::endl;
+    }
+    else
+    {
+        std::cout << "Valid option not selected" << std::endl;
     }
 }
 
@@ -74,22 +68,23 @@ void mainMenuOption(int userSelection)
 void createNewGame()
 {
     // TODO
+    UserPrompt userPrompt;
 
-    //
     std::cout << "Starting a new game." << std::endl;
-
     std::string username;
     std::cout << "Select your username" << std::endl;
-    std::cin >> username;
+    username = userPrompt.getInput();
     std::cout << "Welcome, " << username << std::endl;
 }
 
 void printCredits()
 {
-    std::cout << "--- Developers --- " << std::endl;
+    std::cout << "\n--------- Developers ---------\n"
+              << std::endl;
 
     // Create a text string, which is used to output the text file
     std::string myText;
+    int i = 1;
 
     // Read from the text file
     std::ifstream MyReadFile("credits.txt");
@@ -98,31 +93,37 @@ void printCredits()
     while (getline(MyReadFile, myText))
     {
         // Output the text from the file
-        std::cout << myText << std::endl;
+        if (i == 1)
+        {
+            std::cout << "Name: " << myText << std::endl;
+            i++;
+        }
+        else if (i == 2)
+        {
+            std::cout << "Student ID: " << myText << std::endl;
+            i++;
+        }
+        else if (i == 3)
+        {
+            std::cout << "Email: " << myText << "\n"
+                      << std::endl;
+            i = 1;
+        }
     }
 
     // Close the file
     MyReadFile.close();
+    std::cout << "------------------------------" << std::endl;
 }
 
 // TODO: Consider replacing with a gameState method instead
 void loadGame()
 {
     // TODO
+    UserPrompt userPrompt;
     std::cout << "Starting a new game." << std::endl;
 
     std::string filename;
     std::cout << "Enter the filename of the game you wish to load:" << std::endl;
-    std::cin >> filename;
-}
-
-bool isValidChoice(int userSelection)
-{
-    // Is one of the 4 menu options
-    if (userSelection >= 1 && userSelection <= 4)
-    {
-        return true;
-    }
-
-    return false;
+    filename = userPrompt.getInput();
 }

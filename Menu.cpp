@@ -1,16 +1,13 @@
 #include "Menu.h"
+#include "UserPrompt.h"
 
-int Menu::userSelection()
+std::string Menu::userSelection()
 {
+    UserPrompt userPrompt;
+
     printMainMenu();
 
-    int userSelection = 0;
-
-    do
-    {
-        std::cout << "Select:" << std::endl;
-        std::cin >> userSelection;
-    } while (!isValidChoice(userSelection));
+    std::string userSelection = userPrompt.getInput();
 
     return userSelection;
 }
