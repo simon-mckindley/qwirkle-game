@@ -18,6 +18,16 @@ int LinkedList::getSize()
     return size;
 }
 
+Tile *LinkedList::getTileAtIndex(int index)
+{
+    Node *current = head;
+    for (int i = 0; i < index; i++)
+    {
+        current = current->next;
+    }
+    return current->tile;
+}
+
 // Add a tile to the back of the list. Update pointer.
 void LinkedList::addTileToBack(Tile *tile)
 {
@@ -48,9 +58,10 @@ Tile *LinkedList::drawTile()
 
         return tile;
     }
-    else {
+    else
+    {
 
-        // TODO: Placeholder value consider replacing. 
+        // TODO: Placeholder value consider replacing.
         // What should be returned if nullptr?
         Tile *tile = new Tile();
         return tile;
