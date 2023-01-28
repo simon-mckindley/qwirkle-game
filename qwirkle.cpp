@@ -1,6 +1,4 @@
 #include "LinkedList.h"
-#include "Menu.h"
-#include "GameState.h"
 #include "GamePlay.h"
 #include "UserPrompt.h"
 
@@ -8,10 +6,17 @@
 #include <fstream>
 #include <string>
 
+void printMainMenu();
 void mainMenuOption(std::string userSelection);
 void printCredits();
 
 #define EXIT_SUCCESS 0
+
+// Menu options
+#define NEW_GAME "1"
+#define LOAD_GAME "2"
+#define CREDITS "3"
+#define QUIT "4"
 
 int main(void)
 {
@@ -19,11 +24,12 @@ int main(void)
               << "-------------------" << std::endl;
 
     std::string choice;
-    Menu menu;
+    UserPrompt userPrompt;
 
     do
     {
-        choice = menu.userSelection();
+        printMainMenu();
+        choice = userPrompt.getInput();
         mainMenuOption(choice);
 
     } while (choice != QUIT);
@@ -32,6 +38,16 @@ int main(void)
     delete list;
 
     return EXIT_SUCCESS;
+}
+
+void printMainMenu()
+{
+    std::cout << "\n--- Main Menu ---\n"
+              << "1. New Game\n"
+              << "2. Load Game\n"
+              << "3. Credits\n"
+              << "4. Quit\n"
+              << std::endl;
 }
 
 // Calls the correct method depending on the user option entered
@@ -99,4 +115,3 @@ void printCredits()
     MyReadFile.close();
     std::cout << "------------------------------" << std::endl;
 }
-

@@ -1,7 +1,5 @@
 
 #include "GameBoard.h"
-#include <vector>
-#include <string>
 
 GameBoard::GameBoard()
 {

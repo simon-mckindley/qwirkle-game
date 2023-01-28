@@ -2,6 +2,8 @@
 #include "Players.h"
 
 // Default constructor
+Players::Players() {}
+
 Players::Players(Player *player1, Player *player2)
 {
     this->players[0] = player1;
@@ -11,14 +13,24 @@ Players::Players(Player *player1, Player *player2)
 
 Player Players::nextPlayer()
 {
-    if (this->currentPlayer == this->players[0])
+    if (this->currentPlayer == this->players[1])
     {
-        this->currentPlayer = this->players[1];
-        return *this->players[1];
+        this->currentPlayer = this->players[0];
     }
     else
     {
-        this->currentPlayer = this->players[0];
-        return *this->players[0];
+        this->currentPlayer = this->players[1];
     }
+
+    return *this->currentPlayer;
+}
+
+Player Players::getPlayer(int i)
+{
+    return *this->players[i - 1];
+}
+
+Player Players::getCurrentPlayer()
+{
+    return *this->currentPlayer;
 }

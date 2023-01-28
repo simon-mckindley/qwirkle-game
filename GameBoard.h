@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include <vector>
+#include <string>
 
 using std::vector;
 

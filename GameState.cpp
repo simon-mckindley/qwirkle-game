@@ -2,25 +2,28 @@
 #include "fstream"
 #include "iostream"
 
-GameState::GameState(Player player1, Player player2, GameBoard board, Tiles tiles, Player currentPlayer)
+GameState::GameState() {}
+
+GameState::GameState(Players players, GameBoard board, Tiles tiles)
 {
-    this->player1 = player1;
-    this->player2 = player2;
+    this->players = players;
     this->gameBoard = gameBoard;
     this->tiles = tiles;
-    this->currentPlayer = currentPlayer;
 }
 
-Player GameState::getPlayer(int i)
+Players GameState::getPlayers()
 {
-    if (i == 1)
-    {
-        return this->player1;
-    }
-    else if (i == 2)
-    {
-        return this->player2;
-    }
+    return this->players;
+}
+
+GameBoard GameState::getBoard()
+{
+    return this->gameBoard;
+}
+
+Tiles GameState::getTiles()
+{
+    return this->tiles;
 }
 
 void GameState::save(std::string filename)
@@ -34,14 +37,14 @@ void GameState::save(std::string filename)
     else
     {
         // Write player 1 information
-        file << player1.getName() << std::endl;
-        file << player1.getScore() << std::endl;
-        file << player1.getHand() << std::endl;
+        file << players.getPlayer(1).getName() << std::endl;
+        file << players.getPlayer(1).getScore() << std::endl;
+        file << players.getPlayer(1).getHand() << std::endl;
 
         // Write player 2 information
-        file << player2.getName() << std::endl;
-        file << player2.getScore() << std::endl;
-        file << player2.getHand() << std::endl;
+        file << players.getPlayer(2).getName() << std::endl;
+        file << players.getPlayer(2).getScore() << std::endl;
+        file << players.getPlayer(2).getHand() << std::endl;
 
         /* UNCOMMENT TO CONTINUE BOARD IMPLEMENTATION */
 

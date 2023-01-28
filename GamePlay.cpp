@@ -6,15 +6,15 @@
 // Main gameplay function
 void GamePlay::gamePlay()
 {
-    Players *players = new Players(&gameState->getPlayer(1), &gameState->getPlayer(2));
     bool endGame = false;
 
     do
     {
         std::cout << "\n\n"
-                  << players->nextPlayer().getName() << ", it's your turn";
+                  << gameState->getPlayers().getCurrentPlayer().getName() << ", it's your turn";
         printGameStatus();
         endGame = gamePlayOption();
+        gameState->getPlayers().nextPlayer();
 
     } while (!endGame);
 }
@@ -45,7 +45,7 @@ void GamePlay::createNewGame()
     Player *player2 = new Player(player2name, player2hand);
 
     // Creates new Gamestate object for the pointer
-    gameState = new GameState(*player1, *player2, *(new GameBoard()), tileBag, *player1);
+    gameState = new GameState(*(new Players(player1, player2)), *(new GameBoard()), tileBag);
 
     gamePlay();
 }
@@ -58,14 +58,16 @@ void GamePlay::loadGame()
     std::string filename;
     std::cout << "\nEnter the filename from which to load a save game" << std::endl;
     filename = userPrompt.getInput();
-    std::cout << "\nLoading game from > " << filename << std::endl;
+    std::cout << "\nLoading game from : " << filename << std::endl;
 
     // TODO Load game from file 2.2.2
+    gameState = new GameState();
+    // gameState->load(filename);
 
-    std::cout << "\n.... game play starts" << std::endl;
+    gamePlay();
 }
 
-// Accepts and validates player names
+// Accepts and validates new player names
 std::string GamePlay::getPlayerName()
 {
     UserPrompt userPrompt;
@@ -94,16 +96,16 @@ std::string GamePlay::getPlayerName()
 void GamePlay::printGameStatus()
 {
     std::cout << "\nScore for "
-              << "<Player1>"
+              << gameState->getPlayers().getPlayer(1).getName()
               << ": "
-              << "<9>";
+              << gameState->getPlayers().getPlayer(1).getScore();
     std::cout << "\nScore for "
-              << "<Player2>"
+              << gameState->getPlayers().getPlayer(2).getName()
               << ": "
-              << "<9>";
+              << gameState->getPlayers().getPlayer(2).getScore();
     std::cout << "\nPRINT BOARD HERE" << std::endl;
     std::cout << "\nYour hand is:\n"
-              << "<hand>\n"
+              // TODO getHand() seg faulting << gameState->getPlayers().getCurrentPlayer().getHand() << "\n"
               << std::endl;
 }
 
@@ -119,10 +121,14 @@ bool GamePlay::gamePlayOption()
         UserPrompt userPrompt;
         userInput = userPrompt.getInput();
         int pos = userInput.find_first_of(" ");
+
+        // If input contains a space character
         if (pos != std::string::npos)
         {
-            // Valid input: place, replace, save
+            // The input before the space
             std::string cmd = userInput.substr(0, pos);
+
+            // Valid input: place, replace, save
             if (cmd == "place")
             {
                 std::string tile = userInput.substr(pos + 1, 2);
@@ -139,7 +145,8 @@ bool GamePlay::gamePlayOption()
             else if (cmd == "save")
             {
                 std::string fileName = userInput.substr(pos + 1);
-                std::cout << "File:" << fileName << std::endl;
+                std::cout << "Saving game to: " << fileName << std::endl;
+                gameState->save(fileName);
             }
             else
             {
@@ -150,6 +157,7 @@ bool GamePlay::gamePlayOption()
         else if (userInput == "quit")
         {
             endGame = true;
+            std::cout << "\nQuiting game" << std::endl;
         }
         else
         {
