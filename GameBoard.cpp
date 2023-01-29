@@ -2,7 +2,10 @@
 
 GameBoard::GameBoard()
 {
-    // TODO
+    // TODO: tmp values, need to decide if we add X add 0 as "NULL" palceholders
+    // or define a tile constructor that takes and handles NULL's
+    Tile *tmpTile = new Tile(RED, CIRCLE);
+    vector<Tile> vect(26, Tile(*tmpTile));
 }
 
 GameBoard::GameBoard(vector<vector<Tile>> board)

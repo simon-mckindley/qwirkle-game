@@ -5,6 +5,13 @@ Tile::Tile() : colour('X'), shape(0) {}
 
 Tile::Tile(Colour colour, Shape shape) : colour(colour), shape(shape) {}
 
+// Copy constructor
+Tile::Tile(Tile &t)
+{
+    colour = t.colour;
+    shape = t.shape;
+}
+
 Colour Tile::getColour()
 {
     return colour;
