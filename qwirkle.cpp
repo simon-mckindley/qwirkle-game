@@ -1,22 +1,22 @@
 #include "LinkedList.h"
-#include "Menu.h"
-#include "GameState.h"
+#include "GamePlay.h"
 #include "UserPrompt.h"
 
 #include <iostream>
 #include <fstream>
 #include <string>
 
-// TODO: Consider creating a gameState object with default values for
-// createGame, or load values into gameState with loadGame();
-// GameState createNewGame();
-void createNewGame();
-// GameState loadGameState();
-void loadGame();
+void printMainMenu();
 void mainMenuOption(std::string userSelection);
 void printCredits();
 
 #define EXIT_SUCCESS 0
+
+// Menu options
+#define NEW_GAME "1"
+#define LOAD_GAME "2"
+#define CREDITS "3"
+#define QUIT "4"
 
 int main(void)
 {
@@ -24,11 +24,12 @@ int main(void)
               << "-------------------" << std::endl;
 
     std::string choice;
-    Menu menu;
+    UserPrompt userPrompt;
 
     do
     {
-        choice = menu.userSelection();
+        printMainMenu();
+        choice = userPrompt.getInput();
         mainMenuOption(choice);
 
     } while (choice != QUIT);
@@ -39,16 +40,28 @@ int main(void)
     return EXIT_SUCCESS;
 }
 
+void printMainMenu()
+{
+    std::cout << "\n--- Main Menu ---\n"
+              << "1. New Game\n"
+              << "2. Load Game\n"
+              << "3. Credits\n"
+              << "4. Quit\n"
+              << std::endl;
+}
+
 // Calls the correct method depending on the user option entered
 void mainMenuOption(std::string userSelection)
 {
     if (userSelection == NEW_GAME)
     {
-        createNewGame();
+        GamePlay gamePlay;
+        gamePlay.createNewGame();
     }
     else if (userSelection == LOAD_GAME)
     {
-        loadGame();
+        GamePlay gamePlay;
+        gamePlay.loadGame();
     }
     else if (userSelection == CREDITS)
     {
@@ -62,19 +75,6 @@ void mainMenuOption(std::string userSelection)
     {
         std::cout << "Valid option not selected" << std::endl;
     }
-}
-
-// GameState createNewGame()
-void createNewGame()
-{
-    // TODO
-    UserPrompt userPrompt;
-
-    std::cout << "Starting a new game." << std::endl;
-    std::string username;
-    std::cout << "Select your username" << std::endl;
-    username = userPrompt.getInput();
-    std::cout << "Welcome, " << username << std::endl;
 }
 
 void printCredits()
@@ -114,16 +114,4 @@ void printCredits()
     // Close the file
     MyReadFile.close();
     std::cout << "------------------------------" << std::endl;
-}
-
-// TODO: Consider replacing with a gameState method instead
-void loadGame()
-{
-    // TODO
-    UserPrompt userPrompt;
-    std::cout << "Starting a new game." << std::endl;
-
-    std::string filename;
-    std::cout << "Enter the filename of the game you wish to load:" << std::endl;
-    filename = userPrompt.getInput();
 }

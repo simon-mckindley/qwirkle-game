@@ -1,28 +1,23 @@
 #ifndef ASSIGN2_PLAYERS_H
 #define ASSIGN2_PLAYERS_H
 
-#include "LinkedList.h"
 #include "Player.h"
-#include "Node.h"
-#include <string>
 
 class Players
 {
 private:
-    // TODO: This needs to be correctly implemented, this is just a placeholder
-    LinkedList *players;
-    Node *currentPlayer;
+    Player *players[2];
+    Player *currentPlayer;
 
 public:
     Players();
+    Players(Player *player1, Player *player2);
 
-    // Returns the next player in the LinkedList
-    Player nextPlayer()
-    {
-        // TODO
-        Player *mockPlayer = new Player();
-        return *mockPlayer;
-    }
+    // Returns the next player and assigns them as the current player
+    Player nextPlayer();
+
+    Player getPlayer(int i);
+    Player getCurrentPlayer();
 };
 
 #endif // ASSIGN2_PLAYERS_H
