@@ -2,36 +2,30 @@
 #ifndef ASSIGN2_MENU_H
 #define ASSIGN2_MENU_H
 
-#include "Tile.h"
-
 #include <iostream>
 #include <fstream>
 #include <string>
 
+// Menu options
+#define NEW_GAME "1"
+#define LOAD_GAME "2"
+#define CREDITS "3"
+#define QUIT "4"
+
 class Menu
 {
 public:
-    int userSelection();
+    std::string userSelection();
 
 private:
     void printMainMenu()
     {
-        std::cout << "---Main Menu---" << std::endl;
-        std::cout << "1. New Game" << std::endl;
-        std::cout << "2. Load Game" << std::endl;
-        std::cout << "3. Credits (Show student information)" << std::endl;
-        std::cout << "4. Quit" << std::endl;
-    }
-
-    bool isValidChoice(int userSelection)
-    {
-        // Is one of the 4 menu options
-        if (userSelection >= 1 && userSelection <= 4)
-        {
-            return true;
-        }
-
-        return false;
+        std::cout << "\n--- Main Menu ---\n"
+                  << "1. New Game\n"
+                  << "2. Load Game\n"
+                  << "3. Credits\n"
+                  << "4. Quit\n"
+                  << std::endl;
     }
 };
 
