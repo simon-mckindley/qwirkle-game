@@ -127,17 +127,3 @@ void loadGame()
     std::cout << "Enter the filename of the game you wish to load:" << std::endl;
     filename = userPrompt.getInput();
 }
-<<<<<<< HEAD
-
-bool isValidChoice(int userSelection)
-{
-    // Is one of the 4 menu options
-    if (userSelection >= 1 && userSelection <= 4)
-    {
-        return true;
-    }
-
-    return false;
-}
-=======
->>>>>>> origin/Menu
