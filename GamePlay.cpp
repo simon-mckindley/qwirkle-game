@@ -124,7 +124,10 @@ bool GamePlay::gamePlayOption()
         // TODO: I'm not sure if converting pos from int to size_type
         // will still perform the same funciton, but compasing an int to
         // an npos throws an error trying to compare an int with a long
-        // unsigned int when compiling.
+        // unsigned int when compiling. This resolves that error.
+        //
+        // Need to confirm that this doesn't introduce any logical errors
+        // or runtime errors, but at a first pass it appears to work fine.
         std::string::size_type pos = userInput.find_first_of(" ");
 
         // If input contains a space character
