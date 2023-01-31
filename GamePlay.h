@@ -7,12 +7,13 @@
 
 class GamePlay
 {
-public:
-    void createNewGame();
-    void loadGame();
-
 private:
     GameState *gameState;
+
+public:
+    void createNewGame();
+
+    void loadGame();
 
     // Main gameplay function
     void gamePlay();

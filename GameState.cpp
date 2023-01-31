@@ -4,7 +4,7 @@
 
 GameState::GameState() {}
 
-GameState::GameState(Players players, GameBoard board, Tiles tiles)
+GameState::GameState(Players players, GameBoard gameBoard, Tiles tiles)
 {
     this->players = players;
     this->gameBoard = gameBoard;

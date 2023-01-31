@@ -37,6 +37,30 @@ int main(void)
     LinkedList *list = new LinkedList();
     delete list;
 
+    // TODO: Delete the below code, used as a demo of the GameBoard, setTile
+    // and toString() features.
+
+    // GameBoard gameBoard;
+
+    // Tile *tile = new Tile(RED, CIRCLE);
+    // Tile *tile2 = new Tile(BLUE, CIRCLE);
+    // Tile *tile3 = new Tile(GREEN, CIRCLE);
+
+    // Tile *tile4 = new Tile(BLUE, SQUARE);
+    // Tile *tile5 = new Tile(BLUE, DIAMOND);
+    // Tile *tile6 = new Tile(BLUE, STAR_4);
+
+    // gameBoard.setTile(2, 2, *tile);
+    // gameBoard.setTile(2, 3, *tile2);
+    // gameBoard.setTile(2, 4, *tile3);
+
+    // gameBoard.setTile(3, 3, *tile4);
+    // gameBoard.setTile(4, 3, *tile5);
+    // gameBoard.setTile(5, 3, *tile6);
+
+    // std::string boardString = gameBoard.toString();
+    // std::cout << boardString << std::endl;
+
     return EXIT_SUCCESS;
 }
 

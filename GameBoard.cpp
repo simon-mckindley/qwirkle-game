@@ -1,16 +1,10 @@
 #include "GameBoard.h"
 
-GameBoard::GameBoard()
-{
-    // TODO: tmp values, need to decide if we add X add 0 as "NULL" palceholders
-    // or define a tile constructor that takes and handles NULL's
-    Tile *tmpTile = new Tile(RED, CIRCLE);
-    vector<Tile> vect(26, Tile(*tmpTile));
-}
+GameBoard::GameBoard(){};
 
 GameBoard::GameBoard(vector<vector<Tile>> board)
 {
-    // TODO
+    board = board;
 }
 
 int GameBoard::getHeight()
@@ -27,6 +21,21 @@ int GameBoard::getWidth()
     else
     {
         return 0;
+    }
+}
+
+// Sets the x and y coordinates of the board to the assigned Tile.
+void GameBoard::setTile(int x, int y, Tile tile)
+{
+    bool success = false;
+
+    try
+    {
+        board[x][y] = tile;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
     }
 }
 
@@ -49,4 +58,29 @@ std::vector<std::string> GameBoard::getState()
         }
     }
     return state;
+}
+
+// iterates through each row of the board and builds a string
+// for printing to the console
+std::string GameBoard::toString()
+{
+    std::string boardString = "";
+
+    for (vector<Tile> row : board)
+    {
+        for (Tile col : row)
+        {
+            boardString.push_back('|');
+
+            // Converts type to char or white space if empty tile
+            char c = (col.getColour() != 'X') ? col.getColour() : ' ';
+            std::string s = (col.getShape() == 0) ? " " : std::to_string(col.getShape());
+
+            // Add characters to board
+            boardString.push_back(c);
+            boardString.append(s);
+        }
+        boardString.append("|\n");
+    }
+    return boardString;
 }
