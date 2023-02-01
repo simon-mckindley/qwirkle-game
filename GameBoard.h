@@ -29,7 +29,7 @@ public:
     void setTile(int x, int y, Tile tile);
 
     // Return the state of the board as a vector of strings.
-    std::vector<std::string> getState();
+    std::string getState();
 
     // Print the board to console
     std::string toString();

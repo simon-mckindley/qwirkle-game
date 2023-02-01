@@ -39,21 +39,22 @@ void GameBoard::setTile(int x, int y, Tile tile)
     }
 }
 
-std::vector<std::string> GameBoard::getState()
+std::string GameBoard::getState()
 {
-    std::vector<std::string> state;
-
-    // Added 'size' vairalbe to avoid an error in which int is compared with long unsigned int
-    int size = board.size();
-    for (int i = 0; i < size; i++)
+    std::string state;
+    for (int i = 0; i < board.size(); i++)
     {
-        // Added 'iSize' vairalbe to avoid an error in which int is compared with long unsigned int
-        int iSize = board[i].size();
-        for (int j = 0; j < iSize; j++)
+        for (int j = 0; j < board[i].size(); j++)
         {
             if (board[i][j].getColour() != ' ')
             {
-                state.push_back(board[i][j].getColour() + std::to_string(board[i][j].getShape()) + "@(" + std::to_string(i) + "," + std::to_string(j) + ")");
+                state += board[i][j].getColour();
+                state += std::to_string(board[i][j].getShape());
+                state += "@(";
+                state += std::to_string(i);
+                state += ",";
+                state += std::to_string(j);
+                state += ") ";
             }
         }
     }

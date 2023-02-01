@@ -3,6 +3,7 @@
 
 #include "LinkedList.h"
 #include "Tile.h"
+#include <string>
 
 class Tiles
 {
@@ -27,6 +28,9 @@ public:
     // we have duplicates of a tile, does it matter which of
     // the duplicates is removed from the list? Unsure.
     void removeTile(Tile tile);
+
+    // Read the current tile bag for saving game state.
+    std::string getTiles();
 };
 
 #endif // ASSIGN2_TILES_H
