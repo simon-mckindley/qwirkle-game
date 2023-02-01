@@ -2,28 +2,13 @@
 #include "fstream"
 #include "iostream"
 
-GameState::GameState() {}
-
-GameState::GameState(Players players, GameBoard gameBoard, Tiles tiles)
+GameState::GameState(Player player1, Player player2, GameBoard board, Tiles tiles, Player currentPlayer)
 {
-    this->players = players;
+    this->player1 = player1;
+    this->player2 = player2;
     this->gameBoard = gameBoard;
     this->tiles = tiles;
-}
-
-Players GameState::getPlayers()
-{
-    return this->players;
-}
-
-GameBoard GameState::getBoard()
-{
-    return this->gameBoard;
-}
-
-Tiles GameState::getTiles()
-{
-    return this->tiles;
+    this->currentPlayer = currentPlayer;
 }
 
 void GameState::save(std::string filename)
@@ -37,28 +22,32 @@ void GameState::save(std::string filename)
     else
     {
         // Write player 1 information
-        file << players.getPlayer(1).getName() << std::endl;
-        file << players.getPlayer(1).getScore() << std::endl;
-        file << players.getPlayer(1).getHand() << std::endl;
+        file << player1.getName() << std::endl;
+        file << player1.getScore() << std::endl;
+        file << player1.getHand() << std::endl;
 
         // Write player 2 information
-        file << players.getPlayer(2).getName() << std::endl;
-        file << players.getPlayer(2).getScore() << std::endl;
-        file << players.getPlayer(2).getHand() << std::endl;
-
-        /* UNCOMMENT TO CONTINUE BOARD IMPLEMENTATION */
+        file << player2.getName() << std::endl;
+        file << player2.getScore() << std::endl;
+        file << player2.getHand() << std::endl;
 
         // Write board information
         file << gameBoard.getHeight() << "," << gameBoard.getWidth() << std::endl;
 
-        // May need to print with loop: file << gameBoard.getState() << std::endl;
+        file << gameBoard.getState() << std::endl;
 
-        // // Write tile bag contents
-        // file << tiles.getContents() << std::endl;
+        // Write tile bag contents
+        file << tiles.getTiles() << std::endl;
 
         // Write current players name.
         file << currentPlayer.getName() << std::endl;
 
         file.close();
+
+        std::cout << "Game saved successfully" << std::endl;
     }
+}
+
+void GameState::load(std::string filename)
+{
 }
