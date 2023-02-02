@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "sstream"
 
 using std::vector;
 
@@ -39,4 +40,6 @@ public:
 
     // Set width from file.
     void GameBoard::setWidth(int width);
+
+    void GameBoard::setState(std::string &state);
 };

@@ -4,6 +4,7 @@
 #include "LinkedList.h"
 #include "Tile.h"
 #include <string>
+#include "sstream"
 
 class Tiles
 {
@@ -31,6 +32,9 @@ public:
 
     // Read the current tile bag for saving game state.
     std::string getTiles();
+
+    // Set the tiles to those read in from the file.
+    void Tiles::setTiles(std::string &tileBag);
 };
 
 #endif // ASSIGN2_TILES_H

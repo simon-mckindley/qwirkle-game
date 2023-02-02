@@ -75,7 +75,7 @@ void GameState::load(std::string filename)
     file >> player2Score;
     std::getline(file, player2Hand);
 
-    // Hard-code the board height and width to 26 and 26 respectively
+    // Hard-code the board height and width.
     int boardDimension = 26;
 
     // Read board information
@@ -103,7 +103,7 @@ void GameState::load(std::string filename)
 
     gameBoard.setHeight(boardDimension);
     gameBoard.setWidth(boardDimension);
-    gameBoard.setState(boardDimension);
+    gameBoard.setState(boardState);
 
     tiles.setTiles(tileBag);
 

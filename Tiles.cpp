@@ -28,3 +28,16 @@ std::string Tiles::getTiles()
     }
     return tileAsString;
 }
+
+void Tiles::setTiles(std::string &tileBag)
+{
+    std::istringstream iss(tileBag);
+    std::string tile;
+    while (std::getline(iss, tile, ','))
+    {
+        char colour = tile[0];
+        int shape = stoi(tile.substr(1));
+        Tile newTile(colour, shape);
+        addTile(newTile);
+    }
+}
