@@ -8,14 +8,28 @@
 
 class GameState
 {
+
+private:
+    Players players;
+
+    GameBoard gameBoard;
+
+    Tiles tiles;
+
+    Player currentPlayer;
+
 public:
     // Default Constructor
     GameState();
+
     // Constructor
     GameState(Players players, GameBoard board, Tiles tiles);
 
+    // Accessors
     Players getPlayers();
+
     GameBoard getBoard();
+
     Tiles getTiles();
 
     // Save the game state to a file
@@ -23,12 +37,6 @@ public:
 
     // Load the game state from a file
     void load(std::string filename);
-
-private:
-    Players players;
-    GameBoard gameBoard;
-    Tiles tiles;
-    Player currentPlayer;
 };
 
 #endif // ASSIGN2_GAMESTATE_H

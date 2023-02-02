@@ -37,26 +37,57 @@ int main(void)
     LinkedList *list = new LinkedList();
     delete list;
 
-    // TODO: Delete the below code, used as a demo of the GameBoard, setTile
-    // and toString() features.
+    // TODO:
+    // Delete the below code, used as a demo of the GameBoard, validateSetTile(), setTile() and toString() features.
 
     // GameBoard gameBoard;
 
     // Tile *tile = new Tile(RED, CIRCLE);
     // Tile *tile2 = new Tile(BLUE, CIRCLE);
     // Tile *tile3 = new Tile(GREEN, CIRCLE);
+    // Tile *tile11 = new Tile(PURPLE, CIRCLE);
+    // Tile *tile12 = new Tile(YELLOW, CIRCLE);
+
+    // gameBoard.setTile(2, 2, *tile);
+    // gameBoard.setTile(2, 3, *tile2);
+    // gameBoard.setTile(2, 4, *tile3);
+    // gameBoard.setTile(2, 5, *tile11);
+    // gameBoard.setTile(2, 6, *tile12);
 
     // Tile *tile4 = new Tile(BLUE, SQUARE);
     // Tile *tile5 = new Tile(BLUE, DIAMOND);
     // Tile *tile6 = new Tile(BLUE, STAR_4);
 
-    // gameBoard.setTile(2, 2, *tile);
-    // gameBoard.setTile(2, 3, *tile2);
-    // gameBoard.setTile(2, 4, *tile3);
-
     // gameBoard.setTile(3, 3, *tile4);
     // gameBoard.setTile(4, 3, *tile5);
     // gameBoard.setTile(5, 3, *tile6);
+
+    // Tile *tile7 = new Tile(GREEN, STAR_4);
+    // Tile *tile8 = new Tile(ORANGE, STAR_4);
+    // Tile *tile9 = new Tile(YELLOW, STAR_4);
+    // Tile *tile10 = new Tile(BLUE, STAR_4);
+
+    // gameBoard.setTile(5, 4, *tile7);
+    // gameBoard.setTile(5, 5, *tile8);
+    // gameBoard.setTile(5, 6, *tile9);
+    // gameBoard.setTile(5, 7, *tile10);
+
+    // Tile *tile13 = new Tile(YELLOW, DIAMOND);
+    // gameBoard.setTile(4, 6, *tile13);
+
+    // // Sample placement, should return valid
+    // Tile *placedTile = new Tile(YELLOW, STAR_6);
+    // bool validPlacement = gameBoard.validateSetTile(3, 6, *placedTile);
+
+    // if (validPlacement)
+    // {
+    //     std::cout << "placement is valid" << std::endl;
+    //     gameBoard.setTile(3, 6, *placedTile);
+    // }
+    // else
+    // {
+    //     std::cout << "placement is invalid" << std::endl;
+    // }
 
     // std::string boardString = gameBoard.toString();
     // std::cout << boardString << std::endl;

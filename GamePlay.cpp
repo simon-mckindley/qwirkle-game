@@ -143,7 +143,9 @@ bool GamePlay::gamePlayOption()
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
                 std::cout << "Place:" << tile << ":" << location << std::endl;
+
                 // TODO validate tile and location
+                bool isValid = validateChoice(tile, location, *gameState);
             }
             else if (cmd == "replace")
             {
@@ -177,4 +179,10 @@ bool GamePlay::gamePlayOption()
     } while (invalid);
 
     return endGame;
+}
+
+bool GamePlay::validateChoice(std::string tileChoice, std::string location, GameState gameState)
+{
+    std::cout << tileChoice << " " << location << std::endl;
+    return true;
 }

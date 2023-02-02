@@ -10,7 +10,12 @@ class GamePlay
 private:
     GameState *gameState;
 
+    bool validateChoice(std::string input, std::string location, GameState gameState);
+
 public:
+    // Constructor
+    // GamePlay();
+
     void createNewGame();
 
     void loadGame();
