@@ -42,3 +42,25 @@ std::string Player::getHand()
     hand = hand.substr(0, hand.size() - 1);
     return hand;
 }
+
+void Player::setName(std::string name)
+{
+}
+
+void Player::setScore(int score)
+{
+}
+
+void Player::setHand(std::string hand)
+{
+    playerHand = new LinkedList();
+    std::stringstream ss(hand);
+    std::string tileString;
+    while (std::getline(ss, tileString, ','))
+    {
+        char color = tileString[0];
+        int shape = tileString[1] - '0';
+        Tile *tile = new Tile(color, shape);
+        playerHand->addTileToBack(tile);
+    }
+}

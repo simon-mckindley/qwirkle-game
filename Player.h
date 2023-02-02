@@ -3,6 +3,7 @@
 
 #include "LinkedList.h"
 #include <string>
+#include <sstream>
 
 class Player
 {
@@ -25,6 +26,11 @@ public:
 
     // Return the player hand as an ordered list.
     std::string getHand();
+
+    // Set current player state from file.
+    void setName(std::string name);
+    void setScore(int score);
+    void setHand(std::string hand);
 };
 
 #endif // ASSIGN2_PLAYER_H

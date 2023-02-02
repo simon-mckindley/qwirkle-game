@@ -33,4 +33,10 @@ public:
 
     // Print the board to console
     std::string toString();
+
+    // Set height from file.
+    void GameBoard::setHeight(int height);
+
+    // Set width from file.
+    void GameBoard::setWidth(int width);
 };

@@ -85,3 +85,16 @@ std::string GameBoard::toString()
     }
     return boardString;
 }
+
+void GameBoard::setHeight(int height)
+{
+    board.resize(height, vector<Tile>(board[0].size()));
+}
+
+void GameBoard::setWidth(int width)
+{
+    for (int i = 0; i < board.size(); i++)
+    {
+        board[i].resize(width);
+    }
+}
