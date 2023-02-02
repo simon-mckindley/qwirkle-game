@@ -1,9 +1,11 @@
 #ifndef ASSIGN2_GAMEPLAY_H
 #define ASSIGN2_GAMEPLAY_H
 
+#include "GamePlay.h"
 #include "GameState.h"
+#include "Tile.h"
+#include "TileCodes.h"
 #include "UserPrompt.h"
-#include "Players.h"
 
 class GamePlay
 {
@@ -28,6 +30,13 @@ public:
 
     // Gets and validates user gameplay input
     bool gamePlayOption();
+
+    GameState getGameState() { return *gameState; };
+
+    // Assess score of given move a return as an int
+    int getScore(int x, int y, Tile tile);
+
+    int getAxisScore(int x, int y, Tile tile, bool row);
 
     // Accepts and validates player names
     std::string getPlayerName();
