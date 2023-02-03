@@ -1,18 +1,16 @@
 #include "Player.h"
+#include "TileBag.h"
 
 Player::Player()
 {
-    name = "";
-    score = 0;
-    playerHand = new LinkedList();
 }
-
 // Cosntructor to assign name and hand at creation.
-Player::Player(std::string name, LinkedList *playerHand)
+Player::Player(std::string name, TileBag *tileBag)
 {
     this->name = name;
     score = 0;
-    this->playerHand = playerHand;
+    this->tileBag = tileBag;
+    this->playerHand = new Hand(tileBag);
 }
 
 void Player::increaseScore(int score)
@@ -41,4 +39,9 @@ std::string Player::getHand()
     // remove the last comma from the string
     hand = hand.substr(0, hand.size() - 1);
     return hand;
+}
+
+Hand *Player::getHandPtr()
+{
+    return this->playerHand;
 }

@@ -3,7 +3,7 @@
 
 Node::Node(Tile *tile, Node *next)
 {
-    this->tile = new Tile(tile->getColour(), tile->getShape());
+    this->tile = tile;
     this->next = next;
 }
 

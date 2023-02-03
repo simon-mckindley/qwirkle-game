@@ -1,4 +1,5 @@
 #include "GamePlay.h"
+#include "TileBag.h"
 
 #include <iostream>
 #include <string>
@@ -33,16 +34,12 @@ void GamePlay::createNewGame()
               << "\n\tLets Play!";
 
     // TODO Initialise new game 2.3.10
-    // TODO Shuffle Tile Bag
-    Tiles tileBag;
+    TileBag *tileBag = new TileBag();
+    tileBag->fillTileBag();
 
-    // TODO Allocate hands to players
-    LinkedList *player1hand;
-    LinkedList *player2hand;
-
-    // Creates new players
-    Player *player1 = new Player(player1name, player1hand);
-    Player *player2 = new Player(player2name, player2hand);
+    // Creates new players and allocate hands of tiles
+    Player *player1 = new Player(player1name, tileBag);
+    Player *player2 = new Player(player2name, tileBag);
 
     // Creates new Gamestate object for the pointer
     gameState = new GameState(*(new Players(player1, player2)), *(new GameBoard()), tileBag);
@@ -104,8 +101,9 @@ void GamePlay::printGameStatus()
               << ": "
               << gameState->getPlayers().getPlayer(2).getScore();
     std::cout << "\nPRINT BOARD HERE" << std::endl;
-    std::cout << "\nYour hand is:\n"
-              // TODO getHand() seg faulting << gameState->getPlayers().getCurrentPlayer().getHand() << "\n"
+    std::cout << "\nYour hand is:\n";
+    //   TODO getHand() seg faulting << gameState->getPlayers().getCurrentPlayer().getHand() << "\n"
+    std::cout << gameState->getPlayers().getCurrentPlayer().getHand() << "\n"
               << std::endl;
 }
 

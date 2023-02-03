@@ -8,7 +8,7 @@ using std::vector;
 class GameBoard
 {
 private:
-    // Each vector is a row, and the nested vector of tiles
+    // Each vector is a row, and the nested vector of TileBag
     // within is the existing columns and their values
     std::vector<std::vector<Tile>> board{26, std::vector<Tile>{26, Tile()}};
 

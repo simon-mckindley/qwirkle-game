@@ -3,8 +3,7 @@
 
 #include "Players.h"
 #include "GameBoard.h"
-#include <string>
-#include "Tiles.h"
+#include "TileBag.h"
 
 class GameState
 {
@@ -12,11 +11,11 @@ public:
     // Default Constructor
     GameState();
     // Constructor
-    GameState(Players players, GameBoard board, Tiles tiles);
+    GameState(Players players, GameBoard board, TileBag *tileBag);
 
     Players getPlayers();
     GameBoard getBoard();
-    Tiles getTiles();
+    TileBag *getTileBag();
 
     // Save the game state to a file
     void save(std::string filename);
@@ -27,7 +26,7 @@ public:
 private:
     Players players;
     GameBoard gameBoard;
-    Tiles tiles;
+    TileBag *tileBag;
     Player currentPlayer;
 };
 
