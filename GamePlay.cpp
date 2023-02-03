@@ -17,6 +17,8 @@ void GamePlay::gamePlay()
         gameState->getPlayers().nextPlayer();
 
     } while (!endGame);
+
+    delete gameState;
 }
 
 void GamePlay::createNewGame()
@@ -30,7 +32,7 @@ void GamePlay::createNewGame()
     std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
     player2name = getPlayerName();
     std::cout << "\nWelcome, " << player1name << " and " << player2name
-              << "\n\tLets Play!";
+              << "\n\tLets Play!" << std::endl;
 
     // TODO Initialise new game 2.3.10
     // TODO Shuffle Tile Bag
@@ -120,38 +122,32 @@ bool GamePlay::gamePlayOption()
         invalid = false;
         UserPrompt userPrompt;
         userInput = userPrompt.getInput();
+        int length = userInput.length();
 
-        // TODO: I'm not sure if converting pos from int to size_type
-        // will still perform the same funciton, but compasing an int to
-        // an npos throws an error trying to compare an int with a long
-        // unsigned int when compiling. This resolves that error.
-        //
-        // Need to confirm that this doesn't introduce any logical errors
-        // or runtime errors, but at a first pass it appears to work fine.
         std::string::size_type pos = userInput.find_first_of(" ");
 
         // If input contains a space character
-
         if (pos != std::string::npos)
         {
             // The input before the space
             std::string cmd = userInput.substr(0, pos);
 
-            // Valid input: place, replace, save
-            if (cmd == "place")
+            // Valid commands: "place XX at XX (length=14),
+            // "replace XX" (length=10), "save <filename>" (min_length=7)
+            if (cmd == "place" && length == 14)
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
                 std::cout << "Place:" << tile << ":" << location << std::endl;
                 // TODO validate tile and location
             }
-            else if (cmd == "replace")
+            else if (cmd == "replace" && length == 10)
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::cout << "Replace:" << tile << std::endl;
                 // TODO validate tile
             }
-            else if (cmd == "save")
+            else if (cmd == "save" && length >= 7)
             {
                 std::string fileName = userInput.substr(pos + 1);
                 std::cout << "Saving game to: " << fileName << std::endl;
