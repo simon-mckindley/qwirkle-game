@@ -145,7 +145,7 @@ bool GamePlay::gamePlayOption()
                 std::cout << "Place:" << tile << ":" << location << std::endl;
 
                 // TODO validate tile and location
-                bool isValid = validateChoice(tile, location, *gameState);
+                // bool isValid = validateChoice(tile, location, *gameState);
             }
             else if (cmd == "replace")
             {
@@ -181,163 +181,90 @@ bool GamePlay::gamePlayOption()
     return endGame;
 }
 
-int GamePlay::getAxisScore(int x, int y, Tile tile, bool row)
-{
-    // Determines if the x (rows) or y (cols) axis is being checked
-    int xMod, yMod;
-    int xCoord = x;
-    int yCoord = y;
+// vector<Tile> GamePlay::getSetDirection(int x, int y, bool xAxis)
+// {
+//     vector<Tile> tiles;
+//     GameBoard gameboard = getGameState().getBoard();
 
-    if (row)
-    {
-        xMod = 1;
-        yMod = 0;
-    }
-    else
-    {
-        xMod = 0;
-        yMod = 1;
-    }
+//     int xCoord;
+//     int yCoord;
 
-    // Initialize variables to check if row matches against colours or shapes
-    // and for how many tiles that match is true for
-    Colour colour = tile.getColour();
-    Shape shape = tile.getShape();
+//     bool tileExists = true;
 
-    bool colourMatch = true;
-    bool shapeMatch = true;
+//     int modifiers[2] = {-1, 1};
 
-    // Used to remember if row/col negative of placed tile matches
-    // colours or shapes. Prevents a scenario in which we count points
-    // towards shapes on the left of a placed tiles, then colours on
-    // the right.
-    bool colourMatchingOnly = true;
+//     for (int mod : modifiers)
+//     {
+//         xCoord = x;
+//         yCoord = y;
 
-    GameBoard gameboard = getGameState().getBoard();
+//         // Get tiles left of coordinates
+//         while (xCoord > 0 && yCoord > 0 && xCoord < gameboard.getWidth() &&
+//                yCoord < gameboard.getHeight() && tileExists)
+//         {
 
-    int score = 1;
+//             if (xAxis)
+//             {
+//                 xCoord += mod;
+//                 std::cout << x << y << std::endl;
+//             }
+//             else
+//             {
+//                 yCoord += mod;
+//             }
 
-    // Check score for x axis
-    // Check negative of x/y axis
-    while (xCoord > 0 && yCoord > 0 && (colourMatch || shapeMatch))
-    {
-        xCoord -= xMod;
-        yCoord -= yMod;
+//             Tile newTile = gameboard.getTile(xCoord, y);
 
-        if (colourMatch)
-        {
-            if (gameboard.getTile(xCoord, yCoord).getColour() != colour)
-            {
-                colourMatch = false;
-            }
-        }
+//             if (newTile.getColour() != 'X')
+//             {
 
-        if (shapeMatch)
-        {
-            if (gameboard.getTile(xCoord, yCoord).getShape() != shape)
-            {
-                shapeMatch = false;
-            }
-        }
+//                 tiles.push_back(newTile);
+//             }
+//             else
+//             {
+//                 tileExists = false;
+//             }
+//         }
+//     }
 
-        if (colourMatch || shapeMatch)
-        {
-            score += 1;
-        }
-
-        // Define if the row is colour matching or shape matching and check
-        // only matching type in next loop
-        if (colourMatch && !shapeMatch)
-        {
-            colourMatchingOnly = true;
-        }
-        else if (shapeMatch && !colourMatch)
-        {
-            colourMatchingOnly = false;
-        }
-    }
-
-    // Reset variables for positive x/y axis score check
-    xCoord = x;
-    yCoord = y;
-
-    // Set if row is matching colour or matching shapes
-    if (colourMatchingOnly)
-    {
-        colourMatch = true;
-        shapeMatch = false;
-    }
-    else
-    {
-        shapeMatch = true;
-        colourMatch = false;
-    }
-
-    while (xCoord < gameboard.getWidth() && yCoord < gameboard.getHeight() && (colourMatch || shapeMatch))
-    {
-        xCoord += xMod;
-        yCoord += yMod;
-
-        if (colourMatch)
-        {
-            if (gameboard.getTile(xCoord, yCoord).getColour() != colour)
-            {
-                colourMatch = false;
-            }
-        }
-
-        if (shapeMatch)
-        {
-            if (gameboard.getTile(xCoord, yCoord).getShape() != shape)
-            {
-                shapeMatch = false;
-            }
-        }
-
-        if (colourMatch || shapeMatch)
-        {
-            score += 1;
-        }
-    }
-
-    return score;
-}
+//     return tiles;
+// }
 
 // Assumes move has been validated as allowed withn the rules of the game
-int GamePlay::getScore(int x, int y, Tile tile)
-{
-    // Initialize variables
-    GameBoard gameBoard = getGameState().getBoard();
+// int GamePlay::getScore(int x, int y, Tile tile)
+// {
+//     // Initialize variables
+//     GameBoard gameBoard = getGameState().getBoard();
 
-    Colour colour = tile.getColour();
-    Shape shape = tile.getShape();
+//     Colour colour = tile.getColour();
+//     Shape shape = tile.getShape();
 
-    int xCoord = x;
-    int yCoord = y;
+//     int xCoord = x;
+//     int yCoord = y;
 
-    int score = 1;
-    int qwirkleCount = 0;
+//     int score = 1;
+//     int qwirkleCount = 0;
 
-    // Check score for x axis
-    int xScore = getAxisScore(x, y, tile, true);
-    score += xScore;
-    if (xScore >= 7)
-    {
-        std::cout << "QWIRKLE!!! on the x axis" << std::endl;
-        score += 6;
-    }
+//     // Check score for x axis
+//     int xScore = getAxisScore(x, y, tile, true);
+//     score += xScore;
+//     if (xScore >= 7)
+//     {
+//         std::cout << "QWIRKLE!!! on the x axis" << std::endl;
+//         score += 6;
+//     }
 
-    // Check score for y axis
-    int yScore = getAxisScore(x, y, tile, false);
-    score += yScore;
-    if (yScore >= 7)
-    {
-        std::cout << "QWIRKLE!!! on the y axis" << std::endl;
-        score += 6;
-    }
+//     // Check score for y axis
+//     int yScore = getAxisScore(x, y, tile, false);
+//     score += yScore;
+//     if (yScore >= 7)
+//     {
+//         std::cout << "QWIRKLE!!! on the y axis" << std::endl;
+//         score += 6;
+//     }
 
-    return score;
-}
+//     return score;
+// }
 
 // TODO: Implement validation from GameBoard, not this method here
 bool GamePlay::validateChoice(std::string tileChoice, std::string location, GameState gameState)
@@ -345,7 +272,7 @@ bool GamePlay::validateChoice(std::string tileChoice, std::string location, Game
     std::cout << tileChoice << " " << location << std::endl;
 
     // Validate piece exists in players hand
-    Player player = gameState.getPlayers().getCurrentPlayer();
+    // Player player = gameState.getPlayers().getCurrentPlayer();
     // LinkedList* playerHand = player.getHand()
     // iterate through list and confirm tile exists in players hand.
 

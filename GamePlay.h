@@ -33,10 +33,8 @@ public:
 
     GameState getGameState() { return *gameState; };
 
-    // Assess score of given move a return as an int
-    int getScore(int x, int y, Tile tile);
-
-    int getAxisScore(int x, int y, Tile tile, bool row);
+    // Gets all the tiles of a row left of coordinates
+    vector<Tile> getSetDirection(int x, int y, bool);
 
     // Accepts and validates player names
     std::string getPlayerName();
