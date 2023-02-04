@@ -18,6 +18,7 @@ public:
 
     Player getPlayer(int i);
     Player getCurrentPlayer();
+    void setCurrentPlayer(Player *player);
 };
 
 #endif // ASSIGN2_PLAYERS_H

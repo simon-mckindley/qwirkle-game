@@ -1,18 +1,16 @@
 #include "Player.h"
+#include "TileBag.h"
 
 Player::Player()
 {
-    name = "";
-    score = 0;
-    playerHand = new LinkedList();
 }
-
 // Cosntructor to assign name and hand at creation.
-Player::Player(std::string name, LinkedList *playerHand)
+Player::Player(std::string name, TileBag *tileBag)
 {
     this->name = name;
     score = 0;
-    this->playerHand = playerHand;
+    this->tileBag = tileBag;
+    this->playerHand = new Hand(tileBag);
 }
 
 void Player::increaseScore(int score)
@@ -42,3 +40,32 @@ std::string Player::getHand()
     hand = hand.substr(0, hand.size() - 1);
     return hand;
 }
+
+<<<<<<< HEAD
+Hand *Player::getHandPtr()
+{
+    return this->playerHand;
+}
+=======
+void Player::setName(std::string name)
+{
+}
+
+void Player::setScore(int score)
+{
+}
+
+void Player::setHand(std::string hand)
+{
+    playerHand = new LinkedList();
+    std::stringstream ss(hand);
+    std::string tileString;
+    while (std::getline(ss, tileString, ','))
+    {
+        char color = tileString[0];
+        int shape = tileString[1] - '0';
+        Tile *tile = new Tile(color, shape);
+        playerHand->addTileToBack(tile);
+    }
+}
+>>>>>>> origin/adam/load

@@ -10,7 +10,7 @@ using std::vector;
 class GameBoard
 {
 private:
-    // Each vector is a row, and the nested vector of tiles
+    // Each vector is a row, and the nested vector of TileBag
     // within is the existing columns and their values
     std::vector<std::vector<Tile>> board{26, std::vector<Tile>{26, Tile()}};
 
@@ -76,8 +76,16 @@ public:
     bool checkShapeMatch(Shape shape, Tile adjacentTile);
 
     // Return the state of the board as a vector of strings.
-    std::vector<std::string> getState();
+    std::string getState();
 
     // Print the board to console
     std::string toString();
+
+    // Set height from file.
+    void setHeight(int height);
+
+    // Set width from file.
+    void setWidth(int width);
+
+    void setState(std::string &state);
 };
