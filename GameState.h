@@ -1,21 +1,15 @@
-#ifndef ASSIGN2_GAMESTATE_H
-#define ASSIGN2_GAMESTATE_H
+#ifndef ASSIGN2_GAMESTATEE_H
+#define ASSIGN2_GAMESTATEE_H
 
-#include "Players.h"
+#include "Player.h"
 #include "GameBoard.h"
 #include "TileBag.h"
 
 class GameState
 {
 public:
-    // Default Constructor
-    GameState();
     // Constructor
-    GameState(Players players, GameBoard board, TileBag *tileBag);
-
-    Players getPlayers();
-    GameBoard getBoard();
-    TileBag *getTileBag();
+    GameState(Player player1, Player player2, GameBoard board, Tiles tiles, Player currentPlayer);
 
     // Save the game state to a file
     void save(std::string filename);
@@ -24,10 +18,11 @@ public:
     void load(std::string filename);
 
 private:
-    Players players;
+    Player player1;
+    Player player2;
     GameBoard gameBoard;
     TileBag *tileBag;
     Player currentPlayer;
 };
 
-#endif // ASSIGN2_GAMESTATE_H
+#endif // ASSIGN2_GAMESTATEE_H

@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "sstream"
 
 using std::vector;
 
@@ -29,8 +30,16 @@ public:
     void setTile(int x, int y, Tile tile);
 
     // Return the state of the board as a vector of strings.
-    std::vector<std::string> getState();
+    std::string getState();
 
     // Print the board to console
     std::string toString();
+
+    // Set height from file.
+    void setHeight(int height);
+
+    // Set width from file.
+    void setWidth(int width);
+
+    void setState(std::string &state);
 };
