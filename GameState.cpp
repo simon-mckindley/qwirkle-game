@@ -2,13 +2,15 @@
 #include "fstream"
 #include "iostream"
 
-GameState::GameState() {}
+GameState::GameState()
+{
+}
 
-GameState::GameState(Players players, GameBoard gameBoard, Tiles tiles)
+GameState::GameState(Players players, GameBoard gameBoard, TileBag *tileBag)
 {
     this->players = players;
     this->gameBoard = gameBoard;
-    this->tiles = tiles;
+    this->tileBag = tileBag;
 }
 
 Players GameState::getPlayers()
@@ -21,9 +23,9 @@ GameBoard GameState::getBoard()
     return this->gameBoard;
 }
 
-Tiles GameState::getTiles()
+TileBag *GameState::getTileBag()
 {
-    return this->tiles;
+    return this->tileBag;
 }
 
 void GameState::save(std::string filename)
@@ -54,11 +56,13 @@ void GameState::save(std::string filename)
         // May need to print with loop: file << gameBoard.getState() << std::endl;
 
         // // Write tile bag contents
-        // file << tiles.getContents() << std::endl;
+        // file << TileBag.getContents() << std::endl;
 
         // Write current players name.
         file << currentPlayer.getName() << std::endl;
 
         file.close();
     }
+    // Takes a filepath to an existing file, reads file to construct GameState and
+    // returns GameState
 }

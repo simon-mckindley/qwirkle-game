@@ -1,6 +1,6 @@
-// #include <gtest/gtest.h>
+#include <gtest/gtest.h>
 
-// TEST(NodeTest, Constructor)
-// {
-//     EXPECT_EQ(1, 1);
-// }
+TEST(NodeTest, Constructor)
+{
+    EXPECT_EQ(1, 1);
+}

@@ -9,7 +9,7 @@ compile:
 	g++ -Werror -std=c++14 -g *.cpp -o qwirkle
 
 debug:
-	g++ -Wall -Werror -std=c++14 -g qwirkle.cpp LinkedList.cpp Node.cpp Tile.cpp -o qwirkle
+	g++ -Wall -Werror -std=c++14 -g *.cpp -o qwirkle
 
 deps:
 	cmake -S . -B build

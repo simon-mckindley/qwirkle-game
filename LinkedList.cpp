@@ -13,11 +13,6 @@ LinkedList::~LinkedList()
     clearList();
 }
 
-int LinkedList::getSize()
-{
-    return size;
-}
-
 Tile *LinkedList::getTileAtIndex(int index)
 {
     Node *current = head;
@@ -27,7 +22,6 @@ Tile *LinkedList::getTileAtIndex(int index)
     }
     return current->tile;
 }
-
 // Add a tile to the back of the list. Update pointer.
 void LinkedList::addTileToBack(Tile *tile)
 {
@@ -54,7 +48,6 @@ Tile *LinkedList::drawTile()
         head = head->next;
         Tile *tile = temp->tile;
         size--;
-        delete temp;
 
         return tile;
     }
@@ -84,4 +77,60 @@ void LinkedList::clearList()
         delete current;
         current = next;
     }
+}
+
+// Remove and return the tile chosen by the player.
+void LinkedList::replaceTile(Tile *tileToReplace, LinkedList *tileBag)
+{
+    // Put the old tile back in the tile bag
+    addTileToBack(tileToReplace);
+
+    // Remove the tile from the player's hand
+    removeTilesFromFront(1);
+
+    // Draw a new tile from the tile bag
+    Tile *newTile = tileBag->drawTile();
+
+    // Add the new tile to the player's hand
+    addTileToBack(newTile);
+}
+
+void LinkedList::removeTilesFromFront(int numToRemove)
+{
+    while (getHead() != nullptr && numToRemove > 0)
+    {
+        Node *node = getHead();
+        setHead(getHead()->next);
+        delete node;
+        numToRemove--;
+        this->setSize(this->getSize() - 1);
+    }
+}
+
+int LinkedList::getSize()
+{
+    return size;
+}
+
+void LinkedList::setSize(int size)
+{
+    this->size = size;
+}
+
+Node *LinkedList::getHead()
+{
+    return head;
+}
+void LinkedList::setHead(Node *head)
+{
+    this->head = head;
+}
+
+Node *LinkedList::getTail()
+{
+    return tail;
+}
+void LinkedList::setTail(Node *tail)
+{
+    this->tail = tail;
 }

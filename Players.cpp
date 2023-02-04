@@ -34,3 +34,8 @@ Player Players::getCurrentPlayer()
 {
     return *this->currentPlayer;
 }
+
+void Players::setCurrentPlayer(Player *player)
+{
+    this->currentPlayer = player;
+}
