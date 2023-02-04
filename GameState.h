@@ -7,6 +7,16 @@
 
 class GameState
 {
+
+private:
+    Players players;
+
+    GameBoard gameBoard;
+
+    Tiles tiles;
+
+    Player currentPlayer;
+
 public:
     // Constructor
     GameState(Player player1, Player player2, GameBoard board, Tiles tiles, Player currentPlayer);
