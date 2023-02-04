@@ -18,7 +18,6 @@ TileBag *TileBag::
     {
         Tile *newTile = new Tile();
         this->addTileToBag(newTile);
-        this->setSize(this->getSize() + 1);
     }
 
     return this;
@@ -38,14 +37,15 @@ void TileBag::addTileToBag(Tile *tile)
         getTail()->next = node;
         setTail(node);
     }
+    this->setSize(this->getSize() + 1);
 }
 
 // Remove and return the tile chosen by the player.
 Tile *TileBag::replaceTile(Tile *tileToReplace)
 {
-    // Put the old tile back in the tile bag
+    // Put the old tile back in the tile bag (add to back)
     addTileToBag(tileToReplace);
-    // Draw a new tile from the tile bag
+    // Draw a new tile from the tile bag (remove from front)
     Tile *newTile = this->drawTile();
 
     // Return the new tile

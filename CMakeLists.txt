@@ -1,5 +1,5 @@
 # VARIABLES
-set(PROJECT_NAME_STR apt_assignment_2)
+set(PROJECT_NAME_STR qwirkle-game)
 set(PROJECT_TEST_NAME ${PROJECT_NAME_STR}_test)
 
 ###
@@ -27,8 +27,17 @@ enable_testing()
 
 add_executable(
   ${PROJECT_TEST_NAME}
+  LinkedList.cpp
   Node.cpp
   Node_test.cpp
+  Tile.cpp
+  Hand.cpp
+  TileBag.cpp
+  Players.cpp
+  Players_test.cpp
+  Player.cpp  
+  Player_test.cpp
+  TileBag_test.cpp
 )
 target_link_libraries(
   ${PROJECT_TEST_NAME}
