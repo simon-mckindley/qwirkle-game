@@ -36,10 +36,10 @@ public:
     std::string toString();
 
     // Set height from file.
-    void GameBoard::setHeight(int height);
+    void setHeight(int height);
 
     // Set width from file.
-    void GameBoard::setWidth(int width);
+    void setWidth(int width);
 
-    void GameBoard::setState(std::string &state);
+    void setState(std::string &state);
 };

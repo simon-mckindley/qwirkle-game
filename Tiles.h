@@ -34,7 +34,7 @@ public:
     std::string getTiles();
 
     // Set the tiles to those read in from the file.
-    void Tiles::setTiles(std::string &tileBag);
+    void setTiles(std::string &tileBag);
 };
 
 #endif // ASSIGN2_TILES_H
