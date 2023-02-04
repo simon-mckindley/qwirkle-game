@@ -1,16 +1,23 @@
 #ifndef ASSIGN2_GAMEPLAY_H
 #define ASSIGN2_GAMEPLAY_H
 
+#include "GamePlay.h"
 #include "GameState.h"
+#include "Tile.h"
+#include "TileCodes.h"
 #include "UserPrompt.h"
-#include "Players.h"
 
 class GamePlay
 {
 private:
     GameState *gameState;
 
+    bool validateChoice(std::string input, std::string location, GameState gameState);
+
 public:
+    // Constructor
+    // GamePlay();
+
     void createNewGame();
 
     void loadGame();
@@ -23,6 +30,11 @@ public:
 
     // Gets and validates user gameplay input
     bool gamePlayOption();
+
+    GameState getGameState() { return *gameState; };
+
+    // Gets all the tiles of a row left of coordinates
+    vector<Tile> getSetDirection(int x, int y, bool);
 
     // Accepts and validates player names
     std::string getPlayerName();
