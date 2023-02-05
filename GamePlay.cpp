@@ -164,10 +164,10 @@ bool GamePlay::gamePlayOption()
                 if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
                 {
                     // TODO: fix x and y coordinates for sending to the board
-                    Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTile();
-                    int xCoordinate = stoi(x);
-                    int yCoordinate = stoi(y);
-                    this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
+                    // Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTile();
+                    // int xCoordinate = stoi(x);
+                    // int yCoordinate = stoi(y);
+                    // this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
                 }
                 else
                 {
