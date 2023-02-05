@@ -35,6 +35,7 @@ add_executable(
   Tile.cpp
   TileBag.cpp
   GamePlay.cpp
+  GameState.cpp
   tests/Node_test.cpp
   tests/Player_test.cpp
   tests/Players_test.cpp

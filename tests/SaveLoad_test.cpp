@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "GameState.h"
-#include "GamePlay.h"
+#include "../GameState.h"
+#include "../GamePlay.h"
 
 TEST(GameStateTest, SaveAndLoad)
 {

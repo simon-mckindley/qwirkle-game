@@ -64,6 +64,8 @@ Tile *LinkedList::drawTile()
 // Remove and return the tile chosen by the player.
 void LinkedList::removeItemFromList(Node *nodeToDelete)
 {
+    if (head == nullptr)
+        return;
 
     // Delete from beginning
     if (nodeToDelete == head)
@@ -78,36 +80,42 @@ void LinkedList::removeItemFromList(Node *nodeToDelete)
     // Delete from end
     if (nodeToDelete == tail)
     {
-        Node *current = head;
-        while (current->next != tail)
+        Node *temp = head;
+        Node *tail = getTail();
+        delete (tail);
+        while (temp->next->next != nullptr)
         {
-            current = current->next;
+            temp = temp->next;
         }
-        current->next = nullptr;
-        Tile *tile = tail->tile;
-        delete tail;
-        tail = current;
+        temp->next = nullptr;
         size--;
         return;
     }
 
-    // Delete from middle
+    // Delete from elsewhere
     Node *current = head;
-    while (current->next != nodeToDelete)
+    Node *previous = nullptr;
+    while (current != nodeToDelete)
     {
+        previous = current;
         current = current->next;
     }
-    if (nodeToDelete->next->next != nullptr)
-    {
-        current->next = nodeToDelete->next->next;
-    }
-    else
-    {
-        current->next = nullptr;
-    }
+    previous->next = current->next;
+    delete nodeToDelete;
     size--;
     return;
-    return;
+}
+
+// count total nodes
+int LinkedList::countOfNodes(struct Node *head)
+{
+    int count = 0;
+    while (head != NULL)
+    {
+        head = head->next;
+        count++;
+    }
+    return count;
 }
 
 // Deallocate LinkedList memory.

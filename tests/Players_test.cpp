@@ -11,18 +11,18 @@ TEST(PlayersTest, Constructor)
     // Creates new players and allocate hands of tiles
     Player *player1 = new Player("player1", tileBag);
     Player *player2 = new Player("player2", tileBag);
-    Players players = *(new Players(player1, player2));
-    players.setCurrentPlayer(player1);
-    EXPECT_EQ(players.getCurrentPlayer().getName(), "player1");
+    Players *players = new Players(player1, player2);
+    players->setCurrentPlayer(player1);
+    EXPECT_EQ(players->getCurrentPlayer()->getName(), "player1");
 
-    if (players.getCurrentPlayer().getName() == player1->getName())
+    if (players->getCurrentPlayer()->getName() == player1->getName())
     {
-        players.setCurrentPlayer(player2);
-        EXPECT_EQ(players.getCurrentPlayer().getName(), "player2");
+        players->setCurrentPlayer(player2);
+        EXPECT_EQ(players->getCurrentPlayer()->getName(), "player2");
     }
     else
     {
-        players.setCurrentPlayer(player1);
-        EXPECT_EQ(players.getCurrentPlayer().getName(), "player1");
+        players->setCurrentPlayer(player1);
+        EXPECT_EQ(players->getCurrentPlayer()->getName(), "player1");
     }
 }
