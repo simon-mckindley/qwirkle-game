@@ -1,6 +1,8 @@
 #include "GameState.h"
 #include "fstream"
 #include "iostream"
+#include "TileBag.h"
+#include "Player.h"
 
 GameState::GameState(Player player1, Player player2, GameBoard board, Tiles tiles, Player currentPlayer)
 {
@@ -9,6 +11,32 @@ GameState::GameState(Player player1, Player player2, GameBoard board, Tiles tile
     this->gameBoard = gameBoard;
     this->tiles = tiles;
     this->currentPlayer = currentPlayer;
+}
+
+GameState::GameState(Players players, GameBoard gameboard, TileBag *tileBag)
+{
+
+    this->player1 = players.getPlayer(0);
+    this->player2 = players.getPlayer(1);
+    this->gameBoard = gameBoard;
+    this->tileBag = tileBag;
+    this->currentPlayer = players.getPlayer(0);
+}
+
+// Default GameState, used for loading game
+GameState::GameState()
+{
+    TileBag *tileBag = new TileBag();
+    tileBag->fillTileBag();
+
+    Player *player1 = new Player("", tileBag);
+    Player *player2 = new Player("", tileBag);
+
+    this->player1 = *player1;
+    this->player2 = *player2;
+    this->gameBoard = gameBoard;
+    this->tileBag = tileBag;
+    this->currentPlayer = this->player1;
 }
 
 void GameState::save(std::string filename)

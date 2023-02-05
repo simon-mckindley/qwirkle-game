@@ -29,15 +29,12 @@ public:
     // Return the player hand as an ordered list.
     std::string getHand();
 
-<<<<<<< HEAD
     // Return the player hand as a pointer to a hand.
     Hand *getHandPtr();
-=======
     // Set current player state from file.
     void setName(std::string name);
     void setScore(int score);
     void setHand(std::string hand);
->>>>>>> origin/adam/load
 };
 
 #endif // ASSIGN2_PLAYER_H

@@ -61,7 +61,7 @@ void GamePlay::loadGame()
 
     // TODO Load game from file 2.2.2
     gameState = new GameState();
-    // gameState->load(filename);
+    gameState->load(filename);
 
     gamePlay();
 }
