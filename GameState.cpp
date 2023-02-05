@@ -162,3 +162,8 @@ Player *GameState::getCurrentPlayer()
 {
     return currentPlayer;
 }
+
+TileBag *GameState::getTileBag()
+{
+    return tileBag;
+}

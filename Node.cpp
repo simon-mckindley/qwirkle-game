@@ -24,6 +24,18 @@ Tile Node::getTile()
     return *tile;
 }
 
+Tile Node::getTileByAttributes(Colour colour, Shape shape)
+{
+    for (Node *current = this; current != nullptr; current = current->next)
+    {
+        if (current->tile->getColour() == colour && current->tile->getShape() == shape)
+        {
+            return *current->tile;
+        }
+    }
+    return Tile(0, 0);
+}
+
 void Node::setTile(Tile *tile)
 {
     this->tile = tile;

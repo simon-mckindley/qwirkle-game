@@ -28,6 +28,7 @@ public:
     Colour getColour();
     Shape getShape();
     Tile *getTile();
+    Tile getTile(Colour colour, Shape shape);
 
     // Mutators
     void setColour(Colour colour);
