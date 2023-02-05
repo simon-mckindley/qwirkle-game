@@ -1,9 +1,6 @@
 #include "Player.h"
 #include "TileBag.h"
 
-Player::Player()
-{
-}
 // Cosntructor to assign name and hand at creation.
 Player::Player(std::string name, TileBag *tileBag)
 {
@@ -41,12 +38,10 @@ std::string Player::getHand()
     return hand;
 }
 
-<<<<<<< HEAD
 Hand *Player::getHandPtr()
 {
     return this->playerHand;
 }
-=======
 void Player::setName(std::string name)
 {
 }
@@ -68,4 +63,8 @@ void Player::setHand(std::string hand)
         playerHand->addTileToBack(tile);
     }
 }
->>>>>>> origin/adam/load
+
+Hand *Player::getHandPtr()
+{
+    return this->playerHand;
+}
