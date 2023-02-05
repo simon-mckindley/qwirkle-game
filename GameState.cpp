@@ -157,3 +157,8 @@ GameBoard *GameState::getGameBoard()
 {
     return gameBoard;
 }
+
+TileBag *GameState::getTileBag()
+{
+    return tileBag;
+}
