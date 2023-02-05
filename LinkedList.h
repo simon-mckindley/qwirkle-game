@@ -42,9 +42,11 @@ public:
     Tile *drawTile();
 
     // Remove a tile from player hand.
-    Tile *removeTile(Tile *tile);
+    void removeItemFromList(Node *nodeToDelete);
 
     bool isTileInList(Tile *tile);
+
+    Node *getNode(Tile tile);
 
 private:
     Node *head;
