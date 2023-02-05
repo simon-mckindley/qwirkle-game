@@ -84,7 +84,6 @@ bool GameBoard::validateTileAgainstSet(std::vector<Tile> tileSet, Tile newTile)
 
     for (Tile tile : tileSet)
     {
-        std::cout << tile.getColour() << tile.getShape() << " " << std::endl;
         if (colourMatch && tile.getColour() != colour)
         {
             colourMatch = false;
