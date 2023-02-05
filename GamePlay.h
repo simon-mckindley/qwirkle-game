@@ -14,7 +14,7 @@ private:
 
     bool validateChoice(std::string input, std::string location, GameState gameState);
 
-    bool firstTurn = false;
+    bool firstTurn = true; // TODO: Using this to track first turn is really clunky, change this in future
 
 public:
     // Constructor

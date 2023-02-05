@@ -12,7 +12,7 @@ public:
     ~Hand();
 
 private:
-    const int HAND_SIZE = 3;
+    const int HAND_SIZE = 6;
 };
 
 #endif // ASSIGN2_Hand_H

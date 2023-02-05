@@ -168,8 +168,9 @@ bool GamePlay::gamePlayOption()
                     char xChar = x[0];
                     int xCoordinate = GameBoard::alphabetToNumber(xChar);
                     int yCoordinate = stoi(y) - 1;
-                    if (this->gameState->getGameBoard()->validateSetTile(xCoordinate, yCoordinate, *tempTile))
+                    if (this->gameState->getGameBoard()->validateSetTile(xCoordinate, yCoordinate, *tempTile, this->firstTurn))
                     {
+                        this->firstTurn = false;
                         int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
                         this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
                     }

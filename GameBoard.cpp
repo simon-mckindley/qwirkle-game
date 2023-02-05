@@ -31,15 +31,15 @@ Tile GameBoard::getTile(int x, int y)
     Tile *tile = new Tile();
     if (validSpace(x, y))
     {
-        tile->setColour(board[y][x].getColour());
-        tile->setShape(board[y][x].getShape());
+        tile->setColour(board[x][y].getColour());
+        tile->setShape(board[x][y].getShape());
     }
     return *tile;
 }
 
 bool GameBoard::validSpace(int x, int y)
 {
-    if (x > 0 && x < getWidth() && y > 0 && y < getHeight())
+    if (x >= 0 && x < getWidth() && y >= 0 && y < getHeight())
     {
         return true;
     }
@@ -84,6 +84,7 @@ bool GameBoard::validateTileAgainstSet(std::vector<Tile> tileSet, Tile newTile)
 
     for (Tile tile : tileSet)
     {
+        std::cout << tile.getColour() << tile.getShape() << " " << std::endl;
         if (colourMatch && tile.getColour() != colour)
         {
             colourMatch = false;
@@ -101,9 +102,10 @@ bool GameBoard::validateTileAgainstSet(std::vector<Tile> tileSet, Tile newTile)
             return false;
         }
 
+        // Confirm there is either a colour or shape match in the row
         if (!colourMatch && !shapeMatch)
         {
-            std::cout << "Either shape or colour match the row or column" << std::endl;
+            std::cout << "Either shape or colour must match the row and column" << std::endl;
             return false;
         }
     }
@@ -114,7 +116,7 @@ bool GameBoard::validateTileAgainstSet(std::vector<Tile> tileSet, Tile newTile)
 // Validates that a players attempt to set a tile in a given location is valid within
 // the bounds of the rules of qwirkle. If not, prints a warning to console and returns
 // false
-bool GameBoard::validateSetTile(int x, int y, Tile tile)
+bool GameBoard::validateSetTile(int x, int y, Tile tile, bool firstTurn)
 {
     Colour colour = tile.getColour();
     Shape shape = tile.getShape();
@@ -122,7 +124,7 @@ bool GameBoard::validateSetTile(int x, int y, Tile tile)
     vector<Tile> rowTiles = getTilesOnRow(x, y);
     vector<Tile> colTiles = getTilesOnCol(x, y);
 
-    // Validate that there no tile already exists in that space
+    // Validate that no tile already exists in that space
     if (!validSpace(x, y))
     {
         std::cout << "Tile space must be within the bounds of the board" << std::endl;
@@ -134,8 +136,8 @@ bool GameBoard::validateSetTile(int x, int y, Tile tile)
         return false;
     }
 
-    // Validate that tiles have at least one adjacent tile
-    if (rowTiles.size() <= 0 && colTiles.size() <= 0)
+    // Validate that tiles have at least one adjacent tile (unless it's the first turn)
+    if (rowTiles.size() <= 0 && colTiles.size() <= 0 && !firstTurn)
     {
         std::cout << "Unable to place a tile without any adjacent tiles.";
         return false;
@@ -143,7 +145,7 @@ bool GameBoard::validateSetTile(int x, int y, Tile tile)
 
     // Validate that either Colour or Shape match both the row and column, and that no duplicate
     // tile exists
-    if (!validateTileAgainstSet(rowTiles, tile) || !validateTileAgainstSet(colTiles, tile))
+    if (!firstTurn && (!validateTileAgainstSet(rowTiles, tile) || !validateTileAgainstSet(colTiles, tile)))
     {
         return false;
     }
@@ -220,7 +222,7 @@ vector<Tile> GameBoard::getTilesOnAxis(int x, int y, bool rowAxis)
         yCoord = y;
 
         // Get tiles left of coordinates
-        while (xCoord > 0 && yCoord > 0 && xCoord < getWidth() &&
+        while (xCoord >= 0 && yCoord >= 0 && xCoord < getWidth() &&
                yCoord < getHeight() && tileExists)
         {
             if (rowAxis)
@@ -232,16 +234,19 @@ vector<Tile> GameBoard::getTilesOnAxis(int x, int y, bool rowAxis)
                 yCoord += mod;
             }
 
-            Tile newTile = getTile(xCoord, yCoord);
-
-            if (newTile.getColour() != NO_COL)
+            if (xCoord >= 0 && yCoord >= 0 && xCoord < getWidth() && yCoord < getHeight())
             {
+                Tile newTile = getTile(xCoord, yCoord);
 
-                tiles.push_back(newTile);
-            }
-            else
-            {
-                tileExists = false;
+                if (newTile.getColour() != NO_COL)
+                {
+
+                    tiles.push_back(newTile);
+                }
+                else
+                {
+                    tileExists = false;
+                }
             }
         }
     }
