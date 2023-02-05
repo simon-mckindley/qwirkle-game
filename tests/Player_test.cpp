@@ -1,8 +1,8 @@
 
 #include <gtest/gtest.h>
-#include "Player.h"
-#include "TileBag.h"
-#include "Hand.h"
+#include "../Player.h"
+#include "../TileBag.h"
+#include "../Hand.h"
 
 TEST(PlayerTest, Constructor)
 {

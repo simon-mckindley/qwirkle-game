@@ -1,9 +1,9 @@
 
 #include <gtest/gtest.h>
-#include "Player.h"
-#include "Players.h"
-#include "TileBag.h"
-#include "Hand.h"
+#include "../Player.h"
+#include "../Players.h"
+#include "../TileBag.h"
+#include "../Hand.h"
 
 TEST(PlayersTest, Constructor)
 {

@@ -21,26 +21,6 @@ void printCredits();
 
 int main(void)
 {
-    // std::cout << "\nWelcome to Qwirkle!\n"
-    //           << "-------------------" << std::endl;
-
-    // std::string choice;
-    // UserPrompt userPrompt;
-
-    // do
-    // {
-    //     printMainMenu();
-    //     choice = userPrompt.getInput();
-    //     mainMenuOption(choice);
-
-    // } while (choice != QUIT);
-
-    // LinkedList *list = new LinkedList();
-    // delete list;
-
-    // TODO:
-    // Delete the below code, used as a demo of the GameBoard, validateSetTile(), setTile() and toString() features.
-
     GameBoard gameBoard;
 
     Tile *tile = new Tile(RED, CIRCLE);

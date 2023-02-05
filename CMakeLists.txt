@@ -28,16 +28,16 @@ enable_testing()
 add_executable(
   ${PROJECT_TEST_NAME}
   LinkedList.cpp
-  Node.cpp
-  Node_test.cpp
-  Tile.cpp
   Hand.cpp
-  TileBag.cpp
-  Players.cpp
-  Players_test.cpp
+  Node.cpp
   Player.cpp  
-  Player_test.cpp
-  TileBag_test.cpp
+  Players.cpp
+  Tile.cpp
+  TileBag.cpp
+  tests/Node_test.cpp
+  tests/Player_test.cpp
+  tests/Players_test.cpp
+  tests/TileBag_test.cpp
 )
 target_link_libraries(
   ${PROJECT_TEST_NAME}

@@ -1,6 +1,9 @@
 #include "Player.h"
 #include "TileBag.h"
 
+Player::Player()
+{
+}
 // Cosntructor to assign name and hand at creation.
 Player::Player(std::string name, TileBag *tileBag)
 {
@@ -37,22 +40,9 @@ std::string Player::getHand()
     hand = hand.substr(0, hand.size() - 1);
     return hand;
 }
-
-Hand *Player::getHandPtr()
-{
-    return this->playerHand;
-}
-void Player::setName(std::string name)
-{
-}
-
-void Player::setScore(int score)
-{
-}
-
 void Player::setHand(std::string hand)
 {
-    playerHand = new LinkedList();
+    // playerHand = new LinkedList();
     std::stringstream ss(hand);
     std::string tileString;
     while (std::getline(ss, tileString, ','))
@@ -67,4 +57,12 @@ void Player::setHand(std::string hand)
 Hand *Player::getHandPtr()
 {
     return this->playerHand;
+}
+
+void Player::setName(std::string name)
+{
+}
+
+void Player::setScore(int score)
+{
 }

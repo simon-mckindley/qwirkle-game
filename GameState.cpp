@@ -4,7 +4,7 @@
 #include "TileBag.h"
 #include "Player.h"
 
-GameState::GameState(Player player1, Player player2, GameBoard board, Tiles tiles, Player currentPlayer)
+GameState::GameState(Player player1, Player player2, GameBoard gameBoard, Tiles tiles, Player currentPlayer)
 {
     this->player1 = player1;
     this->player2 = player2;
@@ -13,7 +13,7 @@ GameState::GameState(Player player1, Player player2, GameBoard board, Tiles tile
     this->currentPlayer = currentPlayer;
 }
 
-GameState::GameState(Players players, GameBoard gameboard, TileBag *tileBag)
+GameState::GameState(Players players, GameBoard gameBoard, TileBag *tileBag)
 {
 
     this->player1 = players.getPlayer(0);
@@ -31,6 +31,8 @@ GameState::GameState()
 
     Player *player1 = new Player("", tileBag);
     Player *player2 = new Player("", tileBag);
+
+    GameBoard gameBoard = *(new GameBoard());
 
     this->player1 = *player1;
     this->player2 = *player2;

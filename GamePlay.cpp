@@ -104,7 +104,6 @@ void GamePlay::printGameStatus()
               << gameState->getPlayers().getPlayer(2).getScore();
     std::cout << "\nPRINT BOARD HERE" << std::endl;
     std::cout << "\nYour hand is:\n";
-    //   TODO getHand() seg faulting << gameState->getPlayers().getCurrentPlayer().getHand() << "\n"
     std::cout << gameState->getPlayers().getCurrentPlayer().getHand() << "\n"
               << std::endl;
 }
@@ -175,102 +174,10 @@ bool GamePlay::gamePlayOption()
     return endGame;
 }
 
-// vector<Tile> GamePlay::getSetDirection(int x, int y, bool xAxis)
-// {
-//     vector<Tile> tiles;
-//     GameBoard gameboard = getGameState().getBoard();
-
-//     int xCoord;
-//     int yCoord;
-
-//     bool tileExists = true;
-
-//     int modifiers[2] = {-1, 1};
-
-//     for (int mod : modifiers)
-//     {
-//         xCoord = x;
-//         yCoord = y;
-
-//         // Get tiles left of coordinates
-//         while (xCoord > 0 && yCoord > 0 && xCoord < gameboard.getWidth() &&
-//                yCoord < gameboard.getHeight() && tileExists)
-//         {
-
-//             if (xAxis)
-//             {
-//                 xCoord += mod;
-//                 std::cout << x << y << std::endl;
-//             }
-//             else
-//             {
-//                 yCoord += mod;
-//             }
-
-//             Tile newTile = gameboard.getTile(xCoord, y);
-
-//             if (newTile.getColour() != 'X')
-//             {
-
-//                 tiles.push_back(newTile);
-//             }
-//             else
-//             {
-//                 tileExists = false;
-//             }
-//         }
-//     }
-
-//     return tiles;
-// }
-
-// Assumes move has been validated as allowed withn the rules of the game
-// int GamePlay::getScore(int x, int y, Tile tile)
-// {
-//     // Initialize variables
-//     GameBoard gameBoard = getGameState().getBoard();
-
-//     Colour colour = tile.getColour();
-//     Shape shape = tile.getShape();
-
-//     int xCoord = x;
-//     int yCoord = y;
-
-//     int score = 1;
-//     int qwirkleCount = 0;
-
-//     // Check score for x axis
-//     int xScore = getAxisScore(x, y, tile, true);
-//     score += xScore;
-//     if (xScore >= 7)
-//     {
-//         std::cout << "QWIRKLE!!! on the x axis" << std::endl;
-//         score += 6;
-//     }
-
-//     // Check score for y axis
-//     int yScore = getAxisScore(x, y, tile, false);
-//     score += yScore;
-//     if (yScore >= 7)
-//     {
-//         std::cout << "QWIRKLE!!! on the y axis" << std::endl;
-//         score += 6;
-//     }
-
-//     return score;
-// }
-
 // TODO: Implement validation from GameBoard, not this method here
 bool GamePlay::validateChoice(std::string tileChoice, std::string location, GameState gameState)
 {
     std::cout << tileChoice << " " << location << std::endl;
-
-    // Validate piece exists in players hand
-    // Player player = gameState.getPlayers().getCurrentPlayer();
-    // LinkedList* playerHand = player.getHand()
-    // iterate through list and confirm tile exists in players hand.
-
-    // Validate piece can be placed on the board
 
     return true;
 }

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include "TileBag.h"
-#include "Player.h"
-#include "Hand.h"
+#include "../TileBag.h"
+#include "../Player.h"
+#include "../Hand.h"
 
 TEST(TileBagTest, FillBag)
 {
