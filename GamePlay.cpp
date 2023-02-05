@@ -167,11 +167,19 @@ bool GamePlay::gamePlayOption()
                     Tile tileToPlace = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
                     char xChar = x[0];
                     int xCoordinate = GameBoard::alphabetToNumber(xChar);
-                    int yCoordinate = stoi(y);
-                    this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate - 1, tileToPlace);
-                    Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tileToPlace);
-                    this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
-                    this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+                    int yCoordinate = stoi(y) - 1;
+                    if (this->gameState->getGameBoard()->validateSetTile(xCoordinate, yCoordinate, *tempTile, this->firstTurn))
+                    {
+                        this->firstTurn = false;
+                        int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
+                        this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
+                        
+                        Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tileToPlace);
+                        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
+                        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+                    }
+
+                    delete tempTile;
                 }
                 else
                 {

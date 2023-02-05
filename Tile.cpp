@@ -24,6 +24,7 @@ Shape Tile::generateRandomisedShape()
 
     return shapes[randomIndex];
 }
+
 Colour Tile::getColour()
 {
     return colour;
