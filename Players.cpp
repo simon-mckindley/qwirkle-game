@@ -11,28 +11,28 @@ Players::Players(Player *player1, Player *player2)
     this->currentPlayer = this->players[0];
 }
 
-Player Players::nextPlayer()
+Player *Players::nextPlayer()
 {
     if (this->currentPlayer == this->players[1])
     {
-        this->currentPlayer = this->players[0];
+        setCurrentPlayer(this->players[0]);
     }
     else
     {
-        this->currentPlayer = this->players[1];
+        setCurrentPlayer(this->players[1]);
     }
 
-    return *this->currentPlayer;
+    return this->currentPlayer;
 }
 
-Player Players::getPlayer(int i)
+Player *Players::getPlayer(int i)
 {
-    return *this->players[i - 1];
+    return this->players[i];
 }
 
-Player Players::getCurrentPlayer()
+Player *Players::getCurrentPlayer()
 {
-    return *this->currentPlayer;
+    return this->currentPlayer;
 }
 
 void Players::setCurrentPlayer(Player *player)

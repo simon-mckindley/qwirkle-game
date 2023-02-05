@@ -1,6 +1,7 @@
 #include "GamePlay.h"
 #include "TileBag.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <string>
 
@@ -12,10 +13,10 @@ void GamePlay::gamePlay()
     do
     {
         std::cout << "\n\n"
-                  << gameState->getPlayers().getCurrentPlayer().getName() << ", it's your turn";
+                  << gameState->getPlayers()->getCurrentPlayer()->getName() << ", it's your turn";
         printGameStatus();
         endGame = gamePlayOption();
-        gameState->getPlayers().nextPlayer();
+        gameState->getPlayers()->nextPlayer();
 
     } while (!endGame);
 
@@ -28,12 +29,15 @@ void GamePlay::createNewGame()
 
     std::string player1name;
     std::string player2name;
-    std::cout << "\nEnter a name for Player 1 (Uppercase characters only)" << std::endl;
-    player1name = getPlayerName();
-    std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
-    player2name = getPlayerName();
-    std::cout << "\nWelcome, " << player1name << " and " << player2name
-              << "\n\tLets Play!" << std::endl;
+    // std::cout << "\nEnter a name for Player 1 (Uppercase characters only)" << std::endl;
+    // player1name = getPlayerName();
+    // std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
+    // player2name = getPlayerName();
+    // std::cout << "\nWelcome, " << player1name << " and " << player2name
+    //           << "\n\tLets Play!" << std::endl;
+
+    player1name = "A";
+    player2name = "B";
 
     // TODO Initialise new game 2.3.10
     TileBag *tileBag = new TileBag();
@@ -44,7 +48,10 @@ void GamePlay::createNewGame()
     Player *player2 = new Player(player2name, tileBag);
 
     // Creates new Gamestate object for the pointer
-    gameState = new GameState(*(new Players(player1, player2)), *(new GameBoard()), tileBag);
+    Players *players = new Players(player1, player2);
+    GameBoard *gameBoard = new GameBoard();
+
+    gameState = new GameState(players, gameBoard, tileBag);
 
     gamePlay();
 }
@@ -95,16 +102,17 @@ std::string GamePlay::getPlayerName()
 void GamePlay::printGameStatus()
 {
     std::cout << "\nScore for "
-              << gameState->getPlayers().getPlayer(1).getName()
+              << gameState->getPlayers()->getPlayer(1)->getName()
               << ": "
-              << gameState->getPlayers().getPlayer(1).getScore();
+              << gameState->getPlayers()->getPlayer(1)->getScore();
     std::cout << "\nScore for "
-              << gameState->getPlayers().getPlayer(2).getName()
+              << gameState->getPlayers()->getPlayer(2)->getName()
               << ": "
-              << gameState->getPlayers().getPlayer(2).getScore();
-    std::cout << "\nPRINT BOARD HERE" << std::endl;
+              << gameState->getPlayers()->getPlayer(2)->getScore();
+    std::cout << "\nBoard:" << std::endl;
+    std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n";
-    std::cout << gameState->getPlayers().getCurrentPlayer().getHand() << "\n"
+    std::cout << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
               << std::endl;
 }
 
@@ -118,6 +126,13 @@ bool GamePlay::gamePlayOption()
     {
         invalid = false;
         UserPrompt userPrompt;
+
+        std::cout << "\nWhat would you like to do?" << std::endl;
+        std::cout << "\tplace <tile> at <location>" << std::endl;
+        std::cout << "\treplace <tile>" << std::endl;
+        std::cout << "\tsave <filename>" << std::endl;
+        std::cout << "\tquit" << std::endl;
+
         userInput = userPrompt.getInput();
         int length = userInput.length();
 
@@ -135,10 +150,30 @@ bool GamePlay::gamePlayOption()
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
-                std::cout << "Place:" << tile << ":" << location << std::endl;
+                std::cout << "Tile:" << tile << "\nPlace:" << location << std::endl;
 
-                // TODO validate tile and location
-                // bool isValid = validateChoice(tile, location, *gameState);
+                std::string x = location.substr(0, 1);
+                std::string y = location.substr(1, 1);
+                std::string userSelectionTileColour = tile.substr(0, 1);
+                std::string userSelectionTileShape = tile.substr(1, 1);
+
+                Colour colour = Tile::convertToColour(userSelectionTileColour);
+                Shape shape = Tile::convertToShape(userSelectionTileShape);
+                Tile *tempTile = new Tile(colour, shape);
+
+                if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
+                {
+                    // TODO: fix x and y coordinates for sending to the board
+                    // Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTile();
+                    // int xCoordinate = stoi(x);
+                    // int yCoordinate = stoi(y);
+                    // this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
+                }
+                else
+                {
+                    std::cout << "Invalid tile" << std::endl;
+                    invalid = true;
+                }
             }
             else if (cmd == "replace" && length == 10)
             {
