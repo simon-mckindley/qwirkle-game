@@ -191,7 +191,7 @@ int GameBoard::setTile(int x, int y, Tile tile)
     int score;
     try
     {
-        board[y][x] = tile;
+        board[x][y] = tile;
 
         score = getScore(x, y, tile);
     }
@@ -246,6 +246,17 @@ vector<Tile> GameBoard::getTilesOnAxis(int x, int y, bool rowAxis)
         }
     }
     return tiles;
+}
+
+int GameBoard::alphabetToNumber(char letter)
+{
+    const unsigned int letter_to_value[] =
+        {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+
+    letter = toupper(letter);
+    const unsigned int index = letter - 'A';
+    int value = letter_to_value[index];
+    return value;
 }
 
 std::vector<Tile> GameBoard::getTilesOnRow(int x, int y)

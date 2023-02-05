@@ -75,6 +75,8 @@ public:
     // Validates the given tiles shpae agains the given shape
     bool checkShapeMatch(Shape shape, Tile adjacentTile);
 
+    static int alphabetToNumber(char letter);
+
     // Return the state of the board as a vector of strings.
     std::string getState();
 
