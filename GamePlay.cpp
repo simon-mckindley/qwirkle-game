@@ -102,13 +102,13 @@ std::string GamePlay::getPlayerName()
 void GamePlay::printGameStatus()
 {
     std::cout << "\nScore for "
+              << gameState->getPlayers()->getPlayer(0)->getName()
+              << ": "
+              << gameState->getPlayers()->getPlayer(0)->getScore();
+    std::cout << "\nScore for "
               << gameState->getPlayers()->getPlayer(1)->getName()
               << ": "
               << gameState->getPlayers()->getPlayer(1)->getScore();
-    std::cout << "\nScore for "
-              << gameState->getPlayers()->getPlayer(2)->getName()
-              << ": "
-              << gameState->getPlayers()->getPlayer(2)->getScore();
     std::cout << "\nBoard:" << std::endl;
     std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n";
@@ -164,7 +164,7 @@ bool GamePlay::gamePlayOption()
                 if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
                 {
                     // TODO: fix x and y coordinates for sending to the board
-                    Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
+                    Tile tileToPlace = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
                     char xChar = x[0];
                     int xCoordinate = GameBoard::alphabetToNumber(xChar);
                     int yCoordinate = stoi(y) - 1;
@@ -173,6 +173,10 @@ bool GamePlay::gamePlayOption()
                         this->firstTurn = false;
                         int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
                         this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
+                        
+                        Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tileToPlace);
+                        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
+                        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
                     }
 
                     delete tempTile;

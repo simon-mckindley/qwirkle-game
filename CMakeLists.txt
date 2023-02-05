@@ -34,10 +34,13 @@ add_executable(
   Players.cpp
   Tile.cpp
   TileBag.cpp
+  GamePlay.cpp
   tests/Node_test.cpp
   tests/Player_test.cpp
   tests/Players_test.cpp
   tests/TileBag_test.cpp
+  tests/SaveLoad_test.cpp
+  tests/GamePlay_test.cpp
 )
 target_link_libraries(
   ${PROJECT_TEST_NAME}

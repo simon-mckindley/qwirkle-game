@@ -62,9 +62,52 @@ Tile *LinkedList::drawTile()
 }
 
 // Remove and return the tile chosen by the player.
-Tile *LinkedList::removeTile(Tile *tile)
+void LinkedList::removeItemFromList(Node *nodeToDelete)
 {
-    return new Tile();
+
+    // Delete from beginning
+    if (nodeToDelete == head)
+    {
+        head = head->next;
+        Tile *tile = nodeToDelete->tile;
+        delete nodeToDelete;
+        size--;
+        return;
+    }
+
+    // Delete from end
+    if (nodeToDelete == tail)
+    {
+        Node *current = head;
+        while (current->next != tail)
+        {
+            current = current->next;
+        }
+        current->next = nullptr;
+        Tile *tile = tail->tile;
+        delete tail;
+        tail = current;
+        size--;
+        return;
+    }
+
+    // Delete from middle
+    Node *current = head;
+    while (current->next != nodeToDelete)
+    {
+        current = current->next;
+    }
+    if (nodeToDelete->next->next != nullptr)
+    {
+        current->next = nodeToDelete->next->next;
+    }
+    else
+    {
+        current->next = nullptr;
+    }
+    size--;
+    return;
+    return;
 }
 
 // Deallocate LinkedList memory.
@@ -147,4 +190,18 @@ Node *LinkedList::getTail()
 void LinkedList::setTail(Node *tail)
 {
     this->tail = tail;
+}
+
+Node *LinkedList::getNode(Tile tile)
+{
+    Node *current = this->getHead();
+    while (current != nullptr)
+    {
+        if (current->tile->getColour() == tile.getColour() && current->tile->getShape() == tile.getShape())
+        {
+            return current;
+        }
+        current = current->next;
+    }
+    return nullptr;
 }

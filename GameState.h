@@ -39,6 +39,8 @@ public:
     void setPlayer2(Player player2);
     Player *getPlayer2();
     GameBoard *getGameBoard();
+    Player *getCurrentPlayer();
+    TileBag *getTileBag();
 };
 
 #endif // ASSIGN2_GAMESTATEE_H
