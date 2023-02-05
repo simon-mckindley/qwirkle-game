@@ -15,6 +15,7 @@ public:
     Node *next;
 
     Tile getTile();
+    Tile getTileByAttributes(Colour colour, Shape shape);
     void setTile(Tile *tile);
 };
 
