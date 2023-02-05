@@ -108,7 +108,8 @@ void GamePlay::printGameStatus()
               << gameState->getPlayers()->getPlayer(2)->getName()
               << ": "
               << gameState->getPlayers()->getPlayer(2)->getScore();
-    std::cout << "\nPRINT BOARD HERE" << std::endl;
+    std::cout << "\nBoard:" << std::endl;
+    std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n";
     std::cout << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
               << std::endl;
@@ -124,6 +125,13 @@ bool GamePlay::gamePlayOption()
     {
         invalid = false;
         UserPrompt userPrompt;
+
+        std::cout << "\nWhat would you like to do?" << std::endl;
+        std::cout << "\tplace <tile> at <location>" << std::endl;
+        std::cout << "\treplace <tile>" << std::endl;
+        std::cout << "\tsave <filename>" << std::endl;
+        std::cout << "\tquit" << std::endl;
+
         userInput = userPrompt.getInput();
         int length = userInput.length();
 

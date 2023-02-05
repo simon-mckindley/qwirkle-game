@@ -132,3 +132,28 @@ void GameState::load(std::string filename)
 
     std::cout << "Game loaded successfully" << std::endl;
 }
+
+void GameState::setPlayer1(Player player1)
+{
+    this->player1 = &player1;
+}
+
+Player *GameState::getPlayer1()
+{
+    return player1;
+}
+
+void GameState::setPlayer2(Player player2)
+{
+    this->player2 = &player2;
+}
+
+Player *GameState::getPlayer2()
+{
+    return player2;
+}
+
+GameBoard *GameState::getGameBoard()
+{
+    return gameBoard;
+}
