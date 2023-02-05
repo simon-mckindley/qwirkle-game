@@ -167,8 +167,14 @@ bool GamePlay::gamePlayOption()
                     Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
                     char xChar = x[0];
                     int xCoordinate = GameBoard::alphabetToNumber(xChar);
-                    int yCoordinate = stoi(y);
-                    this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate - 1, tilePtr);
+                    int yCoordinate = stoi(y) - 1;
+                    if (this->gameState->getGameBoard()->validateSetTile(xCoordinate, yCoordinate, *tempTile))
+                    {
+                        int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
+                        this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
+                    }
+
+                    delete tempTile;
                 }
                 else
                 {

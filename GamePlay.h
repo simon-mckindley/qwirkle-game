@@ -14,6 +14,8 @@ private:
 
     bool validateChoice(std::string input, std::string location, GameState gameState);
 
+    bool firstTurn = false;
+
 public:
     // Constructor
     // GamePlay();

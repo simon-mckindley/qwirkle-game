@@ -35,6 +35,7 @@ public:
     void setName(std::string name);
     void setScore(int score);
     void setHand(std::string hand);
+    void addScore(int score);
 };
 
 #endif // ASSIGN2_PLAYER_H
