@@ -144,9 +144,11 @@ bool GamePlay::gamePlayOption()
             // The input before the space
             std::string cmd = userInput.substr(0, pos);
 
-            // Valid commands: "place XX at XX (length=14),
+            // Valid commands:
+            // "place XX at XX (length=14),
+            // "place XX at XXX (length=15),
             // "replace XX" (length=10), "save <filename>" (min_length=7)
-            if (cmd == "place" && length == 14)
+            if (cmd == "place" && (length == 14 || length == 15))
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
@@ -155,6 +157,10 @@ bool GamePlay::gamePlayOption()
                 std::string x = location.substr(0, 1);
                 std::string y = location.substr(1, 1);
                 std::string userSelectionTileColour = tile.substr(0, 1);
+                if (location.length() == 3)
+                {
+                    y = location.substr(1, 2);
+                }
                 std::string userSelectionTileShape = tile.substr(1, 1);
 
                 Colour colour = Tile::convertToColour(userSelectionTileColour);
