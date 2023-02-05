@@ -12,10 +12,10 @@ void GamePlay::gamePlay()
     do
     {
         std::cout << "\n\n"
-                  << gameState->getPlayers().getCurrentPlayer().getName() << ", it's your turn";
+                  << gameState->getPlayers()->getCurrentPlayer()->getName() << ", it's your turn";
         printGameStatus();
         endGame = gamePlayOption();
-        gameState->getPlayers().nextPlayer();
+        gameState->getPlayers()->nextPlayer();
 
     } while (!endGame);
 
@@ -28,12 +28,15 @@ void GamePlay::createNewGame()
 
     std::string player1name;
     std::string player2name;
-    std::cout << "\nEnter a name for Player 1 (Uppercase characters only)" << std::endl;
-    player1name = getPlayerName();
-    std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
-    player2name = getPlayerName();
-    std::cout << "\nWelcome, " << player1name << " and " << player2name
-              << "\n\tLets Play!" << std::endl;
+    // std::cout << "\nEnter a name for Player 1 (Uppercase characters only)" << std::endl;
+    // player1name = getPlayerName();
+    // std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
+    // player2name = getPlayerName();
+    // std::cout << "\nWelcome, " << player1name << " and " << player2name
+    //           << "\n\tLets Play!" << std::endl;
+
+    player1name = "A";
+    player2name = "B";
 
     // TODO Initialise new game 2.3.10
     TileBag *tileBag = new TileBag();
@@ -44,7 +47,10 @@ void GamePlay::createNewGame()
     Player *player2 = new Player(player2name, tileBag);
 
     // Creates new Gamestate object for the pointer
-    gameState = new GameState(*(new Players(player1, player2)), *(new GameBoard()), tileBag);
+    Players *players = new Players(player1, player2);
+    GameBoard *gameBoard = new GameBoard();
+
+    gameState = new GameState(players, gameBoard, tileBag);
 
     gamePlay();
 }
@@ -95,16 +101,16 @@ std::string GamePlay::getPlayerName()
 void GamePlay::printGameStatus()
 {
     std::cout << "\nScore for "
-              << gameState->getPlayers().getPlayer(1).getName()
+              << gameState->getPlayers()->getPlayer(1)->getName()
               << ": "
-              << gameState->getPlayers().getPlayer(1).getScore();
+              << gameState->getPlayers()->getPlayer(1)->getScore();
     std::cout << "\nScore for "
-              << gameState->getPlayers().getPlayer(2).getName()
+              << gameState->getPlayers()->getPlayer(2)->getName()
               << ": "
-              << gameState->getPlayers().getPlayer(2).getScore();
+              << gameState->getPlayers()->getPlayer(2)->getScore();
     std::cout << "\nPRINT BOARD HERE" << std::endl;
     std::cout << "\nYour hand is:\n";
-    std::cout << gameState->getPlayers().getCurrentPlayer().getHand() << "\n"
+    std::cout << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
               << std::endl;
 }
 

@@ -11,23 +11,18 @@ class GameState
 {
 
 private:
-    Players players;
-
-    Player player1;
-    Player player2;
-    Player currentPlayer;
-
-    GameBoard gameBoard;
-
-    Tiles tiles;
-
+    Players *players;
+    Player *player1;
+    Player *player2;
+    Player *currentPlayer;
+    GameBoard *gameBoard;
     TileBag *tileBag;
 
 public:
     // Constructor
-    GameState(Player player1, Player player2, GameBoard board, Tiles tiles, Player currentPlayer);
+    GameState(Player *player1, Player *player2, GameBoard *board, Tiles tiles, Player *currentPlayer);
 
-    GameState(Players players, GameBoard gameBoard, TileBag *tileBag);
+    GameState(Players *players, GameBoard *gameBoard, TileBag *tileBag);
 
     GameState();
 
@@ -37,7 +32,12 @@ public:
     // Load the game state from a file
     void load(std::string filename);
 
-    Players getPlayers() { return players; };
+    Players *getPlayers() { return players; };
+
+    void setPlayer1(Player player1);
+    Player *getPlayer1();
+    void setPlayer2(Player player2);
+    Player *getPlayer2();
 };
 
 #endif // ASSIGN2_GAMESTATEE_H

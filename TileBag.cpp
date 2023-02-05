@@ -9,8 +9,7 @@ TileBag::TileBag()
     setTail(nullptr);
 }
 
-TileBag *TileBag::
-    fillTileBag()
+TileBag *TileBag::fillTileBag()
 {
     std::cout << "Filling Tile Bag..." << std::endl;
 
