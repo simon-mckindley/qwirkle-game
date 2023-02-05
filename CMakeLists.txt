@@ -38,6 +38,7 @@ add_executable(
   tests/Player_test.cpp
   tests/Players_test.cpp
   tests/TileBag_test.cpp
+  tests/SaveLoad_test.cpp
 )
 target_link_libraries(
   ${PROJECT_TEST_NAME}
