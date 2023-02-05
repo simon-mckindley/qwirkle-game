@@ -48,7 +48,7 @@ bool GameBoard::validSpace(int x, int y)
 
 bool GameBoard::checkColourMatch(Colour colour, Tile adjacentTile)
 {
-    if (adjacentTile.getColour() != 'X')
+    if (adjacentTile.getColour() != NO_COL)
     {
         if (colour != adjacentTile.getColour())
         {
@@ -61,7 +61,7 @@ bool GameBoard::checkColourMatch(Colour colour, Tile adjacentTile)
 
 bool GameBoard::checkShapeMatch(Shape shape, Tile adjacentTile)
 {
-    if (adjacentTile.getShape() != 'X')
+    if (adjacentTile.getShape() != NO_COL)
     {
         if (shape != adjacentTile.getShape())
         {
@@ -128,7 +128,7 @@ bool GameBoard::validateSetTile(int x, int y, Tile tile)
         std::cout << "Tile space must be within the bounds of the board" << std::endl;
         return false;
     }
-    else if (getTile(x, y).getColour() != 'X')
+    else if (getTile(x, y).getColour() != NO_COL)
     {
         std::cout << "A tile already exists in this space" << std::endl;
         return false;
@@ -234,7 +234,7 @@ vector<Tile> GameBoard::getTilesOnAxis(int x, int y, bool rowAxis)
 
             Tile newTile = getTile(xCoord, yCoord);
 
-            if (newTile.getColour() != 'X')
+            if (newTile.getColour() != NO_COL)
             {
 
                 tiles.push_back(newTile);
@@ -347,8 +347,8 @@ std::string GameBoard::toString()
             boardString.push_back('|');
 
             // Converts type to char or white space if empty tile
-            char c = (col.getColour() != 'X') ? col.getColour() : ' ';
-            std::string s = (col.getShape() == 0) ? " " : std::to_string(col.getShape());
+            char c = (col.getColour() != NO_COL) ? col.getColour() : ' ';
+            std::string s = (col.getShape() == NO_SHAPE) ? " " : std::to_string(col.getShape());
 
             // Add characters to board
             boardString.push_back(c);
