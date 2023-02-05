@@ -13,6 +13,9 @@ public:
 
     Tile *tile;
     Node *next;
+
+    Tile getTile();
+    void setTile(Tile *tile);
 };
 
 #endif // ASSIGN2_NODE_H

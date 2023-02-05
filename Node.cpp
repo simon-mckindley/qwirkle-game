@@ -18,3 +18,13 @@ Node::Node(Node &other)
     this->tile = new Tile(*(other.tile));
     this->next = other.next;
 }
+
+Tile Node::getTile()
+{
+    return *tile;
+}
+
+void Node::setTile(Tile *tile)
+{
+    this->tile = tile;
+}

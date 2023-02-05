@@ -1,6 +1,7 @@
 #include "GamePlay.h"
 #include "TileBag.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <string>
 
@@ -149,10 +150,30 @@ bool GamePlay::gamePlayOption()
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
-                std::cout << "Place:" << tile << ":" << location << std::endl;
+                std::cout << "Tile:" << tile << "\nPlace:" << location << std::endl;
 
-                // TODO validate tile and location
-                // bool isValid = validateChoice(tile, location, *gameState);
+                std::string x = location.substr(0, 1);
+                std::string y = location.substr(1, 1);
+                std::string userSelectionTileColour = tile.substr(0, 1);
+                std::string userSelectionTileShape = tile.substr(1, 1);
+
+                Colour colour = Tile::convertToColour(userSelectionTileColour);
+                Shape shape = Tile::convertToShape(userSelectionTileShape);
+                Tile *tempTile = new Tile(colour, shape);
+
+                if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
+                {
+                    // TODO: fix x and y coordinates for sending to the board
+                    Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTile();
+                    int xCoordinate = stoi(x);
+                    int yCoordinate = stoi(y);
+                    this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
+                }
+                else
+                {
+                    std::cout << "Invalid tile" << std::endl;
+                    invalid = true;
+                }
             }
             else if (cmd == "replace" && length == 10)
             {

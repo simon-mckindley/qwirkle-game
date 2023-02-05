@@ -1,5 +1,5 @@
+#include "TileCodes.h"
 #include "Tile.h"
-#include <iostream>
 
 Tile::Tile()
 {
@@ -42,4 +42,68 @@ void Tile::setColour(Colour colour)
 void Tile::setShape(Shape shape)
 {
     this->shape = shape;
+}
+
+Colour Tile::convertToColour(std::string colour)
+{
+    if (colour == "R")
+    {
+        return RED;
+    }
+    else if (colour == "O")
+    {
+        return ORANGE;
+    }
+    else if (colour == "Y")
+    {
+        return YELLOW;
+    }
+    else if (colour == "G")
+    {
+        return GREEN;
+    }
+    else if (colour == "B")
+    {
+        return BLUE;
+    }
+    else if (colour == "P")
+    {
+        return PURPLE;
+    }
+    else
+    {
+        return RED;
+    }
+}
+
+Shape Tile::convertToShape(std::string shape)
+{
+    if (shape == "1")
+    {
+        return CIRCLE;
+    }
+    else if (shape == "2")
+    {
+        return STAR_4;
+    }
+    else if (shape == "3")
+    {
+        return DIAMOND;
+    }
+    else if (shape == "4")
+    {
+        return SQUARE;
+    }
+    else if (shape == "5")
+    {
+        return STAR_6;
+    }
+    else if (shape == "6")
+    {
+        return CLOVER;
+    }
+    else
+    {
+        return CIRCLE;
+    }
 }

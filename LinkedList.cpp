@@ -107,6 +107,20 @@ void LinkedList::removeTilesFromFront(int numToRemove)
     }
 }
 
+bool LinkedList::isTileInList(Tile *tile)
+{
+    Node *current = head;
+    while (current != nullptr)
+    {
+        if (current->tile->getColour() == tile->getColour() && current->tile->getShape() == tile->getShape())
+        {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}
+
 int LinkedList::getSize()
 {
     return size;

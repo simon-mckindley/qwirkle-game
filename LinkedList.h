@@ -44,6 +44,8 @@ public:
     // Remove a tile from player hand.
     Tile *removeTile(Tile *tile);
 
+    bool isTileInList(Tile *tile);
+
 private:
     Node *head;
     Node *tail;

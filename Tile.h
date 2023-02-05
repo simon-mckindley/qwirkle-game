@@ -1,7 +1,8 @@
 #ifndef ASSIGN2_TILE_H
 #define ASSIGN2_TILE_H
 
-#include "TileCodes.h"
+#include <iostream>
+#include <string>
 
 // Define a Colour type.
 typedef char Colour;
@@ -20,13 +21,18 @@ public:
 
     Colour generateRandomisedColour();
     Shape generateRandomisedShape();
+    static Colour convertToColour(std::string colour);
+    static Shape convertToShape(std::string shape);
+
     // Accessors
     Colour getColour();
     Shape getShape();
+    Tile *getTile();
 
     // Mutators
     void setColour(Colour colour);
     void setShape(Shape shape);
+    void setTile(Tile *tile);
 
 private:
     Colour colour;
