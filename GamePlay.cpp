@@ -164,7 +164,7 @@ bool GamePlay::gamePlayOption()
                 if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
                 {
                     // TODO: fix x and y coordinates for sending to the board
-                    Tile tileToPlace = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
+                    Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
                     char xChar = x[0];
                     int xCoordinate = GameBoard::alphabetToNumber(xChar);
                     int yCoordinate = stoi(y) - 1;
@@ -173,8 +173,8 @@ bool GamePlay::gamePlayOption()
                         this->firstTurn = false;
                         int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
                         this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
-                        
-                        Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tileToPlace);
+
+                        Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
                         this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
                         this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
                     }
