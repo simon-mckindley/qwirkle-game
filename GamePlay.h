@@ -15,10 +15,10 @@ private:
     // Main gameplay function
     void gamePlay();
 
-    // bool validateChoice(std::string input, std::string location, GameState gameState);
-
+    // Place the tile on the board
     bool placeTile(std::string location, std::string tile);
 
+    // Replace a tile in the players hand
     bool replaceTile(std::string tile);
 
     // Prints the game status at the start of each players turn
@@ -27,22 +27,17 @@ private:
     // Gets and validates user gameplay input
     bool gamePlayOption();
 
-    GameState getGameState() { return *gameState; };
-
-    // Gets all the tiles of a row left of coordinates
-    // vector<Tile> getSetDirection(int x, int y, bool);
-
     // Accepts and validates player names
     std::string getPlayerName();
 
-    bool firstTurn = true; // TODO: Using this to track first turn is really clunky, change this in future
+    bool firstTurn = true;
 
 public:
-    // Constructor
-    // GamePlay();
 
+    // Creates and starts a new Qwirkle game
     void createNewGame();
 
+    // Loads a Qwirkle game from the specified file
     void loadGame();
 
 };

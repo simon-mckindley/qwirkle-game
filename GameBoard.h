@@ -15,9 +15,6 @@ private:
     // within is the existing columns and their values
     std::vector<std::vector<Tile>> board{26, std::vector<Tile>{26, Tile(NO_COL, NO_SHAPE)}};
 
-    // The alphabet, used to print the row letter
-    std::string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
     // Used to track the current tiles in play. This avoids counting tiles
     // that have been placed within the same move twice.
     vector<Tile> currentTiles;

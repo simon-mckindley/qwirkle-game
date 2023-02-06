@@ -303,35 +303,28 @@ std::string GameBoard::getState()
 // for printing to the console
 std::string GameBoard::toString()
 {
-    std::string boardString = "";
+    std::string boardString = " ";
 
     // Print Column Numbers
     int i = 0;
 
-    boardString.append(" "); // Print starting spacer
     while (i < getWidth())
     {
         // Keeps figures centred over columns regardless of one or two digit
         // length
         i++;
-        std::stringstream colNumber;
+        boardString.append(" " + std::to_string(i));
         if (i < 10)
         {
-
-            colNumber << " " << i << " ";
+            boardString.push_back(' ');
         }
-        else
-        {
-            colNumber << " " << i;
-        }
-        boardString.append(colNumber.str());
     }
     boardString.append("\n");
 
     // Print divider
     i = 0;
 
-    boardString.append(" "); // Print starting spacer
+    boardString.push_back(' '); // Print starting spacer
     while (i < getWidth())
     {
         i++;
@@ -343,7 +336,7 @@ std::string GameBoard::toString()
     i = 0;
     for (vector<Tile> row : board)
     {
-        boardString.push_back(alphabet[i]);
+        boardString.push_back(char(65 + i));
         i++;
 
         for (Tile col : row)

@@ -65,7 +65,6 @@ void GamePlay::loadGame()
     filename = userPrompt.getInput();
     std::cout << "\nLoading game from : " << filename << std::endl;
 
-    // TODO Load game from file 2.2.2
     gameState = new GameState();
     gameState->load(filename);
 
@@ -110,8 +109,8 @@ void GamePlay::printGameStatus()
               << gameState->getPlayers()->getPlayer(1)->getScore();
     std::cout << "\nBoard:" << std::endl;
     std::cout << gameState->getGameBoard()->toString() << std::endl;
-    std::cout << "\nYour hand is:\n";
-    std::cout << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
+    std::cout << "\nYour hand is:\n"
+              << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
               << std::endl;
 }
 

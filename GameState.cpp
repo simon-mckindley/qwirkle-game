@@ -59,7 +59,7 @@ void GameState::save(std::string filename)
         file << tileBag->getHead() << std::endl;
 
         // Write current players name
-        file << currentPlayer->getName() << std::endl;
+        file << players->getCurrentPlayer()->getName() << std::endl;
 
         file.close();
 
@@ -158,10 +158,10 @@ GameBoard *GameState::getGameBoard()
     return gameBoard;
 }
 
-Player *GameState::getCurrentPlayer()
-{
-    return currentPlayer;
-}
+// Player *GameState::getCurrentPlayer()
+// {
+//     return currentPlayer;
+// }
 
 TileBag *GameState::getTileBag()
 {
