@@ -18,7 +18,10 @@ Tile *LinkedList::getTileAtIndex(int index)
     Node *current = head;
     for (int i = 0; i < index; i++)
     {
-        current = current->next;
+        if (current->next != nullptr)
+        {
+            current = current->next;
+        }
     }
     return current->tile;
 }
@@ -53,9 +56,6 @@ Tile *LinkedList::drawTile()
     }
     else
     {
-
-        // TODO: Placeholder value consider replacing.
-        // What should be returned if nullptr?
         Tile *tile = new Tile();
         return tile;
     }
@@ -137,7 +137,11 @@ void LinkedList::replaceTile(Tile *tileToReplace, LinkedList *tileBag)
     addTileToBack(tileToReplace);
 
     // Remove the tile from the player's hand
-    removeTilesFromFront(1);
+    Node *replaceNode = getNode(*tileToReplace);
+    if (replaceNode != nullptr)
+    {
+        removeItemFromList(replaceNode);
+    }
 
     // Draw a new tile from the tile bag
     Tile *newTile = tileBag->drawTile();
@@ -146,18 +150,19 @@ void LinkedList::replaceTile(Tile *tileToReplace, LinkedList *tileBag)
     addTileToBack(newTile);
 }
 
-void LinkedList::removeTilesFromFront(int numToRemove)
-{
-    while (getHead() != nullptr && numToRemove > 0)
-    {
-        Node *node = getHead();
-        setHead(getHead()->next);
-        delete node;
-        numToRemove--;
-        this->setSize(this->getSize() - 1);
-    }
-}
+// void LinkedList::removeTilesFromFront(int numToRemove)
+// {
+//     while (getHead() != nullptr && numToRemove > 0)
+//     {
+//         Node *node = getHead();
+//         setHead(getHead()->next);
+//         delete node;
+//         numToRemove--;
+//         this->setSize(this->getSize() - 1);
+//     }
+// }
 
+// Returns true if tile is in the list, else false
 bool LinkedList::isTileInList(Tile *tile)
 {
     Node *current = head;
@@ -186,6 +191,7 @@ Node *LinkedList::getHead()
 {
     return head;
 }
+
 void LinkedList::setHead(Node *head)
 {
     this->head = head;
@@ -195,11 +201,13 @@ Node *LinkedList::getTail()
 {
     return tail;
 }
+
 void LinkedList::setTail(Node *tail)
 {
     this->tail = tail;
 }
 
+// Returns the pointer to the node containing the tile or nullptr
 Node *LinkedList::getNode(Tile tile)
 {
     Node *current = this->getHead();

@@ -11,7 +11,6 @@ class Player
 private:
     std::string name;
     int score;
-    TileBag *tileBag;
     Hand *playerHand;
 
 public:

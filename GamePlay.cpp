@@ -39,7 +39,6 @@ void GamePlay::createNewGame()
     player1name = "A";
     player2name = "B";
 
-    // TODO Initialise new game 2.3.10
     TileBag *tileBag = new TileBag();
     tileBag->fillTileBag();
 
@@ -127,11 +126,12 @@ bool GamePlay::gamePlayOption()
         invalid = false;
         UserPrompt userPrompt;
 
-        std::cout << "\nWhat would you like to do?" << std::endl;
-        std::cout << "\tplace <tile> at <location>" << std::endl;
-        std::cout << "\treplace <tile>" << std::endl;
-        std::cout << "\tsave <filename>" << std::endl;
-        std::cout << "\tquit" << std::endl;
+        std::cout << gameState->getPlayers()->getCurrentPlayer()->getName()
+                  << " - What would you like to do?\n"
+                  << "\tplace <tile> at <location>\n"
+                  << "\treplace <tile>\n"
+                  << "\tsave <filename>\n"
+                  << "\tquit" << std::endl;
 
         userInput = userPrompt.getInput();
         int length = userInput.length();
@@ -148,56 +148,20 @@ bool GamePlay::gamePlayOption()
             // "place XX at XX (length=14),
             // "place XX at XXX (length=15),
             // "replace XX" (length=10), "save <filename>" (min_length=7)
-            if (cmd == "place" && (length == 14 || length == 15))
+            if (cmd == "place" && length >= 14)
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
                 std::cout << "Tile:" << tile << "\nPlace:" << location << std::endl;
 
-                std::string x = location.substr(0, 1);
-                std::string y = location.substr(1, 1);
-                std::string userSelectionTileColour = tile.substr(0, 1);
-                if (location.length() == 3)
-                {
-                    y = location.substr(1, 2);
-                }
-                std::string userSelectionTileShape = tile.substr(1, 1);
-
-                Colour colour = Tile::convertToColour(userSelectionTileColour);
-                Shape shape = Tile::convertToShape(userSelectionTileShape);
-                Tile *tempTile = new Tile(colour, shape);
-
-                if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
-                {
-                    // TODO: fix x and y coordinates for sending to the board
-                    Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
-                    char xChar = x[0];
-                    int xCoordinate = GameBoard::alphabetToNumber(xChar);
-                    int yCoordinate = stoi(y) - 1;
-                    if (this->gameState->getGameBoard()->validateSetTile(xCoordinate, yCoordinate, *tempTile, this->firstTurn))
-                    {
-                        this->firstTurn = false;
-                        int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
-                        this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
-
-                        Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
-                        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
-                        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
-                    }
-
-                    delete tempTile;
-                }
-                else
-                {
-                    std::cout << "Invalid tile" << std::endl;
-                    invalid = true;
-                }
+                invalid = placeTile(location, tile);
             }
             else if (cmd == "replace" && length == 10)
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::cout << "Replace:" << tile << std::endl;
                 // TODO validate tile
+                gameState->getPlayers()->getCurrentPlayer()->getHand();
             }
             else if (cmd == "save" && length >= 7)
             {
@@ -227,10 +191,60 @@ bool GamePlay::gamePlayOption()
     return endGame;
 }
 
-// TODO: Implement validation from GameBoard, not this method here
-bool GamePlay::validateChoice(std::string tileChoice, std::string location, GameState gameState)
+// Validates tile and placement location, then places tile and updates gameState
+bool GamePlay::placeTile(std::string location, std::string tile)
 {
-    std::cout << tileChoice << " " << location << std::endl;
+    bool invalid = false;
+    std::string x = location.substr(0, 1);
+    std::string y = location.substr(1);
+    std::string userSelectionTileColour = tile.substr(0, 1);
+    std::string userSelectionTileShape = tile.substr(1, 1);
 
+    Colour colour = Tile::convertToColour(userSelectionTileColour);
+    Shape shape = Tile::convertToShape(userSelectionTileShape);
+    Tile *tempTile = new Tile(colour, shape);
+
+    if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
+    {
+        Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
+        char xChar = x[0];
+        int xCoordinate = GameBoard::alphabetToNumber(xChar);
+        int yCoordinate = stoi(y) - 1;
+        if (this->gameState->getGameBoard()->validateSetTile(xCoordinate, yCoordinate, *tempTile, this->firstTurn))
+        {
+            this->firstTurn = false;
+            int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
+            this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
+
+            Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
+            this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
+            this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+        }
+        else
+        {
+            invalid = true;
+        }
+    }
+    else
+    {
+        std::cout << "Invalid tile" << std::endl;
+        invalid = true;
+    }
+
+    delete tempTile;
+
+    return invalid;
+}
+
+bool GamePlay::replaceTile(std::string tile)
+{
     return true;
 }
+
+// TODO: Implement validation from GameBoard, not this method here
+// bool GamePlay::validateChoice(std::string tileChoice, std::string location, GameState gameState)
+// {
+//     std::cout << tileChoice << " " << location << std::endl;
+
+//     return true;
+// }

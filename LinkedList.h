@@ -36,7 +36,7 @@ public:
     void replaceTile(Tile *tileToReplace, LinkedList *tileBag);
 
     // Remove a number of nodes from the front of the list.
-    void removeTilesFromFront(int numToRemove);
+    // void removeTilesFromFront(int numToRemove);
 
     // Get the front tile from the list.
     Tile *drawTile();
@@ -47,6 +47,9 @@ public:
     bool isTileInList(Tile *tile);
 
     Node *getNode(Tile tile);
+
+    // count total nodes
+    int countOfNodes(struct Node *head);
 
 private:
     Node *head;

@@ -173,7 +173,7 @@ int GameBoard::getScore(int x, int y, Tile tile)
     {
         colTiles.push_back(tile);
     }
-    score += colTiles.size(); // Add a point for each tiile in the col
+    score += colTiles.size(); // Add a point for each tile in the col
 
     // Any row of 6 elements must be a qwirkle (as no duplicate tiles can occur)
     if (colTiles.size() >= 6 or rowTiles.size() >= 6)
