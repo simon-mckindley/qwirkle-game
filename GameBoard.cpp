@@ -97,14 +97,16 @@ bool GameBoard::validateTileAgainstSet(std::vector<Tile> tileSet, Tile newTile)
         // Check if duplicate tile exists
         if (tile.getColour() == colour && tile.getShape() == shape)
         {
-            std::cout << "Cannot place a tile that has a duplicate in the same row or column" << std::endl;
+            std::cout << "\n*** Cannot place a tile that has a duplicate in the same row or column ***\n"
+                      << std::endl;
             return false;
         }
 
         // Confirm there is either a colour or shape match in the row
         if (!colourMatch && !shapeMatch)
         {
-            std::cout << "Either shape or colour must match the row and column" << std::endl;
+            std::cout << "\n*** Either shape or colour must match the row and column ***\n"
+                      << std::endl;
             return false;
         }
     }
@@ -126,19 +128,22 @@ bool GameBoard::validateSetTile(int x, int y, Tile tile, bool firstTurn)
     // Validate that no tile already exists in that space
     if (!validSpace(x, y))
     {
-        std::cout << "Tile space must be within the bounds of the board" << std::endl;
+        std::cout << "\n*** Tile space must be within the bounds of the board ***\n"
+                  << std::endl;
         return false;
     }
     else if (getTile(x, y).getColour() != NO_COL)
     {
-        std::cout << "A tile already exists in this space" << std::endl;
+        std::cout << "\n*** A tile already exists in this space ***\n"
+                  << std::endl;
         return false;
     }
 
     // Validate that tiles have at least one adjacent tile (unless it's the first turn)
     if (rowTiles.size() <= 0 && colTiles.size() <= 0 && !firstTurn)
     {
-        std::cout << "Unable to place a tile without any adjacent tiles.";
+        std::cout << "\n*** Unable to place a tile without any adjacent tiles ***\n"
+                  << std::endl;
         return false;
     }
 
@@ -323,14 +328,13 @@ std::string GameBoard::toString()
 
     // Print divider
     i = 0;
-
-    boardString.push_back(' '); // Print starting spacer
+    boardString.push_back(' ');
     while (i < getWidth())
     {
         i++;
         boardString.append("---");
     }
-    boardString.append("\n");
+    boardString.append("-\n");
 
     // Print board
     i = 0;
@@ -353,6 +357,16 @@ std::string GameBoard::toString()
         }
         boardString.append("|\n");
     }
+
+    i = 0;
+    boardString.push_back(' ');
+    while (i < getWidth())
+    {
+        i++;
+        boardString.append("---");
+    }
+    boardString.append("-\n");
+
     return boardString;
 }
 

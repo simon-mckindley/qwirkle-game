@@ -36,8 +36,8 @@ void GamePlay::createNewGame()
     // std::cout << "\nWelcome, " << player1name << " and " << player2name
     //           << "\n\tLets Play!" << std::endl;
 
-    player1name = "A";
-    player2name = "B";
+    player1name = "ONE";
+    player2name = "TWO";
 
     TileBag *tileBag = new TileBag();
     tileBag->fillTileBag();
@@ -86,7 +86,7 @@ std::string GamePlay::getPlayerName()
             if (!isupper(c))
             {
                 valid = false;
-                std::cout << "Invalid input" << std::endl;
+                std::cout << "Invalid name format" << std::endl;
                 break;
             }
         }
@@ -107,7 +107,7 @@ void GamePlay::printGameStatus()
               << gameState->getPlayers()->getPlayer(1)->getName()
               << ": "
               << gameState->getPlayers()->getPlayer(1)->getScore();
-    std::cout << "\nBoard:" << std::endl;
+    std::cout << "\n\nBoard:" << std::endl;
     std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n"
               << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
@@ -151,7 +151,7 @@ bool GamePlay::gamePlayOption()
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
-                std::cout << "Tile:" << tile << "\nPlace:" << location << std::endl;
+                std::cout << "Tile: " << tile << "  Place: " << location << std::endl;
 
                 invalid = placeTile(location, tile);
             }
@@ -161,6 +161,7 @@ bool GamePlay::gamePlayOption()
                 std::cout << "Replace:" << tile << std::endl;
                 // TODO validate tile
                 gameState->getPlayers()->getCurrentPlayer()->getHand();
+                invalid = replaceTile(tile);
             }
             else if (cmd == "save" && length >= 7)
             {
@@ -170,7 +171,8 @@ bool GamePlay::gamePlayOption()
             }
             else
             {
-                std::cout << "Invalid input" << std::endl;
+                std::cout << "\n*** Invalid input ***\n"
+                          << std::endl;
                 invalid = true;
             }
         }
@@ -181,7 +183,8 @@ bool GamePlay::gamePlayOption()
         }
         else
         {
-            std::cout << "Invalid input" << std::endl;
+            std::cout << "\n*** Invalid input ***\n"
+                      << std::endl;
             invalid = true;
         }
 
@@ -239,11 +242,3 @@ bool GamePlay::replaceTile(std::string tile)
 {
     return true;
 }
-
-// TODO: Implement validation from GameBoard, not this method here
-// bool GamePlay::validateChoice(std::string tileChoice, std::string location, GameState gameState)
-// {
-//     std::cout << tileChoice << " " << location << std::endl;
-
-//     return true;
-// }
