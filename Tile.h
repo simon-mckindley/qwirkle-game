@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "TileCodes.h"
 
 // Define a Colour type.
 typedef char Colour;
@@ -38,6 +39,8 @@ public:
 private:
     Colour colour;
     Shape shape;
+
+    int GetRandomDigit(int max);
 };
 
 #endif // ASSIGN2_TILE_H

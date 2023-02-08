@@ -1,4 +1,3 @@
-#include "TileCodes.h"
 #include "Tile.h"
 
 Tile::Tile()
@@ -12,17 +11,20 @@ Tile::Tile(Colour colour, Shape shape) : colour(colour), shape(shape) {}
 Colour Tile::generateRandomisedColour()
 {
     Colour colours[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-    int randomIndex = rand() % 6;
 
-    return colours[randomIndex];
+    return colours[GetRandomDigit(5)];
 }
 
 Shape Tile::generateRandomisedShape()
 {
     Shape shapes[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
-    int randomIndex = rand() % 6;
 
-    return shapes[randomIndex];
+    return shapes[GetRandomDigit(5)];
+}
+
+int Tile::GetRandomDigit(int max)
+{
+    return rand() % max;
 }
 
 Colour Tile::getColour()
@@ -47,64 +49,62 @@ void Tile::setShape(Shape shape)
 
 Colour Tile::convertToColour(std::string colour)
 {
+    Colour code = ' ';
     if (colour == "R")
     {
-        return RED;
+        code = RED;
     }
     else if (colour == "O")
     {
-        return ORANGE;
+        code = ORANGE;
     }
     else if (colour == "Y")
     {
-        return YELLOW;
+        code = YELLOW;
     }
     else if (colour == "G")
     {
-        return GREEN;
+        code = GREEN;
     }
     else if (colour == "B")
     {
-        return BLUE;
+        code = BLUE;
     }
     else if (colour == "P")
     {
-        return PURPLE;
+        code = PURPLE;
     }
-    else
-    {
-        return RED;
-    }
+
+    return code;
 }
 
 Shape Tile::convertToShape(std::string shape)
 {
+    Shape code = ' ';
     if (shape == "1")
     {
-        return CIRCLE;
+        code = CIRCLE;
     }
     else if (shape == "2")
     {
-        return STAR_4;
+        code = STAR_4;
     }
     else if (shape == "3")
     {
-        return DIAMOND;
+        code = DIAMOND;
     }
     else if (shape == "4")
     {
-        return SQUARE;
+        code = SQUARE;
     }
     else if (shape == "5")
     {
-        return STAR_6;
+        code = STAR_6;
     }
     else if (shape == "6")
     {
-        return CLOVER;
+        code = CLOVER;
     }
-    else
-    {
-        return CIRCLE;
-    }
+
+    return code;
 }

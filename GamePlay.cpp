@@ -12,7 +12,7 @@ void GamePlay::gamePlay()
 
     do
     {
-        std::cout << "\n\n"
+        std::cout << "\n******************************************\n"
                   << gameState->getPlayers()->getCurrentPlayer()->getName() << ", it's your turn";
         printGameStatus();
         endGame = gamePlayOption();
@@ -99,14 +99,17 @@ std::string GamePlay::getPlayerName()
 // Prints the game status at the start of each players turn
 void GamePlay::printGameStatus()
 {
-    std::cout << "\nScore for "
-              << gameState->getPlayers()->getPlayer(0)->getName()
-              << ": "
-              << gameState->getPlayers()->getPlayer(0)->getScore();
+    gameState->getPlayers();
+    std::cout
+        << "\nScore for "
+        << gameState->getPlayers()->getPlayer(0)->getName()
+        << ": "
+        << gameState->getPlayers()->getPlayer(0)->getScore();
     std::cout << "\nScore for "
               << gameState->getPlayers()->getPlayer(1)->getName()
               << ": "
               << gameState->getPlayers()->getPlayer(1)->getScore();
+    std::cout << "\nTiles left in Tile Bag: " << gameState->getTileBag() << std::endl;
     std::cout << "\n\nBoard:" << std::endl;
     std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n"
@@ -253,7 +256,7 @@ bool GamePlay::replaceTile(std::string tile)
         Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
         Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
         this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
-        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->replaceTile(&tilePtr));
     }
     else
     {

@@ -25,6 +25,7 @@ Tile *LinkedList::getTileAtIndex(int index)
     }
     return current->tile;
 }
+
 // Add a tile to the back of the list. Update pointer.
 void LinkedList::addTileToBack(Tile *tile)
 {
@@ -73,11 +74,9 @@ void LinkedList::removeItemFromList(Node *nodeToDelete)
         head = head->next;
         delete nodeToDelete;
         size--;
-        return;
     }
-
     // Delete from end
-    if (nodeToDelete == tail)
+    else if (nodeToDelete == tail)
     {
         Node *temp = head;
         while (temp->next->next != nullptr)
@@ -88,21 +87,21 @@ void LinkedList::removeItemFromList(Node *nodeToDelete)
         tail = temp;
         delete nodeToDelete;
         size--;
-        return;
     }
-
     // Delete from elsewhere
-    Node *current = head;
-    Node *previous = nullptr;
-    while (current != nodeToDelete)
+    else
     {
-        previous = current;
-        current = current->next;
+        Node *current = head;
+        Node *previous = nullptr;
+        while (current != nodeToDelete)
+        {
+            previous = current;
+            current = current->next;
+        }
+        previous->next = current->next;
+        delete nodeToDelete;
+        size--;
     }
-    previous->next = current->next;
-    delete nodeToDelete;
-    size--;
-    return;
 }
 
 // count total nodes
@@ -128,38 +127,6 @@ void LinkedList::clearList()
         current = next;
     }
 }
-
-// Remove and return the tile chosen by the player.
-// void LinkedList::replaceTile(Tile *tileToReplace, LinkedList *tileBag)
-// {
-//     // Put the old tile back in the tile bag
-//     addTileToBack(tileToReplace);
-
-//     // Remove the tile from the player's hand
-//     Node *replaceNode = getNode(*tileToReplace);
-//     if (replaceNode != nullptr)
-//     {
-//         removeItemFromList(replaceNode);
-//     }
-
-//     // Draw a new tile from the tile bag
-//     Tile *newTile = tileBag->drawTile();
-
-//     // Add the new tile to the player's hand
-//     addTileToBack(newTile);
-// }
-
-// void LinkedList::removeTilesFromFront(int numToRemove)
-// {
-//     while (getHead() != nullptr && numToRemove > 0)
-//     {
-//         Node *node = getHead();
-//         setHead(getHead()->next);
-//         delete node;
-//         numToRemove--;
-//         this->setSize(this->getSize() - 1);
-//     }
-// }
 
 // Returns true if tile is in the list, else false
 bool LinkedList::isTileInList(Tile *tile)
@@ -209,7 +176,7 @@ void LinkedList::setTail(Node *tail)
 // Returns the pointer to the node containing the tile or nullptr
 Node *LinkedList::getNode(Tile tile)
 {
-    Node *current = this->getHead();
+    Node *current = head;
     while (current != nullptr)
     {
         if (current->tile->getColour() == tile.getColour() && current->tile->getShape() == tile.getShape())

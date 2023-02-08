@@ -32,12 +32,6 @@ public:
     // Add a tile to the list.
     void addTileToBack(Tile *tile);
 
-    // Remove a tile from player hand and replace it with a new tile.
-    void replaceTile(Tile *tileToReplace, LinkedList *tileBag);
-
-    // Remove a number of nodes from the front of the list.
-    // void removeTilesFromFront(int numToRemove);
-
     // Get the front tile from the list.
     Tile *drawTile();
 
