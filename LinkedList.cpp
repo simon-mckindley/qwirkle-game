@@ -61,7 +61,7 @@ Tile *LinkedList::drawTile()
     }
 }
 
-// Remove and return the tile chosen by the player.
+// Remove the tile chosen by the player.
 void LinkedList::removeItemFromList(Node *nodeToDelete)
 {
     if (head == nullptr)
@@ -71,7 +71,6 @@ void LinkedList::removeItemFromList(Node *nodeToDelete)
     if (nodeToDelete == head)
     {
         head = head->next;
-        Tile *tile = nodeToDelete->tile;
         delete nodeToDelete;
         size--;
         return;
@@ -81,13 +80,13 @@ void LinkedList::removeItemFromList(Node *nodeToDelete)
     if (nodeToDelete == tail)
     {
         Node *temp = head;
-        Node *tail = getTail();
-        delete (tail);
         while (temp->next->next != nullptr)
         {
             temp = temp->next;
         }
         temp->next = nullptr;
+        tail = temp;
+        delete nodeToDelete;
         size--;
         return;
     }
@@ -131,24 +130,24 @@ void LinkedList::clearList()
 }
 
 // Remove and return the tile chosen by the player.
-void LinkedList::replaceTile(Tile *tileToReplace, LinkedList *tileBag)
-{
-    // Put the old tile back in the tile bag
-    addTileToBack(tileToReplace);
+// void LinkedList::replaceTile(Tile *tileToReplace, LinkedList *tileBag)
+// {
+//     // Put the old tile back in the tile bag
+//     addTileToBack(tileToReplace);
 
-    // Remove the tile from the player's hand
-    Node *replaceNode = getNode(*tileToReplace);
-    if (replaceNode != nullptr)
-    {
-        removeItemFromList(replaceNode);
-    }
+//     // Remove the tile from the player's hand
+//     Node *replaceNode = getNode(*tileToReplace);
+//     if (replaceNode != nullptr)
+//     {
+//         removeItemFromList(replaceNode);
+//     }
 
-    // Draw a new tile from the tile bag
-    Tile *newTile = tileBag->drawTile();
+//     // Draw a new tile from the tile bag
+//     Tile *newTile = tileBag->drawTile();
 
-    // Add the new tile to the player's hand
-    addTileToBack(newTile);
-}
+//     // Add the new tile to the player's hand
+//     addTileToBack(newTile);
+// }
 
 // void LinkedList::removeTilesFromFront(int numToRemove)
 // {

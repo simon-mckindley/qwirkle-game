@@ -240,5 +240,27 @@ bool GamePlay::placeTile(std::string location, std::string tile)
 
 bool GamePlay::replaceTile(std::string tile)
 {
-    return true;
+    bool invalid = false;
+    std::string userSelectionTileColour = tile.substr(0, 1);
+    std::string userSelectionTileShape = tile.substr(1, 1);
+
+    Colour colour = Tile::convertToColour(userSelectionTileColour);
+    Shape shape = Tile::convertToShape(userSelectionTileShape);
+    Tile *tempTile = new Tile(colour, shape);
+
+    if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
+    {
+        Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
+        Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
+        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
+        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+    }
+    else
+    {
+        std::cout << "\n*** No such tile in your hand ***\n"
+                  << std::endl;
+        invalid = true;
+    }
+
+    return invalid;
 }
