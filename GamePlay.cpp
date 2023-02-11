@@ -224,7 +224,11 @@ bool GamePlay::placeTile(std::string location, std::string tile)
 
                 Node *nodeToRemove = this->currentPlayer->getHandPtr()->getNode(tilePtr);
                 this->currentPlayer->getHandPtr()->removeItemFromList(nodeToRemove);
-                this->currentPlayer->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+                Tile *newTile = this->gameState->getTileBag()->drawTile();
+                if (newTile != nullptr)
+                {
+                    this->currentPlayer->getHandPtr()->addTileToBack(newTile);
+                }
             }
             else
             {

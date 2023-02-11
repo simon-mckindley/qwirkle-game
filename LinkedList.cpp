@@ -60,6 +60,7 @@ void LinkedList::addTileToFront(Tile *tile)
     size++;
 }
 
+// Add a tile to the list at the index provided
 void LinkedList::addTileAtIndex(int index, Tile *tile)
 {
     if (index == 0) // head
@@ -93,20 +94,16 @@ void LinkedList::addTileAtIndex(int index, Tile *tile)
 // Remove and return the tile from the head of the list.
 Tile *LinkedList::drawTile()
 {
+    Tile *tile = nullptr; 
     if (head != nullptr)
     {
         Node *temp = head;
         head = head->next;
-        Tile *tile = temp->tile;
+        tile = temp->tile;
         size--;
-
-        return tile;
     }
-    else
-    {
-        Tile *tile = new Tile();
-        return tile;
-    }
+    
+    return tile;
 }
 
 // Remove the tile chosen by the player.
