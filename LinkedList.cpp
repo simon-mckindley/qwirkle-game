@@ -43,6 +43,49 @@ void LinkedList::addTileToBack(Tile *tile)
     size++;
 }
 
+// Add a tile to the front of the list. Update pointer.
+void LinkedList::addTileToFront(Tile *tile)
+{
+    Node *node = new Node(tile, nullptr);
+    if (head == nullptr)
+    {
+        head = node;
+        tail = node;
+    }
+    else
+    {
+        node->next = head;
+        head = node;
+    }
+    size++;
+}
+
+void LinkedList::addTileAtIndex(int index, Tile *tile)
+{
+    if (index == 0) // head
+    {
+        addTileToFront(tile);
+    }
+    else if (index == size - 1) // tail
+    {
+        addTileToBack(tile);
+    }
+    else if (index < size) // anywhere inbetween
+    {
+        Node *newNode = new Node(tile, nullptr);
+        Node *target = head;
+        Node *previous = nullptr;
+        for (int i = 0; i < index; i++)
+        {
+            previous = target;
+            target = target->next;
+        }
+        newNode->next = target;
+        previous->next = newNode;
+        size++;
+    }
+}
+
 // Remove and return the tile from the head of the list.
 Tile *LinkedList::drawTile()
 {

@@ -31,6 +31,8 @@ public:
 
     // Add a tile to the list.
     void addTileToBack(Tile *tile);
+    void addTileToFront(Tile *tile);
+    void addTileAtIndex(int index, Tile *tile);
 
     // Get the front tile from the list.
     Tile *drawTile();

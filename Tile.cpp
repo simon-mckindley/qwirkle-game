@@ -2,8 +2,9 @@
 
 Tile::Tile()
 {
-    this->setColour(generateRandomisedColour());
-    this->setShape(generateRandomisedShape());
+    
+    // this->setColour(generateRandomisedColour());
+    // this->setShape(generateRandomisedShape());
 }
 
 Tile::Tile(Colour colour, Shape shape) : colour(colour), shape(shape) {}

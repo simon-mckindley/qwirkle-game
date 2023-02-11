@@ -114,13 +114,13 @@ void GameState::load(std::string filename)
     file.close();
 
     // Use the read information to update the current game state
-    player1->setName(player1Name);
-    player1->setScore(player1Score);
-    player1->setHand(player1Hand);
+    // player1->setName(player1Name);
+    // player1->setScore(player1Score);
+    // player1->setHand(player1Hand);
 
-    player2->setName(player2Name);
-    player2->setScore(player2Score);
-    player2->setHand(player2Hand);
+    // player2->setName(player2Name);
+    // player2->setScore(player2Score);
+    // player2->setHand(player2Hand);
 
     gameBoard->setHeight(boardDimension);
     gameBoard->setWidth(boardDimension);
@@ -128,7 +128,7 @@ void GameState::load(std::string filename)
 
     // tile.setTiles(tileBag);
 
-    currentPlayer->setName(currentPlayerName);
+    //currentPlayer->setName(currentPlayerName);
 
     std::cout << "Game loaded successfully" << std::endl;
 }

@@ -109,9 +109,9 @@ void GamePlay::printGameStatus()
               << gameState->getPlayers()->getPlayer(1)->getName()
               << ": "
               << gameState->getPlayers()->getPlayer(1)->getScore();
-    std::cout << "\nTiles left in Tile Bag: " << gameState->getTileBag() << std::endl;
+    std::cout << "\nTiles left in Tile Bag: " << gameState->getTileBag()->getSize() << std::endl;
     std::cout << "\n\nBoard:" << std::endl;
-    std::cout << gameState->getGameBoard()->toString() << std::endl;
+    // std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n"
               << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
               << std::endl;

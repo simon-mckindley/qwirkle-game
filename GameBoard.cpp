@@ -315,8 +315,7 @@ std::string GameBoard::toString()
 
     while (i < getWidth())
     {
-        // Keeps figures centred over columns regardless of one or two digit
-        // length
+        // Keeps figures centred over columns regardless of one or two digit length
         i++;
         boardString.append(" " + std::to_string(i));
         if (i < 10)

@@ -31,8 +31,6 @@ public:
     // Return the player hand as a pointer to a hand.
     Hand *getHandPtr();
     // Set current player state from file.
-    void setName(std::string name);
-    void setScore(int score);
     void setHand(std::string hand);
     void addScore(int score);
 };

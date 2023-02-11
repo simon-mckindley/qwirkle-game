@@ -50,7 +50,6 @@ std::string Player::getHand()
 }
 void Player::setHand(std::string hand)
 {
-    // playerHand = new LinkedList();
     std::stringstream ss(hand);
     std::string tileString;
     while (std::getline(ss, tileString, ','))
@@ -67,10 +66,3 @@ Hand *Player::getHandPtr()
     return this->playerHand;
 }
 
-void Player::setName(std::string name)
-{
-}
-
-void Player::setScore(int score)
-{
-}
