@@ -21,8 +21,6 @@ TileBag *TileBag::fillTileBag()
             {
                 Tile *newTile = new Tile(colour, shape);
                 this->addTileAtIndex(getRandomDigit(this->getSize()), newTile);
-
-                std::cout << "Tile: " << colour << shape << std::endl;
             }
         }
     }
@@ -33,33 +31,13 @@ TileBag *TileBag::fillTileBag()
     return this;
 }
 
-// // Add a tile to the back of the list. Update pointer.
-// void TileBag::addTileToBag(Tile *tile)
-// {
-//     Node *node = new Node(tile, nullptr);
-//     if (this->getSize() == 0)
-//     {
-//         setHead(node);
-//         setTail(node);
-//     }
-//     else
-//     {
-//         getTail()->next = node;
-//         setTail(node);
-//     }
-//     this->setSize(this->getSize() + 1);
-// }
-
 // Remove and return the tile chosen by the player.
 Tile *TileBag::replaceTile(Tile *tileToReplace)
 {
     // Put the old tile back in the tile bag (add to back)
     this->addTileToBack(tileToReplace);
     // Draw a new tile from the tile bag (remove from front)
-    Tile *newTile = this->drawTile();
-
-    // Return the new tile
-    return newTile;
+    return this->drawTile();
 }
 
 void TileBag::printBag()

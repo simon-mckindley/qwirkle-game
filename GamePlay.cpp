@@ -111,7 +111,7 @@ void GamePlay::printGameStatus()
               << gameState->getPlayers()->getPlayer(1)->getScore();
     std::cout << "\nTiles left in Tile Bag: " << gameState->getTileBag()->getSize() << std::endl;
     std::cout << "\n\nBoard:" << std::endl;
-    // std::cout << gameState->getGameBoard()->toString() << std::endl;
+    std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n"
               << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
               << std::endl;
@@ -146,10 +146,10 @@ bool GamePlay::gamePlayOption()
             // The input before the space
             std::string cmd = userInput.substr(0, pos);
 
-            // Valid commands:
-            // "place XX at XX (length=14),
-            // "place XX at XXX (length=15),
-            // "replace XX" (length=10), "save <filename>" (min_length=7)
+            /* Valid commands:
+            "place XX at XX (length=14),
+            "place XX at XXX (length=15),
+            "replace XX" (length=10), "save <filename>" (min_length=7) */
             if (cmd == "place" && length >= 14)
             {
                 std::string tile = userInput.substr(pos + 1, 2);
@@ -162,8 +162,6 @@ bool GamePlay::gamePlayOption()
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::cout << "Replace:" << tile << std::endl;
-                // TODO validate tile
-                gameState->getPlayers()->getCurrentPlayer()->getHand();
                 invalid = replaceTile(tile);
             }
             else if (cmd == "save" && length >= 7)
@@ -214,19 +212,28 @@ bool GamePlay::placeTile(std::string location, std::string tile)
         Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
         char xChar = x[0];
         int xCoordinate = GameBoard::alphabetToNumber(xChar);
-        int yCoordinate = stoi(y) - 1;
-        if (this->gameState->getGameBoard()->validateSetTile(xCoordinate, yCoordinate, *tempTile, this->firstTurn))
+        try
         {
-            this->firstTurn = false;
-            int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
-            this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
+            int yCoordinate = stoi(y) - 1;
 
-            Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
-            this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
-            this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+            if (this->gameState->getGameBoard()->validateSetTile(xCoordinate, yCoordinate, *tempTile, this->firstTurn))
+            {
+                this->firstTurn = false;
+                int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
+                this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
+
+                Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
+                this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
+                this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+            }
+            else
+            {
+                invalid = true;
+            }
         }
-        else
+        catch (std::invalid_argument arg)
         {
+            std::cout << "Invalid location" << std::endl;
             invalid = true;
         }
     }
@@ -264,6 +271,8 @@ bool GamePlay::replaceTile(std::string tile)
                   << std::endl;
         invalid = true;
     }
+
+    delete tempTile;
 
     return invalid;
 }

@@ -29,7 +29,6 @@ public:
 
     // Functions to add/remove TileBag.
 
-    // Add a tile to the list.
     void addTileToBack(Tile *tile);
     void addTileToFront(Tile *tile);
     void addTileAtIndex(int index, Tile *tile);

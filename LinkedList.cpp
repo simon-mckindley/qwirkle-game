@@ -84,6 +84,10 @@ void LinkedList::addTileAtIndex(int index, Tile *tile)
         previous->next = newNode;
         size++;
     }
+    else
+    {
+        std::cout << "Invalid Index" << std::endl;
+    }
 }
 
 // Remove and return the tile from the head of the list.

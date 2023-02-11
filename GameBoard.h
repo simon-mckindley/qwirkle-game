@@ -55,16 +55,13 @@ public:
     // Validates that a space is within the bounds of the board
     bool validSpace(int x, int y);
 
-    // Validate that tile can be placed there within the rules of the
-    // game.
+    // Validate that tile can be placed there within the rules of the game.
     bool validateSetTile(int x, int y, Tile tile, bool firstTurn);
 
-    // Gets a vecotr of tiles that share the same row as the x, y coords
-    // given
+    // Gets a vector of tiles that share the same row as the x, y coords given
     std::vector<Tile> getTilesOnRow(int x, int y);
 
-    // Gets a vector of tiels that share the same col as the x, y corrds
-    // given
+    // Gets a vector of tiels that share the same col as the x, y corrds given
     std::vector<Tile> getTilesOnCol(int x, int y);
 
     // Validates the given tiles colour against the given colour

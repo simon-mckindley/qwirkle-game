@@ -17,8 +17,6 @@ public:
     TileBag();
 
     TileBag *fillTileBag();
-    // void addTileToBag(Tile *tile);
-    // void removeFromBag(int index);
 
     // Remove a tile from player hand and replace it with a new tile.
     Tile *replaceTile(Tile *tileToReplace);
