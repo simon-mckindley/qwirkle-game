@@ -11,6 +11,7 @@ class GamePlay
 {
 private:
     GameState *gameState;
+    Player *currentPlayer;
 
     // Main gameplay function
     void gamePlay();

@@ -25,8 +25,8 @@ TileBag *TileBag::fillTileBag()
         }
     }
 
-    std::cout << "\tSize: " << this->getSize() << std::endl;
-    printBag();
+    // std::cout << "\tSize: " << this->getSize() << std::endl;
+    // printBag();
 
     return this;
 }
@@ -40,6 +40,7 @@ Tile *TileBag::replaceTile(Tile *tileToReplace)
     return this->drawTile();
 }
 
+// Print bag - for testing purposes
 void TileBag::printBag()
 {
     for (int i = 0; i < this->getSize(); i++)

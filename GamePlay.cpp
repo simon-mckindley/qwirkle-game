@@ -9,14 +9,15 @@
 void GamePlay::gamePlay()
 {
     bool endGame = false;
+    currentPlayer = gameState->getPlayers()->getCurrentPlayer();
 
     do
     {
         std::cout << "\n******************************************\n"
-                  << gameState->getPlayers()->getCurrentPlayer()->getName() << ", it's your turn";
+                  << currentPlayer->getName() << ", it's your turn";
         printGameStatus();
         endGame = gamePlayOption();
-        gameState->getPlayers()->nextPlayer();
+        currentPlayer = gameState->getPlayers()->nextPlayer();
 
     } while (!endGame);
 
@@ -113,7 +114,7 @@ void GamePlay::printGameStatus()
     std::cout << "\n\nBoard:" << std::endl;
     std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n"
-              << gameState->getPlayers()->getCurrentPlayer()->getHand() << "\n"
+              << currentPlayer->getHand() << "\n"
               << std::endl;
 }
 
@@ -128,7 +129,7 @@ bool GamePlay::gamePlayOption()
         invalid = false;
         UserPrompt userPrompt;
 
-        std::cout << gameState->getPlayers()->getCurrentPlayer()->getName()
+        std::cout << currentPlayer->getName()
                   << " - What would you like to do?\n"
                   << "\tplace <tile> at <location>\n"
                   << "\treplace <tile>\n"
@@ -155,7 +156,6 @@ bool GamePlay::gamePlayOption()
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
                 std::cout << "Tile: " << tile << "  Place: " << location << std::endl;
-
                 invalid = placeTile(location, tile);
             }
             else if (cmd == "replace" && length == 10)
@@ -207,9 +207,9 @@ bool GamePlay::placeTile(std::string location, std::string tile)
     Shape shape = Tile::convertToShape(userSelectionTileShape);
     Tile *tempTile = new Tile(colour, shape);
 
-    if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
+    if (this->currentPlayer->getHandPtr()->isTileInList(tempTile))
     {
-        Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
+        Tile tilePtr = this->currentPlayer->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
         char xChar = x[0];
         int xCoordinate = GameBoard::alphabetToNumber(xChar);
         try
@@ -220,11 +220,11 @@ bool GamePlay::placeTile(std::string location, std::string tile)
             {
                 this->firstTurn = false;
                 int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
-                this->gameState->getPlayers()->getCurrentPlayer()->addScore(score);
+                this->currentPlayer->addScore(score);
 
-                Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
-                this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
-                this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
+                Node *nodeToRemove = this->currentPlayer->getHandPtr()->getNode(tilePtr);
+                this->currentPlayer->getHandPtr()->removeItemFromList(nodeToRemove);
+                this->currentPlayer->getHandPtr()->addTileToBack(this->gameState->getTileBag()->drawTile());
             }
             else
             {
@@ -258,12 +258,12 @@ bool GamePlay::replaceTile(std::string tile)
     Shape shape = Tile::convertToShape(userSelectionTileShape);
     Tile *tempTile = new Tile(colour, shape);
 
-    if (this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->isTileInList(tempTile))
+    if (this->currentPlayer->getHandPtr()->isTileInList(tempTile))
     {
-        Tile tilePtr = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
-        Node *nodeToRemove = this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->getNode(tilePtr);
-        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->removeItemFromList(nodeToRemove);
-        this->gameState->getPlayers()->getCurrentPlayer()->getHandPtr()->addTileToBack(this->gameState->getTileBag()->replaceTile(&tilePtr));
+        Tile tilePtr = this->currentPlayer->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
+        Node *nodeToRemove = this->currentPlayer->getHandPtr()->getNode(tilePtr);
+        this->currentPlayer->getHandPtr()->removeItemFromList(nodeToRemove);
+        this->currentPlayer->getHandPtr()->addTileToBack(this->gameState->getTileBag()->replaceTile(&tilePtr));
     }
     else
     {
