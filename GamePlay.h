@@ -22,8 +22,14 @@ private:
     // Replace a tile in the players hand
     bool replaceTile(std::string tile);
 
+    // Checks if the players hand is empty, which is the end of the game
+    bool checkEndGame();
+
     // Prints the game status at the start of each players turn
     void printGameStatus();
+
+    // Prints the results at the end of a game
+    void printEndGame();
 
     // Gets and validates user gameplay input
     bool gamePlayOption();
@@ -34,13 +40,11 @@ private:
     bool firstTurn = true;
 
 public:
-
     // Creates and starts a new Qwirkle game
     void createNewGame();
 
     // Loads a Qwirkle game from the specified file
     void loadGame();
-
 };
 
 #endif // ASSIGN2_GAMEPLAY_H

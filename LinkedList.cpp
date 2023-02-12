@@ -63,15 +63,18 @@ void LinkedList::addTileToFront(Tile *tile)
 // Add a tile to the list at the index provided
 void LinkedList::addTileAtIndex(int index, Tile *tile)
 {
-    if (index == 0) // head
+    // Add to head
+    if (index == 0)
     {
         addTileToFront(tile);
     }
-    else if (index == size - 1) // tail
+    // Add to tail
+    else if (index == size - 1)
     {
         addTileToBack(tile);
     }
-    else if (index < size) // anywhere inbetween
+    // Add to anywhere inbetween
+    else if (index < size)
     {
         Node *newNode = new Node(tile, nullptr);
         Node *target = head;
@@ -94,7 +97,7 @@ void LinkedList::addTileAtIndex(int index, Tile *tile)
 // Remove and return the tile from the head of the list.
 Tile *LinkedList::drawTile()
 {
-    Tile *tile = nullptr; 
+    Tile *tile = nullptr;
     if (head != nullptr)
     {
         Node *temp = head;
@@ -102,7 +105,7 @@ Tile *LinkedList::drawTile()
         tile = temp->tile;
         size--;
     }
-    
+
     return tile;
 }
 

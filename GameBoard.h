@@ -61,13 +61,13 @@ public:
     // Gets a vector of tiles that share the same row as the x, y coords given
     std::vector<Tile> getTilesOnRow(int x, int y);
 
-    // Gets a vector of tiels that share the same col as the x, y corrds given
+    // Gets a vector of tiles that share the same col as the x, y corrds given
     std::vector<Tile> getTilesOnCol(int x, int y);
 
     // Validates the given tiles colour against the given colour
     bool checkColourMatch(Colour colour, Tile adjacentTile);
 
-    // Validates the given tiles shpae agains the given shape
+    // Validates the given tiles shape agains the given shape
     bool checkShapeMatch(Shape shape, Tile adjacentTile);
 
     static int alphabetToNumber(char letter);

@@ -100,12 +100,10 @@ std::string GamePlay::getPlayerName()
 // Prints the game status at the start of each players turn
 void GamePlay::printGameStatus()
 {
-    gameState->getPlayers();
-    std::cout
-        << "\nScore for "
-        << gameState->getPlayers()->getPlayer(0)->getName()
-        << ": "
-        << gameState->getPlayers()->getPlayer(0)->getScore();
+    std::cout << "\nScore for "
+              << gameState->getPlayers()->getPlayer(0)->getName()
+              << ": "
+              << gameState->getPlayers()->getPlayer(0)->getScore();
     std::cout << "\nScore for "
               << gameState->getPlayers()->getPlayer(1)->getName()
               << ": "
@@ -115,6 +113,43 @@ void GamePlay::printGameStatus()
     std::cout << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "\nYour hand is:\n"
               << currentPlayer->getHand() << "\n"
+              << std::endl;
+}
+
+// Prints the results at the end of a game
+void GamePlay::printEndGame()
+{
+    int p1Score = gameState->getPlayers()->getPlayer(0)->getScore();
+    int p2Score = gameState->getPlayers()->getPlayer(1)->getScore();
+    std::string winner = "";
+
+    std::cout << "\n\tGAME OVER"
+              << "\nScore for "
+              << gameState->getPlayers()->getPlayer(0)->getName()
+              << ": " << p1Score;
+    std::cout << "\nScore for "
+              << gameState->getPlayers()->getPlayer(1)->getName()
+              << ": " << p2Score
+              << std::endl;
+
+    if (p1Score == p2Score)
+    {
+        std::cout << "The game is a tie!\n"
+                  << std::endl;
+        return;
+    }
+    else if (p1Score > p2Score)
+    {
+        winner = gameState->getPlayers()->getPlayer(0)->getName();
+    }
+    else if (p2Score > p1Score)
+    {
+        winner = gameState->getPlayers()->getPlayer(1)->getName();
+    }
+
+    std::cout << "Player "
+              << winner
+              << " has won!\n"
               << std::endl;
 }
 
@@ -179,8 +214,8 @@ bool GamePlay::gamePlayOption()
         }
         else if (userInput == "quit")
         {
-            endGame = true;
             std::cout << "\nQuiting game" << std::endl;
+            return true;
         }
         else
         {
@@ -190,6 +225,12 @@ bool GamePlay::gamePlayOption()
         }
 
     } while (invalid);
+
+    endGame = checkEndGame();
+    if (endGame)
+    {
+        printEndGame();
+    }
 
     return endGame;
 }
@@ -279,4 +320,15 @@ bool GamePlay::replaceTile(std::string tile)
     delete tempTile;
 
     return invalid;
+}
+
+bool GamePlay::checkEndGame()
+{
+
+    if (this->currentPlayer->getHandPtr()->getSize() > 0)
+    {
+        return false;
+    }
+
+    return true;
 }

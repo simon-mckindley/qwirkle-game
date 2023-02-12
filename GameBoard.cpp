@@ -183,7 +183,7 @@ int GameBoard::getScore(int x, int y, Tile tile)
     // Any row of 6 elements must be a qwirkle (as no duplicate tiles can occur)
     if (colTiles.size() >= 6 or rowTiles.size() >= 6)
     {
-        std::cout << "QWIRKLE!!!" << std::endl;
+        std::cout << "\n*** QWIRKLE!!! ***" << std::endl;
         score += 6;
     }
 
@@ -304,7 +304,7 @@ std::string GameBoard::getState()
     return state;
 }
 
-// iterates through each row of the board and builds a string
+// Iterates through each row of the board and builds a string
 // for printing to the console
 std::string GameBoard::toString()
 {

@@ -13,17 +13,31 @@ TileBag *TileBag::fillTileBag()
     const Shape shapes[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
     const Colour colours[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
 
-    for (int i = 0; i < 2; i++)
-    {
-        for (Shape shape : shapes)
-        {
-            for (Colour colour : colours)
-            {
-                Tile *newTile = new Tile(colour, shape);
-                this->addTileAtIndex(getRandomDigit(this->getSize()), newTile);
-            }
-        }
-    }
+    // for (int i = 0; i < 2; i++)
+    // {
+    //     for (Shape shape : shapes)
+    //     {
+    //         for (Colour colour : colours)
+    //         {
+    //             Tile *newTile = new Tile(colour, shape);
+    //             this->addTileAtIndex(getRandomDigit(this->getSize()), newTile);
+    //         }
+    //     }
+    // }
+
+    this->addTileToBack(new Tile(RED, CIRCLE));
+    this->addTileToBack(new Tile(ORANGE, CIRCLE));
+    this->addTileToBack(new Tile(YELLOW, CIRCLE));
+    this->addTileToBack(new Tile(GREEN, CIRCLE));
+    this->addTileToBack(new Tile(BLUE, CIRCLE));
+    this->addTileToBack(new Tile(PURPLE, CIRCLE));
+
+    this->addTileToBack(new Tile(RED, CIRCLE));
+    this->addTileToBack(new Tile(ORANGE, CIRCLE));
+    this->addTileToBack(new Tile(YELLOW, CIRCLE));
+    this->addTileToBack(new Tile(GREEN, CIRCLE));
+    this->addTileToBack(new Tile(BLUE, CIRCLE));
+    this->addTileToBack(new Tile(PURPLE, CIRCLE));
 
     // std::cout << "\tSize: " << this->getSize() << std::endl;
     // printBag();
