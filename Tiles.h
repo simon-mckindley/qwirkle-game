@@ -13,14 +13,14 @@ private:
 
 public:
     // Default constructor
-    Tiles();
+    // Tiles();
 
     // Constructor for loadGame function()
     // May need refactoring when implementing loadGame()
-    Tiles(LinkedList tiles);
+    // Tiles(LinkedList tiles);
 
     // Add Tile to the Tiles object
-    void addTile(Tile tile);
+    // void addTile(Tile tile);
 
     // Remove a tile from the tiles object
     // Must retain order of list
@@ -28,13 +28,13 @@ public:
     // TODO: If we need to retain the order of the list, and
     // we have duplicates of a tile, does it matter which of
     // the duplicates is removed from the list? Unsure.
-    void removeTile(Tile tile);
+    // void removeTile(Tile tile);
 
     // Read the current tile bag for saving game state.
-    std::string getTiles();
+    // std::string getTiles();
 
     // Set the tiles to those read in from the file.
-    void setTiles(std::string &tileBag);
+    // void setTiles(std::string &tileBag);
 };
 
 #endif // ASSIGN2_TILES_H

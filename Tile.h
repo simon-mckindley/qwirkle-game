@@ -15,13 +15,11 @@ class Tile
 {
 public:
     // Default Constructor
-    Tile();
+    Tile() {};
 
     // Constructor
     Tile(Colour colour, Shape shape);
 
-    Colour generateRandomisedColour();
-    Shape generateRandomisedShape();
     static Colour convertToColour(std::string colour);
     static Shape convertToShape(std::string shape);
 
@@ -39,8 +37,6 @@ public:
 private:
     Colour colour;
     Shape shape;
-
-    int GetRandomDigit(int max);
 };
 
 #endif // ASSIGN2_TILE_H

@@ -102,16 +102,15 @@ void GamePlay::printGameStatus()
 {
     std::cout << "\nScore for "
               << gameState->getPlayers()->getPlayer(0)->getName()
-              << ": "
-              << gameState->getPlayers()->getPlayer(0)->getScore();
+              << ": " << gameState->getPlayers()->getPlayer(0)->getScore();
     std::cout << "\nScore for "
               << gameState->getPlayers()->getPlayer(1)->getName()
-              << ": "
-              << gameState->getPlayers()->getPlayer(1)->getScore();
-    std::cout << "\nTiles left in Tile Bag: " << gameState->getTileBag()->getSize() << std::endl;
-    std::cout << "\n\nBoard:" << std::endl;
-    std::cout << gameState->getGameBoard()->toString() << std::endl;
-    std::cout << "\nYour hand is:\n"
+              << ": " << gameState->getPlayers()->getPlayer(1)->getScore();
+    std::cout << "\nTiles left in Tile Bag: "
+              << gameState->getTileBag()->getSize() << std::endl;
+    std::cout << "\nBoard:\n"
+              << gameState->getGameBoard()->toString() << std::endl;
+    std::cout << "Your hand is:\n"
               << currentPlayer->getHand() << "\n"
               << std::endl;
 }
@@ -303,7 +302,13 @@ bool GamePlay::replaceTile(std::string tile)
     Shape shape = Tile::convertToShape(userSelectionTileShape);
     Tile *tempTile = new Tile(colour, shape);
 
-    if (this->currentPlayer->getHandPtr()->isTileInList(tempTile))
+    if (this->gameState->getTileBag()->getSize() == 0)
+    {
+        std::cout << "\n*** The tile bag is empty ***\n"
+                  << std::endl;
+        invalid = true;
+    }
+    else if (this->currentPlayer->getHandPtr()->isTileInList(tempTile))
     {
         Tile tilePtr = this->currentPlayer->getHandPtr()->getHead()->getTileByAttributes(colour, shape);
         Node *nodeToRemove = this->currentPlayer->getHandPtr()->getNode(tilePtr);

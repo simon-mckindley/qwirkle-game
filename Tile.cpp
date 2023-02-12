@@ -1,29 +1,6 @@
 #include "Tile.h"
 
-Tile::Tile()
-{
-}
-
 Tile::Tile(Colour colour, Shape shape) : colour(colour), shape(shape) {}
-
-Colour Tile::generateRandomisedColour()
-{
-    Colour colours[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
-
-    return colours[GetRandomDigit(5)];
-}
-
-Shape Tile::generateRandomisedShape()
-{
-    Shape shapes[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
-
-    return shapes[GetRandomDigit(5)];
-}
-
-int Tile::GetRandomDigit(int max)
-{
-    return rand() % max;
-}
 
 Colour Tile::getColour()
 {
