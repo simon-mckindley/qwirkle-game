@@ -1,6 +1,8 @@
 #ifndef ASSIGN2_TILEBAG_H
 #define ASSIGN2_TILEBAG_H
 
+#include <string>
+
 #include "LinkedList.h"
 #include "Tile.h"
 #include "TileCodes.h"
@@ -21,7 +23,8 @@ public:
     // Remove a tile from player hand and replace it with a new tile.
     Tile *replaceTile(Tile *tileToReplace);
 
-    void printBag();
+    // Returns a comma separated string of the tile bag contents
+    std::string printBag();
 
 private:
     int getRandomDigit(int max);

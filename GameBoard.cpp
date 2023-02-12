@@ -289,18 +289,20 @@ std::string GameBoard::getState()
     {
         for (int j = 0; j < board[i].size(); j++)
         {
-            if (board[i][j].getColour() != ' ')
+            if (board[i][j].getColour() != NO_COL)
             {
                 state += board[i][j].getColour();
                 state += std::to_string(board[i][j].getShape());
-                state += "@(";
-                state += std::to_string(i);
+                state += "@";
+                state += char(65 + i);
+                state += std::to_string(j + 1);
                 state += ",";
-                state += std::to_string(j);
-                state += ") ";
             }
         }
     }
+
+    // Remove the last comma from the string
+    state = state.substr(0, state.size() - 1);
     return state;
 }
 

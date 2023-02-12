@@ -32,6 +32,7 @@ void Player::addScore(int score)
     this->score += score;
 }
 
+// Returns a comma separated string of the players hand
 std::string Player::getHand()
 {
     std::string hand = "";
@@ -48,6 +49,7 @@ std::string Player::getHand()
     hand = hand.substr(0, hand.size() - 1);
     return hand;
 }
+
 void Player::setHand(std::string hand)
 {
     std::stringstream ss(hand);

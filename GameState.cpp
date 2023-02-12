@@ -9,26 +9,25 @@ GameState::GameState(Players *players, GameBoard *gameBoard, TileBag *tileBag)
     this->players = players;
     this->gameBoard = gameBoard;
     this->tileBag = tileBag;
-    this->currentPlayer = players->getPlayer(0);
 }
 
 // Default GameState, used for loading game
-GameState::GameState()
-{
-    TileBag *tileBag = new TileBag();
-    tileBag->fillTileBag();
+// GameState::GameState()
+// {
+//     TileBag *tileBag = new TileBag();
+//     tileBag->fillTileBag();
 
-    Player *player1 = new Player("", tileBag);
-    Player *player2 = new Player("", tileBag);
+//     Player *player1 = new Player("", tileBag);
+//     Player *player2 = new Player("", tileBag);
 
-    GameBoard *gameBoard = new GameBoard();
+//     GameBoard *gameBoard = new GameBoard();
 
-    this->player1 = player1;
-    this->player2 = player2;
-    this->gameBoard = gameBoard;
-    this->tileBag = tileBag;
-    this->currentPlayer = this->player1;
-}
+//     this->player1 = player1;
+//     this->player2 = player2;
+//     this->gameBoard = gameBoard;
+//     this->tileBag = tileBag;
+//     this->currentPlayer = this->player1;
+// }
 
 void GameState::save(std::string filename)
 {
@@ -41,34 +40,34 @@ void GameState::save(std::string filename)
     else
     {
         // Write player 1 information
-        file << player1->getName() << std::endl;
-        file << player1->getScore() << std::endl;
-        file << player1->getHand() << std::endl;
+        file << players->getPlayer(0)->getName() << std::endl;
+        file << players->getPlayer(0)->getScore() << std::endl;
+        file << players->getPlayer(0)->getHand() << std::endl;
 
         // Write player 2 information
-        file << player2->getName() << std::endl;
-        file << player2->getScore() << std::endl;
-        file << player2->getHand() << std::endl;
+        file << players->getPlayer(1)->getName() << std::endl;
+        file << players->getPlayer(1)->getScore() << std::endl;
+        file << players->getPlayer(1)->getHand() << std::endl;
 
         // Write board information
         file << gameBoard->getHeight() << "," << gameBoard->getWidth() << std::endl;
-
         file << gameBoard->getState() << std::endl;
 
         // Write tile bag contents
-        file << tileBag->getHead() << std::endl;
+        file << tileBag->printBag() << std::endl;
 
         // Write current players name
         file << players->getCurrentPlayer()->getName() << std::endl;
 
         file.close();
 
-        std::cout << "Game saved successfully" << std::endl;
+        std::cout << "\nGame saved successfully to " << filename << "\n"
+                  << std::endl;
     }
-    // Takes a filepath to an existing file, reads file to construct GameState and
-    // returns GameState
 }
 
+// Takes a filepath to an existing file, reads file to construct GameState and
+// returns GameState
 void GameState::load(std::string filename)
 {
     std::ifstream file(filename);
@@ -128,40 +127,15 @@ void GameState::load(std::string filename)
 
     // tile.setTiles(tileBag);
 
-    //currentPlayer->setName(currentPlayerName);
+    // currentPlayer->setName(currentPlayerName);
 
     std::cout << "Game loaded successfully" << std::endl;
-}
-
-void GameState::setPlayer1(Player player1)
-{
-    this->player1 = &player1;
-}
-
-Player *GameState::getPlayer1()
-{
-    return player1;
-}
-
-void GameState::setPlayer2(Player player2)
-{
-    this->player2 = &player2;
-}
-
-Player *GameState::getPlayer2()
-{
-    return player2;
 }
 
 GameBoard *GameState::getGameBoard()
 {
     return gameBoard;
 }
-
-// Player *GameState::getCurrentPlayer()
-// {
-//     return currentPlayer;
-// }
 
 TileBag *GameState::getTileBag()
 {

@@ -12,19 +12,16 @@ class GameState
 
 private:
     Players *players;
-    Player *player1;
-    Player *player2;
-    Player *currentPlayer;
     GameBoard *gameBoard;
     TileBag *tileBag;
 
 public:
-    // Constructor
-    GameState(Player *player1, Player *player2, GameBoard *board, Tiles tiles, Player *currentPlayer);
+    // Default Constructor
+    GameState(){};
 
+    // New game constructor
     GameState(Players *players, GameBoard *gameBoard, TileBag *tileBag);
-
-    GameState();
+    // GameState(Player *player1, Player *player2, GameBoard *board, Tiles tiles, Player *currentPlayer);
 
     // Save the game state to a file
     void save(std::string filename);
@@ -33,13 +30,7 @@ public:
     void load(std::string filename);
 
     Players *getPlayers() { return players; };
-
-    void setPlayer1(Player player1);
-    Player *getPlayer1();
-    void setPlayer2(Player player2);
-    Player *getPlayer2();
     GameBoard *getGameBoard();
-    Player *getCurrentPlayer();
     TileBag *getTileBag();
 };
 

@@ -203,6 +203,7 @@ bool GamePlay::gamePlayOption()
                 std::string fileName = userInput.substr(pos + 1);
                 std::cout << "Saving game to: " << fileName << std::endl;
                 gameState->save(fileName);
+                invalid = true;
             }
             else
             {
@@ -292,6 +293,7 @@ bool GamePlay::placeTile(std::string location, std::string tile)
     return invalid;
 }
 
+// Validates the tile, puts it back in the tilebag and replaces it with a newly drawn tile
 bool GamePlay::replaceTile(std::string tile)
 {
     bool invalid = false;
@@ -327,9 +329,9 @@ bool GamePlay::replaceTile(std::string tile)
     return invalid;
 }
 
+// Checks if the players hand is empty - endgame
 bool GamePlay::checkEndGame()
 {
-
     if (this->currentPlayer->getHandPtr()->getSize() > 0)
     {
         return false;

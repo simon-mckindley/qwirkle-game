@@ -13,31 +13,31 @@ TileBag *TileBag::fillTileBag()
     const Shape shapes[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
     const Colour colours[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
 
-    // for (int i = 0; i < 2; i++)
-    // {
-    //     for (Shape shape : shapes)
-    //     {
-    //         for (Colour colour : colours)
-    //         {
-    //             Tile *newTile = new Tile(colour, shape);
-    //             this->addTileAtIndex(getRandomDigit(this->getSize()), newTile);
-    //         }
-    //     }
-    // }
+    for (int i = 0; i < 2; i++)
+    {
+        for (Shape shape : shapes)
+        {
+            for (Colour colour : colours)
+            {
+                Tile *newTile = new Tile(colour, shape);
+                this->addTileAtIndex(getRandomDigit(this->getSize()), newTile);
+            }
+        }
+    }
 
-    this->addTileToBack(new Tile(RED, CIRCLE));
-    this->addTileToBack(new Tile(ORANGE, CIRCLE));
-    this->addTileToBack(new Tile(YELLOW, CIRCLE));
-    this->addTileToBack(new Tile(GREEN, CIRCLE));
-    this->addTileToBack(new Tile(BLUE, CIRCLE));
-    this->addTileToBack(new Tile(PURPLE, CIRCLE));
+    // this->addTileToBack(new Tile(RED, CIRCLE));
+    // this->addTileToBack(new Tile(ORANGE, CIRCLE));
+    // this->addTileToBack(new Tile(YELLOW, CIRCLE));
+    // this->addTileToBack(new Tile(GREEN, CIRCLE));
+    // this->addTileToBack(new Tile(BLUE, CIRCLE));
+    // this->addTileToBack(new Tile(PURPLE, CIRCLE));
 
-    this->addTileToBack(new Tile(RED, CIRCLE));
-    this->addTileToBack(new Tile(ORANGE, CIRCLE));
-    this->addTileToBack(new Tile(YELLOW, CIRCLE));
-    this->addTileToBack(new Tile(GREEN, CIRCLE));
-    this->addTileToBack(new Tile(BLUE, CIRCLE));
-    this->addTileToBack(new Tile(PURPLE, CIRCLE));
+    // this->addTileToBack(new Tile(RED, CIRCLE));
+    // this->addTileToBack(new Tile(ORANGE, CIRCLE));
+    // this->addTileToBack(new Tile(YELLOW, CIRCLE));
+    // this->addTileToBack(new Tile(GREEN, CIRCLE));
+    // this->addTileToBack(new Tile(BLUE, CIRCLE));
+    // this->addTileToBack(new Tile(PURPLE, CIRCLE));
 
     // std::cout << "\tSize: " << this->getSize() << std::endl;
     // printBag();
@@ -54,13 +54,19 @@ Tile *TileBag::replaceTile(Tile *tileToReplace)
     return this->drawTile();
 }
 
-// Print bag - for testing purposes
-void TileBag::printBag()
+// Returns a comma separated string of the tile bag contents
+std::string TileBag::printBag()
 {
+    std::string bag = "";
     for (int i = 0; i < this->getSize(); i++)
     {
-        std::cout << this->getTileAtIndex(i)->getColour() << this->getTileAtIndex(i)->getShape() << ", ";
+        bag += this->getTileAtIndex(i)->getColour();
+        bag += std::to_string(this->getTileAtIndex(i)->getShape()) + ",";
     }
+
+    // Remove the last comma from the string
+    bag = bag.substr(0, bag.size() - 1);
+    return bag;
 }
 
 int TileBag::getRandomDigit(int max)
