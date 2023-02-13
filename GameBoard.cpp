@@ -384,42 +384,27 @@ void GameBoard::setWidth(int width)
     }
 }
 
-void GameBoard::setState(std::string &state)
+void GameBoard::setState(std::string &state, int height, int width)
 {
-    int width = 0, height = 0;
     int x, y;
     char color;
     int shape;
     std::stringstream ss(state);
     std::string tileString;
+    std::string xString;
 
-    while (std::getline(ss, tileString, ' '))
-    {
-        // Extract color, shape, x and y from the tile string
-        color = tileString[0];
-        shape = tileString[2] - '0';
-        x = stoi(tileString.substr(4, tileString.find(",") - 4));
-        y = stoi(tileString.substr(tileString.find(",") + 1, tileString.find(")") - tileString.find(",") - 1));
-
-        // Update the height and width of the board if necessary
-        height = std::max(height, x + 1);
-        width = std::max(width, y + 1);
-    }
-
-    // Resize the board to the dimensions read from the input string
+    // Resize the board to the dimensions
     board.resize(height, vector<Tile>(width));
 
-    // Reset the stringstream and getline to the beginning of the input string
-    ss.clear();
-    ss.str(state);
-
     // Fill the board with Tile objects based on the information in the input string
-    while (std::getline(ss, tileString, ' '))
+    while (std::getline(ss, tileString, ','))
     {
         color = tileString[0];
-        shape = tileString[2] - '0';
-        x = stoi(tileString.substr(4, tileString.find(",") - 4));
-        y = stoi(tileString.substr(tileString.find(",") + 1, tileString.find(")") - tileString.find(",") - 1));
+        shape = tileString[1] - '0';
+        std::size_t pos = tileString.find("@");
+        xString = tileString.substr(pos + 1, 1);
+        x = (xString[0] - 64) - 1;
+        y = (stoi(tileString.substr(pos + 2, tileString.find(",") - 1))) - 1;
         board[x][y] = Tile(color, shape);
     }
 }

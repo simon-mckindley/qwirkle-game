@@ -2,6 +2,7 @@
 #define ASSIGN2_TILEBAG_H
 
 #include <string>
+#include "sstream"
 
 #include "LinkedList.h"
 #include "Tile.h"
@@ -17,6 +18,9 @@ class TileBag : public LinkedList
 public:
     // Default constructor
     TileBag();
+
+    // Constructor from string list
+    TileBag(std::string bagString);
 
     TileBag *fillTileBag();
 

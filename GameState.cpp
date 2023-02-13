@@ -29,6 +29,7 @@ GameState::GameState(Players *players, GameBoard *gameBoard, TileBag *tileBag)
 //     this->currentPlayer = this->player1;
 // }
 
+// Save a the current game data to the specified file
 void GameState::save(std::string filename)
 {
     std::ofstream file(filename);
@@ -74,62 +75,74 @@ void GameState::load(std::string filename)
     if (!file)
     {
         std::cout << "Error: File Not Found." << std::endl;
-        return;
     }
+    else
+    {
+        std::string name;
+        std::string score;
+        std::string hand;
+        TileBag *newHand;
+        std::string boardDimension;
+        std::string boardState;
+        std::string tileBag;
+        std::string currentPlayerName;
 
-    // Read player 1 information
-    std::string player1Name;
-    int player1Score;
-    std::string player1Hand;
+        // Read player 1 information
+        std::getline(file, name);
+        std::getline(file, score);
+        std::getline(file, hand);
+        newHand = new TileBag(hand);
+        Player *player1 = new Player(name, newHand);
+        player1->addScore(stoi(score));
 
-    std::getline(file, player1Name);
-    file >> player1Score;
-    std::getline(file, player1Hand);
+        // Read player 2 information
+        std::getline(file, name);
+        std::getline(file, score);
+        std::getline(file, hand);
+        newHand = new TileBag(hand);
+        Player *player2 = new Player(name, newHand);
+        player2->addScore(stoi(score));
 
-    // Read player 2 information
-    std::string player2Name;
-    int player2Score;
-    std::string player2Hand;
+        // Hard-code the board height and width.
+        std::getline(file, boardDimension);
 
-    std::getline(file, player2Name);
-    file >> player2Score;
-    std::getline(file, player2Hand);
+        // Read board information
+        std::getline(file, boardState);
 
-    // Hard-code the board height and width.
-    int boardDimension = 26;
+        // Read tile bag contents
+        std::getline(file, tileBag);
 
-    // Read board information
-    std::string boardState;
-    std::getline(file, boardState);
+        // Read current player name
+        std::getline(file, currentPlayerName);
 
-    // Read tile bag contents
-    std::string tileBag;
-    std::getline(file, tileBag);
+        file.close();
 
-    // Read current player name
-    std::string currentPlayerName;
-    std::getline(file, currentPlayerName);
+        // Create players
+        this->players = new Players(player1, player2);
+        if (currentPlayerName == player1->getName())
+        {
+            this->players->setCurrentPlayer(player1);
+        }
+        else
+        {
+            this->players->setCurrentPlayer(player2);
+        }
 
-    file.close();
+        // Get dimensions from string
+        std::string::size_type pos = boardDimension.find_first_of(",");
+        int height = stoi(boardDimension.substr(0, pos));
+        int width = stoi(boardDimension.substr(pos + 1));
+        std::cout << height << ":" << width << std::endl;
 
-    // Use the read information to update the current game state
-    // player1->setName(player1Name);
-    // player1->setScore(player1Score);
-    // player1->setHand(player1Hand);
+        // Create gameboard
+        this->gameBoard = new GameBoard();
+        this->gameBoard->setState(boardState, height, width);
 
-    // player2->setName(player2Name);
-    // player2->setScore(player2Score);
-    // player2->setHand(player2Hand);
+        // Create tilebag
+        this->tileBag = new TileBag(tileBag);
 
-    gameBoard->setHeight(boardDimension);
-    gameBoard->setWidth(boardDimension);
-    gameBoard->setState(boardState);
-
-    // tile.setTiles(tileBag);
-
-    // currentPlayer->setName(currentPlayerName);
-
-    std::cout << "Game loaded successfully" << std::endl;
+        std::cout << "Game loaded successfully" << std::endl;
+    }
 }
 
 GameBoard *GameState::getGameBoard()

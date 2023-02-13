@@ -84,5 +84,5 @@ public:
     // Set width from file.
     void setWidth(int width);
 
-    void setState(std::string &state);
+    void setState(std::string &state, int height, int width);
 };
