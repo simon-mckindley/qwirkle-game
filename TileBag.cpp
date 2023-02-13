@@ -9,17 +9,15 @@ TileBag::TileBag()
 
 TileBag::TileBag(std::string bagString)
 {
-        std::istringstream iss(bagString);
-        std::string tile;
-        while (std::getline(iss, tile, ','))
-        {
-            char colour = tile[0];
-            int shape = stoi(tile.substr(1));
-            Tile *newTile = new Tile(colour, shape);
-            this->addTileToBack(newTile);
-        }
-
-        std::cout << printBag() << std::endl;
+    std::istringstream iss(bagString);
+    std::string tile;
+    while (std::getline(iss, tile, ','))
+    {
+        char colour = tile[0];
+        int shape = stoi(tile.substr(1));
+        Tile *newTile = new Tile(colour, shape);
+        this->addTileToBack(newTile);
+    }
 }
 
 TileBag *TileBag::fillTileBag()

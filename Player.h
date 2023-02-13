@@ -17,8 +17,6 @@ public:
     Player();
     Player(std::string name, TileBag *tileBag);
 
-    void increaseScore(int score);
-
     // Return the player name.
     std::string getName();
 
@@ -30,8 +28,11 @@ public:
 
     // Return the player hand as a pointer to a hand.
     Hand *getHandPtr();
+
     // Set current player state from file.
     void setHand(std::string hand);
+
+    // Increase the players score
     void addScore(int score);
 };
 

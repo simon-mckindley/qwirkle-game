@@ -11,6 +11,7 @@ Players::Players(Player *player1, Player *player2)
     this->currentPlayer = this->players[0];
 }
 
+// Returns the next player and assigns them as the current player
 Player *Players::nextPlayer()
 {
     if (this->currentPlayer == this->players[1])
@@ -28,11 +29,6 @@ Player *Players::nextPlayer()
 Player *Players::getPlayer(int i)
 {
     return this->players[i];
-}
-
-Player *Players::getCurrentPlayer()
-{
-    return this->currentPlayer;
 }
 
 void Players::setCurrentPlayer(Player *player)

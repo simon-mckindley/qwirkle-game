@@ -4,7 +4,7 @@ GameBoard::GameBoard(){};
 
 GameBoard::GameBoard(vector<vector<Tile>> board)
 {
-    board = board;
+    this->board = board;
 }
 
 int GameBoard::getHeight()
@@ -282,6 +282,7 @@ std::vector<Tile> GameBoard::getTilesOnCol(int x, int y)
     return tiles;
 }
 
+// Return the state of the board as a string
 std::string GameBoard::getState()
 {
     std::string state;
@@ -306,19 +307,43 @@ std::string GameBoard::getState()
     return state;
 }
 
+// Sets the board according to the data passed in from the load file method
+void GameBoard::setState(std::string &state, int height, int width)
+{
+    int x, y;
+    char color;
+    int shape;
+    std::stringstream ss(state);
+    std::string tileString;
+    std::string xString;
+
+    // Resize the board to the dimensions
+    board.resize(height, vector<Tile>(width));
+
+    // Fill the board with Tile objects based on the information in the input string
+    while (std::getline(ss, tileString, ','))
+    {
+        color = tileString[0];
+        shape = tileString[1] - '0';
+        std::size_t pos = tileString.find("@");
+        xString = tileString.substr(pos + 1, 1);
+        x = (xString[0] - 64) - 1;
+        y = (stoi(tileString.substr(pos + 2, tileString.find(",") - 1))) - 1;
+        board[x][y] = Tile(color, shape);
+    }
+}
+
 // Iterates through each row of the board and builds a string
 // for printing to the console
 std::string GameBoard::toString()
 {
     std::string boardString = " ";
+    int i;
 
     // Print Column Numbers
-    int i = 0;
-
-    while (i < getWidth())
+    for (i = 1; i <= getWidth(); i++)
     {
         // Keeps figures centred over columns regardless of one or two digit length
-        i++;
         boardString.append(" " + std::to_string(i));
         if (i < 10)
         {
@@ -328,11 +353,9 @@ std::string GameBoard::toString()
     boardString.append("\n");
 
     // Print divider
-    i = 0;
     boardString.push_back(' ');
-    while (i < getWidth())
+    for (i = 0; i < getWidth(); i++)
     {
-        i++;
         boardString.append("---");
     }
     boardString.append("-\n");
@@ -359,52 +382,12 @@ std::string GameBoard::toString()
         boardString.append("|\n");
     }
 
-    i = 0;
     boardString.push_back(' ');
-    while (i < getWidth())
+    for (i = 0; i < getWidth(); i++)
     {
-        i++;
         boardString.append("---");
     }
     boardString.append("-\n");
 
     return boardString;
-}
-
-void GameBoard::setHeight(int height)
-{
-    board.resize(height, vector<Tile>(board[0].size()));
-}
-
-void GameBoard::setWidth(int width)
-{
-    for (int i = 0; i < board.size(); i++)
-    {
-        board[i].resize(width);
-    }
-}
-
-void GameBoard::setState(std::string &state, int height, int width)
-{
-    int x, y;
-    char color;
-    int shape;
-    std::stringstream ss(state);
-    std::string tileString;
-    std::string xString;
-
-    // Resize the board to the dimensions
-    board.resize(height, vector<Tile>(width));
-
-    // Fill the board with Tile objects based on the information in the input string
-    while (std::getline(ss, tileString, ','))
-    {
-        color = tileString[0];
-        shape = tileString[1] - '0';
-        std::size_t pos = tileString.find("@");
-        xString = tileString.substr(pos + 1, 1);
-        x = (xString[0] - 64) - 1;
-        y = (stoi(tileString.substr(pos + 2, tileString.find(",") - 1))) - 1;
-        board[x][y] = Tile(color, shape);
-    }
 }

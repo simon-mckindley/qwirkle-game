@@ -12,11 +12,6 @@ Player::Player(std::string name, TileBag *tileBag)
     this->playerHand = new Hand(tileBag);
 }
 
-void Player::increaseScore(int score)
-{
-    this->score += score;
-}
-
 std::string Player::getName()
 {
     return name;

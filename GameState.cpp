@@ -1,8 +1,4 @@
 #include "GameState.h"
-#include "fstream"
-#include "iostream"
-#include "TileBag.h"
-#include "Player.h"
 
 GameState::GameState(Players *players, GameBoard *gameBoard, TileBag *tileBag)
 {
@@ -10,24 +6,6 @@ GameState::GameState(Players *players, GameBoard *gameBoard, TileBag *tileBag)
     this->gameBoard = gameBoard;
     this->tileBag = tileBag;
 }
-
-// Default GameState, used for loading game
-// GameState::GameState()
-// {
-//     TileBag *tileBag = new TileBag();
-//     tileBag->fillTileBag();
-
-//     Player *player1 = new Player("", tileBag);
-//     Player *player2 = new Player("", tileBag);
-
-//     GameBoard *gameBoard = new GameBoard();
-
-//     this->player1 = player1;
-//     this->player2 = player2;
-//     this->gameBoard = gameBoard;
-//     this->tileBag = tileBag;
-//     this->currentPlayer = this->player1;
-// }
 
 // Save a the current game data to the specified file
 void GameState::save(std::string filename)
@@ -69,12 +47,13 @@ void GameState::save(std::string filename)
 
 // Takes a filepath to an existing file, reads file to construct GameState and
 // returns GameState
-void GameState::load(std::string filename)
+bool GameState::load(std::string filename)
 {
     std::ifstream file(filename);
     if (!file)
     {
         std::cout << "Error: File Not Found." << std::endl;
+        return false;
     }
     else
     {
@@ -103,7 +82,7 @@ void GameState::load(std::string filename)
         Player *player2 = new Player(name, newHand);
         player2->addScore(stoi(score));
 
-        // Hard-code the board height and width.
+        // Read board height and width.
         std::getline(file, boardDimension);
 
         // Read board information
@@ -132,7 +111,6 @@ void GameState::load(std::string filename)
         std::string::size_type pos = boardDimension.find_first_of(",");
         int height = stoi(boardDimension.substr(0, pos));
         int width = stoi(boardDimension.substr(pos + 1));
-        std::cout << height << ":" << width << std::endl;
 
         // Create gameboard
         this->gameBoard = new GameBoard();
@@ -142,15 +120,6 @@ void GameState::load(std::string filename)
         this->tileBag = new TileBag(tileBag);
 
         std::cout << "Game loaded successfully" << std::endl;
+        return true;
     }
-}
-
-GameBoard *GameState::getGameBoard()
-{
-    return gameBoard;
-}
-
-TileBag *GameState::getTileBag()
-{
-    return tileBag;
 }

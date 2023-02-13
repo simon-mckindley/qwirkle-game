@@ -10,15 +10,16 @@ private:
     Player *currentPlayer;
 
 public:
+    // Constructors
     Players();
     Players(Player *player1, Player *player2);
 
     // Returns the next player and assigns them as the current player
     Player *nextPlayer();
+
+    // Accessor / Mutator methods
     Player *getPlayer(int i);
-    Player *getCurrentPlayer();
-    void setNextPlayer(Player player);
-    void setPlayer(Player player);
+    Player *getCurrentPlayer() { return this->currentPlayer; };
     void setCurrentPlayer(Player *player);
 };
 

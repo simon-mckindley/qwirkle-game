@@ -26,13 +26,10 @@ public:
     // Accessors
     Colour getColour();
     Shape getShape();
-    Tile *getTile();
-    Tile getTile(Colour colour, Shape shape);
 
     // Mutators
     void setColour(Colour colour);
     void setShape(Shape shape);
-    void setTile(Tile *tile);
 
 private:
     Colour colour;

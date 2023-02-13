@@ -30,15 +30,15 @@ void GamePlay::createNewGame()
 
     std::string player1name;
     std::string player2name;
-    // std::cout << "\nEnter a name for Player 1 (Uppercase characters only)" << std::endl;
-    // player1name = getPlayerName();
-    // std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
-    // player2name = getPlayerName();
-    // std::cout << "\nWelcome, " << player1name << " and " << player2name
-    //           << "\n\tLets Play!" << std::endl;
+    std::cout << "\nEnter a name for Player 1 (Uppercase characters only)" << std::endl;
+    player1name = getPlayerName();
+    std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
+    player2name = getPlayerName();
+    std::cout << "\nWelcome, " << player1name << " and " << player2name
+              << "\n\tLets Play!" << std::endl;
 
-    player1name = "ONE";
-    player2name = "TWO";
+    // player1name = "ONE";
+    // player2name = "TWO";
 
     TileBag *tileBag = new TileBag();
     tileBag->fillTileBag();
@@ -58,30 +58,31 @@ void GamePlay::createNewGame()
 
 void GamePlay::loadGame()
 {
-    UserPrompt userPrompt;
     std::cout << "\nLoad a saved game" << std::endl;
 
     std::string filename;
     std::cout << "\nEnter the filename from which to load a save game" << std::endl;
-    filename = userPrompt.getInput();
+    filename = UserPrompt::getInput();
     std::cout << "\nLoading game from : " << filename << std::endl;
 
     gameState = new GameState();
-    gameState->load(filename);
+    bool loaded = gameState->load(filename);
 
-    gamePlay();
+    if (loaded)
+    {
+        gamePlay();
+    }
 }
 
 // Accepts and validates new player names
 std::string GamePlay::getPlayerName()
 {
-    UserPrompt userPrompt;
     std::string name = "";
     bool valid;
     do
     {
         valid = true;
-        name = userPrompt.getInput();
+        name = UserPrompt::getInput();
         for (char c : name)
         {
             if (!isupper(c))
@@ -108,7 +109,7 @@ void GamePlay::printGameStatus()
               << ": " << gameState->getPlayers()->getPlayer(1)->getScore();
     std::cout << "\nTiles left in Tile Bag: "
               << gameState->getTileBag()->getSize() << std::endl;
-    std::cout << "\nBoard:\n"
+    std::cout << "\n"
               << gameState->getGameBoard()->toString() << std::endl;
     std::cout << "Your hand is:\n"
               << currentPlayer->getHand() << "\n"
@@ -161,7 +162,6 @@ bool GamePlay::gamePlayOption()
     do
     {
         invalid = false;
-        UserPrompt userPrompt;
 
         std::cout << currentPlayer->getName()
                   << " - What would you like to do?\n"
@@ -170,7 +170,7 @@ bool GamePlay::gamePlayOption()
                   << "\tsave <filename>\n"
                   << "\tquit" << std::endl;
 
-        userInput = userPrompt.getInput();
+        userInput = UserPrompt::getInput();
         int length = userInput.length();
 
         std::string::size_type pos = userInput.find_first_of(" ");
@@ -262,6 +262,7 @@ bool GamePlay::placeTile(std::string location, std::string tile)
                 this->firstTurn = false;
                 int score = this->gameState->getGameBoard()->setTile(xCoordinate, yCoordinate, tilePtr);
                 this->currentPlayer->addScore(score);
+                std::cout << "Score for this placement: " << score << std::endl;
 
                 Node *nodeToRemove = this->currentPlayer->getHandPtr()->getNode(tilePtr);
                 this->currentPlayer->getHandPtr()->removeItemFromList(nodeToRemove);

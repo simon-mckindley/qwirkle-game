@@ -1,4 +1,3 @@
-
 #ifndef ASSIGN2_LINKEDLIST_H
 #define ASSIGN2_LINKEDLIST_H
 
@@ -28,7 +27,6 @@ public:
     void setSize(int size);
 
     // Functions to add/remove TileBag.
-
     void addTileToBack(Tile *tile);
     void addTileToFront(Tile *tile);
     void addTileAtIndex(int index, Tile *tile);

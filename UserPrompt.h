@@ -12,7 +12,7 @@
 class UserPrompt
 {
 public:
-    std::string getInput();
+    static std::string getInput();
 };
 
 #endif // ASSIGN2_USERPROMPT_H

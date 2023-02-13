@@ -24,15 +24,12 @@ int main(void)
     std::cout << "\nWelcome to Qwirkle!\n"
               << "-------------------" << std::endl;
 
-    // GamePlay gamePlay;
-    // gamePlay.createNewGame();
     std::string choice;
-    UserPrompt userPrompt;
 
     do
     {
         printMainMenu();
-        choice = userPrompt.getInput();
+        choice = UserPrompt::getInput();
         mainMenuOption(choice);
 
     } while (choice != QUIT);
@@ -46,7 +43,7 @@ void printMainMenu()
               << "1. New Game\n"
               << "2. Load Game\n"
               << "3. Credits\n"
-              << "4. Quit\n"
+              << "4. Exit\n"
               << std::endl;
 }
 
