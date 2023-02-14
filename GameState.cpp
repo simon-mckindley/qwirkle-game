@@ -37,7 +37,7 @@ void GameState::save(std::string filename)
         file << tileBag->printBag() << std::endl;
 
         // Write current players name
-        file << players->getCurrentPlayer()->getName() << std::endl;
+        file << players->getCurrentPlayerIndex() << std::endl;
 
         file.close();
 
@@ -67,7 +67,7 @@ bool GameState::load(std::string filename)
         std::string boardDimension;
         std::string boardState;
         std::string tileBag;
-        std::string currentPlayerName;
+        std::string currentPlayer;
 
         try
         {
@@ -96,9 +96,12 @@ bool GameState::load(std::string filename)
             std::getline(file, tileBag);
 
             // Read current player name
-            std::getline(file, currentPlayerName);
+            std::getline(file, currentPlayer);
 
             file.close();
+
+            // Set current player
+            players->setCurrentPlayerIndex(stoi(currentPlayer));
 
             // Get dimensions from string
             std::string::size_type pos = boardDimension.find_first_of(",");

@@ -42,6 +42,11 @@ void Players::setCurrentPlayerIndex(int i)
     this->currentPlayerIndex = i;
 }
 
+int Players::getCurrentPlayerIndex()
+{
+    return this->currentPlayerIndex;
+}
+
 int Players::getSize()
 {
     return this->players.size();

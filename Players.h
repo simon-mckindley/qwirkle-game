@@ -24,6 +24,7 @@ public:
     Player *getPlayer(int i);
     Player *getCurrentPlayer();
     void setCurrentPlayerIndex(int i);
+    int getCurrentPlayerIndex();
     int getSize();
 };
 
