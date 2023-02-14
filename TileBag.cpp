@@ -22,7 +22,7 @@ TileBag::TileBag(std::string bagString)
 
 TileBag *TileBag::fillTileBag()
 {
-    std::cout << "Filling Tile Bag..." << std::endl;
+    std::cout << "Randomising Tile Bag..." << std::endl;
     const Shape shapes[6] = {CIRCLE, STAR_4, DIAMOND, SQUARE, STAR_6, CLOVER};
     const Colour colours[6] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE};
 

@@ -338,5 +338,6 @@ bool GamePlay::checkEndGame()
         return false;
     }
 
+    this->currentPlayer->addScore(6);
     return true;
 }

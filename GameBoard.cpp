@@ -317,6 +317,8 @@ void GameBoard::setState(std::string &state, int height, int width)
     std::string tileString;
     std::string xString;
 
+    std::cout << "Re-creating the board..." << std::endl;
+
     // Resize the board to the dimensions
     board.resize(height, vector<Tile>(width));
 
