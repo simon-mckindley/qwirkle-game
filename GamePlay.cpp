@@ -24,38 +24,76 @@ void GamePlay::gamePlay()
     delete gameState;
 }
 
+// Creates a new 2-4 (human) player game
 void GamePlay::createNewGame()
 {
     std::cout << "\nStarting a new game." << std::endl;
 
-    std::string player1name;
-    std::string player2name;
-    std::cout << "\nEnter a name for Player 1 (Uppercase characters only)" << std::endl;
-    player1name = getPlayerName();
-    std::cout << "\nEnter a name for Player 2 (Uppercase characters only)" << std::endl;
-    player2name = getPlayerName();
-    std::cout << "\nWelcome, " << player1name << " and " << player2name
-              << "\n\tLets Play!" << std::endl;
-
-    // player1name = "ONE";
-    // player2name = "TWO";
-
+    Players *players = new Players();
     TileBag *tileBag = new TileBag();
+    GameBoard *gameBoard = new GameBoard();
     tileBag->fillTileBag();
 
-    // Creates new players and allocate hands of tiles
-    Player *player1 = new Player(player1name, tileBag);
-    Player *player2 = new Player(player2name, tileBag);
+    int numPlayers = validatePlayerNum();
+
+    // Create new players
+    for (int i = 1; i <= numPlayers; i++)
+    {
+        std::cout << "\nEnter a name for Player " << i
+                  << " (Uppercase characters only)" << std::endl;
+        std::string playerName = getPlayerName();
+
+        Player *player = new Player(playerName, tileBag);
+        players->addPlayer(*player);
+    }
+
+    // Welcome message
+    std::cout << "\nWelcome, ";
+    for (int i = 0; i < players->getSize(); i++)
+    {
+        std::cout << players->getPlayer(i)->getName();
+        if (i < players->getSize() - 1)
+        {
+            std::cout << ", ";
+        }
+    }
+    std::cout << "\n\tLets Play!" << std::endl;
 
     // Creates new Gamestate object for the pointer
-    Players *players = new Players(player1, player2);
-    GameBoard *gameBoard = new GameBoard();
-
     gameState = new GameState(players, gameBoard, tileBag);
 
     gamePlay();
 }
 
+// Creates a new AI versus (human) player game
+void GamePlay::createAIGame()
+{
+    std::cout << "\nStarting a new game." << std::endl;
+
+    std::string playerName;
+    std::cout << "\nEnter your player name (Uppercase characters only)" << std::endl;
+    playerName = getPlayerName();
+    std::cout << "\nWelcome, " << playerName
+              << "\n\tLets Play!" << std::endl;
+
+    // player1name = "ONE";
+
+    TileBag *tileBag = new TileBag();
+    tileBag->fillTileBag();
+
+    // Creates new players and allocate hands of tiles
+    Player *player = new Player(playerName, tileBag);
+
+    // Creates new Gamestate object for the pointer
+    // Players *players = new Players(player1, player2);
+    GameBoard *gameBoard = new GameBoard();
+
+    // gameState = new GameState(players, gameBoard, tileBag);
+
+    gamePlay();
+}
+
+// Calls the load method of gamestate with the specified file
 void GamePlay::loadGame()
 {
     std::cout << "\nLoad a saved game" << std::endl;
@@ -72,6 +110,35 @@ void GamePlay::loadGame()
     {
         gamePlay();
     }
+}
+
+// Validates and returns the number of players
+int GamePlay::validatePlayerNum()
+{
+    int numPlayers = 0;
+    const int minPlayers = 2;
+    const int maxPlayers = 4;
+
+    std::cout << "\nHow many players are there? (" << minPlayers << " - " << maxPlayers << ")"
+              << std::endl;
+    do
+    {
+        try
+        {
+            numPlayers = stoi(UserPrompt::getInput());
+
+            if (numPlayers < minPlayers || numPlayers > maxPlayers)
+            {
+                std::cout << "Invalid input" << std::endl;
+            }
+        }
+        catch (const std::invalid_argument &e)
+        {
+            std::cout << "Invalid input" << std::endl;
+        }
+    } while (numPlayers < minPlayers || numPlayers > maxPlayers);
+
+    return numPlayers;
 }
 
 // Accepts and validates new player names
@@ -101,12 +168,13 @@ std::string GamePlay::getPlayerName()
 // Prints the game status at the start of each players turn
 void GamePlay::printGameStatus()
 {
-    std::cout << "\nScore for "
-              << gameState->getPlayers()->getPlayer(0)->getName()
-              << ": " << gameState->getPlayers()->getPlayer(0)->getScore();
-    std::cout << "\nScore for "
-              << gameState->getPlayers()->getPlayer(1)->getName()
-              << ": " << gameState->getPlayers()->getPlayer(1)->getScore();
+    for (int i = 0; i < gameState->getPlayers()->getSize(); i++)
+    {
+        std::cout << "\nScore for "
+                  << gameState->getPlayers()->getPlayer(i)->getName()
+                  << ": " << gameState->getPlayers()->getPlayer(i)->getScore();
+    }
+
     std::cout << "\nTiles left in Tile Bag: "
               << gameState->getTileBag()->getSize() << std::endl;
     std::cout << "\n"
@@ -119,38 +187,36 @@ void GamePlay::printGameStatus()
 // Prints the results at the end of a game
 void GamePlay::printEndGame()
 {
-    int p1Score = gameState->getPlayers()->getPlayer(0)->getScore();
-    int p2Score = gameState->getPlayers()->getPlayer(1)->getScore();
+    int topScore = 0;
     std::string winner = "";
 
-    std::cout << "\n\tGAME OVER"
-              << "\nScore for "
-              << gameState->getPlayers()->getPlayer(0)->getName()
-              << ": " << p1Score;
-    std::cout << "\nScore for "
-              << gameState->getPlayers()->getPlayer(1)->getName()
-              << ": " << p2Score
-              << std::endl;
+    std::cout << "\n\tGAME OVER";
+    for (int i = 0; i < gameState->getPlayers()->getSize(); i++)
+    {
+        int score = gameState->getPlayers()->getPlayer(i)->getScore();
+        std::string name = gameState->getPlayers()->getPlayer(i)->getName();
+        if (score > topScore)
+        {
+            topScore = score;
+            winner = name;
+        }
+        else if (score == topScore)
+        {
+            winner = "tied";
+        }
+        std::cout << "\nScore for " << name << ": " << score;
+    }
 
-    if (p1Score == p2Score)
+    if (winner == "tied")
     {
         std::cout << "The game is a tie!\n"
                   << std::endl;
-        return;
     }
-    else if (p1Score > p2Score)
+    else
     {
-        winner = gameState->getPlayers()->getPlayer(0)->getName();
+        std::cout << "Player " << winner << " has won!\n"
+                  << std::endl;
     }
-    else if (p2Score > p1Score)
-    {
-        winner = gameState->getPlayers()->getPlayer(1)->getName();
-    }
-
-    std::cout << "Player "
-              << winner
-              << " has won!\n"
-              << std::endl;
 }
 
 // Gets and validates user gameplay input
@@ -277,7 +343,7 @@ bool GamePlay::placeTile(std::string location, std::string tile)
                 invalid = true;
             }
         }
-        catch (std::invalid_argument arg)
+        catch (const std::invalid_argument &e)
         {
             std::cout << "Invalid location" << std::endl;
             invalid = true;

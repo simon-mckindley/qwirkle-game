@@ -15,9 +15,10 @@ void printCredits();
 
 // Menu options
 #define NEW_GAME "1"
-#define LOAD_GAME "2"
-#define CREDITS "3"
-#define QUIT "4"
+#define AI_GAME "2"
+#define LOAD_GAME "3"
+#define CREDITS "4"
+#define QUIT "5"
 
 int main(void)
 {
@@ -40,7 +41,8 @@ int main(void)
 void printMainMenu()
 {
     std::cout << "\n--- Main Menu ---\n"
-              << "1. New Game\n"
+              << "1. New Game (2-4 Players) \n"
+              << "2. New AI Game (You vs AI player)\n"
               << "2. Load Game\n"
               << "3. Credits\n"
               << "4. Exit\n"
@@ -54,6 +56,11 @@ void mainMenuOption(std::string userSelection)
     {
         GamePlay gamePlay;
         gamePlay.createNewGame();
+    }
+    else if (userSelection == AI_GAME)
+    {
+        GamePlay gamePlay;
+        gamePlay.createAIGame();
     }
     else if (userSelection == LOAD_GAME)
     {

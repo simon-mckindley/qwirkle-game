@@ -15,10 +15,6 @@ private:
     // within is the existing columns and their values
     std::vector<std::vector<Tile>> board{26, std::vector<Tile>{26, Tile(NO_COL, NO_SHAPE)}};
 
-    // Used to track the current tiles in play. This avoids counting tiles
-    // that have been placed within the same move twice.
-    vector<Tile> currentTiles;
-
     // Helper method that returns all the tiles in a row or column that are
     // in play with a tile in the given x, y space. This does NOT include tiles
     // that share a row or column, but are seperated by an empty tiles space

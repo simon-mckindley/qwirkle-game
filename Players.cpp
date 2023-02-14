@@ -2,36 +2,47 @@
 #include "Players.h"
 
 // Default constructor
-Players::Players() {}
-
-Players::Players(Player *player1, Player *player2)
+Players::Players()
 {
-    this->players[0] = player1;
-    this->players[1] = player2;
-    this->currentPlayer = this->players[0];
+    this->currentPlayerIndex = 0;
+}
+
+void Players::addPlayer(Player player)
+{
+    this->players.push_back(player);
 }
 
 // Returns the next player and assigns them as the current player
 Player *Players::nextPlayer()
 {
-    if (this->currentPlayer == this->players[1])
+    if (this->currentPlayerIndex >= this->players.size() - 1)
     {
-        setCurrentPlayer(this->players[0]);
+        this->currentPlayerIndex = 0;
     }
     else
     {
-        setCurrentPlayer(this->players[1]);
+        this->currentPlayerIndex++;
     }
 
-    return this->currentPlayer;
+    return &this->players.at(this->currentPlayerIndex);
 }
 
 Player *Players::getPlayer(int i)
 {
-    return this->players[i];
+    return &this->players.at(i);
 }
 
-void Players::setCurrentPlayer(Player *player)
+Player *Players::getCurrentPlayer()
 {
-    this->currentPlayer = player;
+    return &this->players.at(this->currentPlayerIndex);
+}
+
+void Players::setCurrentPlayerIndex(int i)
+{
+    this->currentPlayerIndex = i;
+}
+
+int Players::getSize()
+{
+    return this->players.size();
 }

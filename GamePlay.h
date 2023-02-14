@@ -34,6 +34,9 @@ private:
     // Gets and validates user gameplay input
     bool gamePlayOption();
 
+    // Validates and returns the number of players
+    int validatePlayerNum();
+
     // Accepts and validates player names
     std::string getPlayerName();
 
@@ -42,6 +45,9 @@ private:
 public:
     // Creates and starts a new Qwirkle game
     void createNewGame();
+
+    // Creates and starts a new Qwirkle game with AI player
+    void createAIGame();
 
     // Loads a Qwirkle game from the specified file
     void loadGame();

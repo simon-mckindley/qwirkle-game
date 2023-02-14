@@ -49,77 +49,77 @@ void GameState::save(std::string filename)
 // returns GameState
 bool GameState::load(std::string filename)
 {
-    std::ifstream file(filename);
-    if (!file)
-    {
-        std::cout << "Error: File Not Found." << std::endl;
-        return false;
-    }
-    else
-    {
-        std::string name;
-        std::string score;
-        std::string hand;
-        TileBag *newHand;
-        std::string boardDimension;
-        std::string boardState;
-        std::string tileBag;
-        std::string currentPlayerName;
+    // std::ifstream file(filename);
+    // if (!file)
+    // {
+    //     std::cout << "Error: File Not Found." << std::endl;
+    //     return false;
+    // }
+    // else
+    // {
+    //     std::string name;
+    //     std::string score;
+    //     std::string hand;
+    //     TileBag *newHand;
+    //     std::string boardDimension;
+    //     std::string boardState;
+    //     std::string tileBag;
+    //     std::string currentPlayerName;
 
-        // Read player 1 information
-        std::getline(file, name);
-        std::getline(file, score);
-        std::getline(file, hand);
-        newHand = new TileBag(hand);
-        Player *player1 = new Player(name, newHand);
-        player1->addScore(stoi(score));
+    //     // Read player 1 information
+    //     std::getline(file, name);
+    //     std::getline(file, score);
+    //     std::getline(file, hand);
+    //     newHand = new TileBag(hand);
+    //     Player *player1 = new Player(name, newHand);
+    //     player1->addScore(stoi(score));
 
-        // Read player 2 information
-        std::getline(file, name);
-        std::getline(file, score);
-        std::getline(file, hand);
-        newHand = new TileBag(hand);
-        Player *player2 = new Player(name, newHand);
-        player2->addScore(stoi(score));
+    //     // Read player 2 information
+    //     std::getline(file, name);
+    //     std::getline(file, score);
+    //     std::getline(file, hand);
+    //     newHand = new TileBag(hand);
+    //     Player *player2 = new Player(name, newHand);
+    //     player2->addScore(stoi(score));
 
-        // Read board height and width.
-        std::getline(file, boardDimension);
+    //     // Read board height and width.
+    //     std::getline(file, boardDimension);
 
-        // Read board information
-        std::getline(file, boardState);
+    //     // Read board information
+    //     std::getline(file, boardState);
 
-        // Read tile bag contents
-        std::getline(file, tileBag);
+    //     // Read tile bag contents
+    //     std::getline(file, tileBag);
 
-        // Read current player name
-        std::getline(file, currentPlayerName);
+    //     // Read current player name
+    //     std::getline(file, currentPlayerName);
 
-        file.close();
+    //     file.close();
 
-        // Create players
-        this->players = new Players(player1, player2);
-        if (currentPlayerName == player1->getName())
-        {
-            this->players->setCurrentPlayer(player1);
-        }
-        else
-        {
-            this->players->setCurrentPlayer(player2);
-        }
+    //     // Create players
+    //     this->players = new Players(player1, player2);
+    //     if (currentPlayerName == player1->getName())
+    //     {
+    //         this->players->setCurrentPlayer(player1);
+    //     }
+    //     else
+    //     {
+    //         this->players->setCurrentPlayer(player2);
+    //     }
 
-        // Get dimensions from string
-        std::string::size_type pos = boardDimension.find_first_of(",");
-        int height = stoi(boardDimension.substr(0, pos));
-        int width = stoi(boardDimension.substr(pos + 1));
+    //     // Get dimensions from string
+    //     std::string::size_type pos = boardDimension.find_first_of(",");
+    //     int height = stoi(boardDimension.substr(0, pos));
+    //     int width = stoi(boardDimension.substr(pos + 1));
 
-        // Create gameboard
-        this->gameBoard = new GameBoard();
-        this->gameBoard->setState(boardState, height, width);
+    //     // Create gameboard
+    //     this->gameBoard = new GameBoard();
+    //     this->gameBoard->setState(boardState, height, width);
 
-        // Create tilebag
-        this->tileBag = new TileBag(tileBag);
+    //     // Create tilebag
+    //     this->tileBag = new TileBag(tileBag);
 
-        std::cout << "Game loaded successfully" << std::endl;
+    //     std::cout << "Game loaded successfully" << std::endl;
         return true;
-    }
+    // }
 }
