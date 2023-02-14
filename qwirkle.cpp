@@ -41,11 +41,11 @@ int main(void)
 void printMainMenu()
 {
     std::cout << "\n--- Main Menu ---\n"
-              << "1. New Game (2-4 Players) \n"
-              << "2. New AI Game (You vs AI player)\n"
-              << "2. Load Game\n"
-              << "3. Credits\n"
-              << "4. Exit\n"
+              << NEW_GAME << ". New Game (2-4 Players) \n"
+              << AI_GAME << ". New AI Game (You vs AI player)\n"
+              << LOAD_GAME << ". Load Game\n"
+              << CREDITS << ". Credits\n"
+              << QUIT << ". Exit\n"
               << std::endl;
 }
 
