@@ -367,7 +367,6 @@ std::string GameBoard::toString()
     for (vector<Tile> row : board)
     {
         boardString.push_back(char(65 + i));
-        i++;
 
         for (Tile col : row)
         {
@@ -381,7 +380,11 @@ std::string GameBoard::toString()
             boardString.push_back(c);
             boardString.append(s);
         }
-        boardString.append("|\n");
+
+        boardString.push_back('|');
+        boardString.push_back(char(65 + i));
+        boardString.push_back('\n');
+        i++;
     }
 
     boardString.push_back(' ');
@@ -389,7 +392,19 @@ std::string GameBoard::toString()
     {
         boardString.append("---");
     }
-    boardString.append("-\n");
+    boardString.append("-\n ");
+
+    // Print Column Numbers
+    for (i = 1; i <= getWidth(); i++)
+    {
+        // Keeps figures centred over columns regardless of one or two digit length
+        boardString.append(" " + std::to_string(i));
+        if (i < 10)
+        {
+            boardString.push_back(' ');
+        }
+    }
+    boardString.push_back('\n');
 
     return boardString;
 }
