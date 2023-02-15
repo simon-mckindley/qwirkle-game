@@ -1,7 +1,4 @@
 #include "Hand.h"
-#include "Node.h"
-#include "Tile.h"
-#include <iostream>
 
 Hand::Hand(TileBag *tileBag)
 {

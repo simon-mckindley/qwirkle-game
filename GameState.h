@@ -2,6 +2,7 @@
 #define ASSIGN2_GAMESTATEE_H
 
 #include "Player.h"
+#include "AI_Player.h"
 #include "Players.h"
 #include "Tiles.h"
 #include "TileBag.h"

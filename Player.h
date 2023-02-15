@@ -3,15 +3,17 @@
 
 #include "LinkedList.h"
 #include "Hand.h"
+#include "TileBag.h"
 #include <string>
 #include <sstream>
 
 class Player
 {
-private:
+protected:
     std::string name;
     int score;
     Hand *playerHand;
+    bool isAI;
 
 public:
     Player();
@@ -34,6 +36,8 @@ public:
 
     // Increase the players score
     void addScore(int score);
+
+    bool getIsAI();
 };
 
 #endif // ASSIGN2_PLAYER_H

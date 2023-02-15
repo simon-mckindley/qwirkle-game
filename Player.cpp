@@ -1,25 +1,24 @@
 #include "Player.h"
-#include "TileBag.h"
 
-Player::Player()
-{
-}
+Player::Player() {}
+
 // Cosntructor to assign name and hand at creation.
 Player::Player(std::string name, TileBag *tileBag)
 {
     this->name = name;
-    score = 0;
+    this->score = 0;
     this->playerHand = new Hand(tileBag);
+    this->isAI = false;
 }
 
 std::string Player::getName()
 {
-    return name;
+    return this->name;
 }
 
 int Player::getScore()
 {
-    return score;
+    return this->score;
 }
 
 void Player::addScore(int score)
@@ -63,3 +62,7 @@ Hand *Player::getHandPtr()
     return this->playerHand;
 }
 
+bool Player::getIsAI()
+{
+    return this->isAI;
+}

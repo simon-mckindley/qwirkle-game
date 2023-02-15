@@ -83,12 +83,16 @@ void GamePlay::createAIGame()
 
     // Creates new players and allocate hands of tiles
     Player *player = new Player(playerName, tileBag);
+    Player *ai_player = new AI_Player(tileBag);
+    Players *players = new Players();
+    players->addPlayer(*player);
+    players->addPlayer(*ai_player);
+    
 
     // Creates new Gamestate object for the pointer
-    // Players *players = new Players(player1, player2);
     GameBoard *gameBoard = new GameBoard();
 
-    // gameState = new GameState(players, gameBoard, tileBag);
+    gameState = new GameState(players, gameBoard, tileBag);
 
     gamePlay();
 }

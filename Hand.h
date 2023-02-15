@@ -4,6 +4,8 @@
 #include "Node.h"
 #include "LinkedList.h"
 #include "TileBag.h"
+#include "Tile.h"
+#include <iostream>
 
 class Hand : public LinkedList
 {
