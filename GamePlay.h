@@ -34,6 +34,8 @@ private:
     // Gets and validates user gameplay input
     bool gamePlayOption();
 
+    bool aiPlayOption();
+
     // Validates and returns the number of players
     int validatePlayerNum();
 

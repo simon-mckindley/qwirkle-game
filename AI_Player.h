@@ -3,7 +3,11 @@
 
 #include "Player.h"
 #include "Hand.h"
+#include "GameBoard.h"
 #include <string>
+
+#define PLACE_CMD 'P'
+#define REPLACE_CMD 'R'
 
 class AI_Player : public Player
 {
@@ -14,7 +18,7 @@ public:
     // Constructor to assign name and hand at creation.
     AI_Player(TileBag *tileBag);
 
-    void gamePlay();
+    std::string gamePlay(GameBoard *board);
 };
 
 #endif // ASSIGN2_AI_PLAYER_H

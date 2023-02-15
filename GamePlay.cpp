@@ -16,7 +16,16 @@ void GamePlay::gamePlay()
         std::cout << "\n******************************************\n"
                   << currentPlayer->getName() << ", it's your turn";
         printGameStatus();
-        endGame = gamePlayOption();
+
+        if (currentPlayer->getIsAI())
+        {
+            endGame = aiPlayOption();
+        }
+        else
+        {
+            endGame = gamePlayOption();
+        }
+
         currentPlayer = gameState->getPlayers()->nextPlayer();
 
     } while (!endGame);
@@ -87,7 +96,6 @@ void GamePlay::createAIGame()
     Players *players = new Players();
     players->addPlayer(*player);
     players->addPlayer(*ai_player);
-    
 
     // Creates new Gamestate object for the pointer
     GameBoard *gameBoard = new GameBoard();
@@ -295,6 +303,41 @@ bool GamePlay::gamePlayOption()
         }
 
     } while (invalid);
+
+    endGame = checkEndGame();
+    if (endGame)
+    {
+        printEndGame();
+    }
+
+    return endGame;
+}
+
+bool GamePlay::aiPlayOption()
+{
+    AI_Player *ai_player = (AI_Player *)currentPlayer;
+    std::string cmdStr = ai_player->gamePlay(gameState->getGameBoard());
+    std::cout << "Result: " << cmdStr << std::endl;
+
+    /* cmdStr format:
+    To place:   P<tile><location>
+    To replace: R<tile> */
+
+    bool endGame = false;
+
+    if (cmdStr[0] == PLACE_CMD)
+    {
+        std::string tile = cmdStr.substr(1, 2);
+        std::string location = cmdStr.substr(3);
+        std::cout << "Tile: " << tile << "  Place: " << location << std::endl;
+        placeTile(location, tile);
+    }
+    else if (cmdStr[0] == REPLACE_CMD)
+    {
+        std::string tile = cmdStr.substr(1);
+        std::cout << "Replace:" << tile << std::endl;
+        replaceTile(tile);
+    }
 
     endGame = checkEndGame();
     if (endGame)

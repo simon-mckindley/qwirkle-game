@@ -1,3 +1,6 @@
+#ifndef ASSIGN2_GAMEBOARD_H
+#define ASSIGN2_GAMEBOARD_H
+
 #include "Tile.h"
 #include "TileCodes.h"
 
@@ -35,10 +38,6 @@ private:
     // Validates the given tiles shape agains the given shape
     bool checkShapeMatch(Shape shape, Tile adjacentTile);
 
-    // Helper method to setTile which calculates the score achieved by the
-    // tile placement
-    int getScore(int x, int y, Tile tile);
-
 public:
     // Default constructor
     GameBoard();
@@ -66,6 +65,16 @@ public:
     // Validate that tile can be placed there within the rules of the game.
     bool validateSetTile(int x, int y, Tile tile, bool firstTurn);
 
+    // Validate that tiles have at least one adjacent tile & not already occupied
+    bool validateAdjacent(int x, int y);
+
+    // Validate that either Colour or Shape match both the row and column, and that no duplicate tile exists
+    bool validateValidPlacement(int x, int y, Tile tile);
+
+    // Calculates the score achieved by the tile placement
+    int getScore(int x, int y, Tile tile);
+
+    // Converts alphabet character to row number
     static int alphabetToNumber(char letter);
 
     // Return the state of the board as a string
@@ -77,3 +86,5 @@ public:
     // Print the board to console
     std::string toString();
 };
+
+#endif // ASSIGN2_GAMEBOARD_H

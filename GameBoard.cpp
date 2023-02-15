@@ -97,16 +97,12 @@ bool GameBoard::validateTileAgainstSet(std::vector<Tile> tileSet, Tile newTile)
         // Check if duplicate tile exists
         if (tile.getColour() == colour && tile.getShape() == shape)
         {
-            std::cout << "\n*** Cannot place a tile that has a duplicate in the same row or column ***\n"
-                      << std::endl;
             return false;
         }
 
         // Confirm there is either a colour or shape match in the row
         if (!colourMatch && !shapeMatch)
         {
-            std::cout << "\n*** Either shape or colour must match the row and column ***\n"
-                      << std::endl;
             return false;
         }
     }
@@ -151,10 +147,46 @@ bool GameBoard::validateSetTile(int x, int y, Tile tile, bool firstTurn)
     // tile exists
     if (!firstTurn && (!validateTileAgainstSet(rowTiles, tile) || !validateTileAgainstSet(colTiles, tile)))
     {
+        std::cout << "\n*** Either shape or colour must match the row and column & no duplicate tiles ***\n"
+                  << std::endl;
         return false;
     }
 
     return true;
+}
+
+// Validate that tiles have at least one adjacent tile & not already occupied
+bool GameBoard::validateAdjacent(int x, int y)
+{
+    bool result = true;
+    vector<Tile> rowTiles = getTilesOnRow(x, y);
+    vector<Tile> colTiles = getTilesOnCol(x, y);
+
+    if (rowTiles.size() <= 0 && colTiles.size() <= 0)
+    {
+        result = false;
+    }
+    else if (getTile(x, y).getColour() != NO_COL)
+    {
+        result = false;
+    }
+
+    return result;
+}
+
+// Validate that either Colour or Shape match both the row and column, and that no duplicate tile exists
+bool GameBoard::validateValidPlacement(int x, int y, Tile tile)
+{
+    bool result = true;
+    vector<Tile> rowTiles = getTilesOnRow(x, y);
+    vector<Tile> colTiles = getTilesOnCol(x, y);
+
+    if (!validateTileAgainstSet(rowTiles, tile) || !validateTileAgainstSet(colTiles, tile))
+    {
+        result = false;
+    }
+
+    return result;
 }
 
 // Takes the tile and coordinates of a players set tile and returns the resulting score. Uses the
@@ -259,6 +291,11 @@ vector<Tile> GameBoard::getTilesOnAxis(int x, int y, bool rowAxis)
 
 int GameBoard::alphabetToNumber(char letter)
 {
+    if (!isalpha(letter))
+    {
+        return 26;
+    }
+
     const unsigned int letter_to_value[] =
         {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
 
