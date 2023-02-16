@@ -16,7 +16,7 @@ std::string AI_Player::gamePlay(GameBoard *board)
     int topScore = 0;
     std::string tileCode = "";
     std::string location = "";
-    std::string result = "";
+    std::string cmd = "";
 
     // Loop through all board positions
     for (int x = 0; x < board->getHeight(); x++)
@@ -41,7 +41,6 @@ std::string AI_Player::gamePlay(GameBoard *board)
                             topScore = newScore;
                             tileCode = tile->getColour() + std::to_string(tile->getShape());
                             location = char(65 + x) + std::to_string(y + 1);
-                            std::cout << "\t" << tileCode << "@" << location << ":" << topScore << "\t";
                         }
                     }
                 }
@@ -51,15 +50,15 @@ std::string AI_Player::gamePlay(GameBoard *board)
 
     if (topScore > 0)
     {
-        result.push_back(PLACE_CMD);
-        result.append(tileCode + location);
+        cmd.push_back(PLACE_CMD);
+        cmd.append(tileCode + location);
     }
     else
     {
         Tile *tile = this->playerHand->getTileAtIndex(0);
-        result.push_back(REPLACE_CMD);
-        result.push_back(tile->getColour());
-        result.append(std::to_string(tile->getShape()));
+        cmd.push_back(REPLACE_CMD);
+        cmd.push_back(tile->getColour());
+        cmd.append(std::to_string(tile->getShape()));
     }
-    return result;
+    return cmd;
 }

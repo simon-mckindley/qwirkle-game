@@ -26,6 +26,10 @@ void GamePlay::gamePlay()
             endGame = gamePlayOption();
         }
 
+        std::cout << "Press <Enter> to continue...";
+        std::string str;
+        std::getline(std::cin, str);
+
         currentPlayer = gameState->getPlayers()->nextPlayer();
 
     } while (!endGame);
@@ -263,6 +267,7 @@ bool GamePlay::gamePlayOption()
             "place XX at XX (length=14),
             "place XX at XXX (length=15),
             "replace XX" (length=10), "save <filename>" (min_length=7) */
+
             if (cmd == "place" && length >= 14)
             {
                 std::string tile = userInput.substr(pos + 1, 2);
@@ -317,7 +322,6 @@ bool GamePlay::aiPlayOption()
 {
     AI_Player *ai_player = (AI_Player *)currentPlayer;
     std::string cmdStr = ai_player->gamePlay(gameState->getGameBoard());
-    std::cout << "Result: " << cmdStr << std::endl;
 
     /* cmdStr format:
     To place:   P<tile><location>
@@ -325,17 +329,21 @@ bool GamePlay::aiPlayOption()
 
     bool endGame = false;
 
+    std::cout << currentPlayer->getName() << " will ";
+
     if (cmdStr[0] == PLACE_CMD)
     {
         std::string tile = cmdStr.substr(1, 2);
         std::string location = cmdStr.substr(3);
-        std::cout << "Tile: " << tile << "  Place: " << location << std::endl;
+        std::cout << "place a tile\n"
+                  << "Tile: " << tile << "  Place: " << location
+                  << std::endl;
         placeTile(location, tile);
     }
     else if (cmdStr[0] == REPLACE_CMD)
     {
         std::string tile = cmdStr.substr(1);
-        std::cout << "Replace:" << tile << std::endl;
+        std::cout << "replace:" << tile << std::endl;
         replaceTile(tile);
     }
 
