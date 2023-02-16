@@ -7,6 +7,18 @@ GameState::GameState(Players *players, GameBoard *gameBoard, TileBag *tileBag)
     this->tileBag = tileBag;
 }
 
+/* Game file format:
+Number of players:    <int>
+Player Name:          <string>
+Is player AI:         <int>
+Player score:         <int>
+player hand:          <tile>,<tile>, etc
+Board dimensions:     <height>,<width>
+Board state:          <tile>@<location>,<tile>@<location>, etc
+Tile bag:             <tile>,<tile>, etc
+Current player index: <int>
+*/
+
 // Save a the current game data to the specified file
 void GameState::save(std::string filename)
 {
@@ -25,6 +37,7 @@ void GameState::save(std::string filename)
         for (int i = 0; i < players->getSize(); i++)
         {
             file << players->getPlayer(i)->getName() << std::endl;
+            file << players->getPlayer(i)->getIsAI() << std::endl;
             file << players->getPlayer(i)->getScore() << std::endl;
             file << players->getPlayer(i)->getHand() << std::endl;
         }
@@ -36,7 +49,7 @@ void GameState::save(std::string filename)
         // Write tile bag contents
         file << tileBag->printBag() << std::endl;
 
-        // Write current players name
+        // Write current players index
         file << players->getCurrentPlayerIndex() << std::endl;
 
         file.close();
@@ -61,9 +74,9 @@ bool GameState::load(std::string filename)
         players = new Players();
         std::string input;
         std::string name;
+        std::string isAI;
         std::string score;
         std::string hand;
-        TileBag *newHand;
         std::string boardDimension;
         std::string boardState;
         std::string tileBag;
@@ -78,10 +91,20 @@ bool GameState::load(std::string filename)
             for (int i = 0; i < numPlayers; i++)
             {
                 std::getline(file, name);
+                std::getline(file, isAI);
                 std::getline(file, score);
                 std::getline(file, hand);
-                newHand = new TileBag(hand);
-                Player *player = new Player(name, newHand);
+                bool isAIplayer = stoi(isAI);
+                TileBag *newHand = new TileBag(hand);
+                Player *player;
+                if (isAIplayer)
+                {
+                    player = new AI_Player(newHand);
+                }
+                else
+                {
+                    player = new Player(name, newHand);
+                }
                 player->addScore(stoi(score));
                 players->addPlayer(*player);
             }
@@ -95,7 +118,7 @@ bool GameState::load(std::string filename)
             // Read tile bag contents
             std::getline(file, tileBag);
 
-            // Read current player name
+            // Read current player index
             std::getline(file, currentPlayer);
 
             file.close();

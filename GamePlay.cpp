@@ -26,11 +26,14 @@ void GamePlay::gamePlay()
             endGame = gamePlayOption();
         }
 
-        std::cout << "Press <Enter> to continue...";
-        std::string str;
-        std::getline(std::cin, str);
+        if (!endGame)
+        {
+            std::cout << "Press <Enter> to continue...";
+            std::string str;
+            std::getline(std::cin, str);
 
-        currentPlayer = gameState->getPlayers()->nextPlayer();
+            currentPlayer = gameState->getPlayers()->nextPlayer();
+        }
 
     } while (!endGame);
 
@@ -238,17 +241,18 @@ void GamePlay::printEndGame()
 // Gets and validates user gameplay input
 bool GamePlay::gamePlayOption()
 {
-    bool invalid;
+    bool loopAgain;
     bool endGame = false;
     std::string userInput;
     do
     {
-        invalid = false;
+        loopAgain = false;
 
         std::cout << currentPlayer->getName()
                   << " - What would you like to do?\n"
                   << "\tplace <tile> at <location>\n"
                   << "\treplace <tile>\n"
+                  << "\thint <tile>\n"
                   << "\tsave <filename>\n"
                   << "\tquit" << std::endl;
 
@@ -266,33 +270,41 @@ bool GamePlay::gamePlayOption()
             /* Valid commands:
             "place XX at XX (length=14),
             "place XX at XXX (length=15),
-            "replace XX" (length=10), "save <filename>" (min_length=7) */
+            "replace XX" (length=10),
+            "hint XX" (length=7),
+            "save <filename>" (min_length=7) */
 
             if (cmd == "place" && length >= 14)
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::string location = userInput.substr(pos + 7);
                 std::cout << "Tile: " << tile << "  Place: " << location << std::endl;
-                invalid = placeTile(location, tile);
+                loopAgain = placeTile(location, tile);
             }
             else if (cmd == "replace" && length == 10)
             {
                 std::string tile = userInput.substr(pos + 1, 2);
                 std::cout << "Replace:" << tile << std::endl;
-                invalid = replaceTile(tile);
+                loopAgain = replaceTile(tile);
+            }
+            else if (cmd == "hint" && length == 7)
+            {
+                std::string tile = userInput.substr(pos + 1, 2);
+                getHint(tile);
+                loopAgain = true;
             }
             else if (cmd == "save" && length >= 7)
             {
                 std::string fileName = userInput.substr(pos + 1);
                 std::cout << "Saving game to: " << fileName << std::endl;
                 gameState->save(fileName);
-                invalid = true;
+                loopAgain = true;
             }
             else
             {
                 std::cout << "\n*** Invalid input ***\n"
                           << std::endl;
-                invalid = true;
+                loopAgain = true;
             }
         }
         else if (userInput == "quit")
@@ -304,10 +316,10 @@ bool GamePlay::gamePlayOption()
         {
             std::cout << "\n*** Invalid input ***\n"
                       << std::endl;
-            invalid = true;
+            loopAgain = true;
         }
 
-    } while (invalid);
+    } while (loopAgain);
 
     endGame = checkEndGame();
     if (endGame)
@@ -318,6 +330,7 @@ bool GamePlay::gamePlayOption()
     return endGame;
 }
 
+// Gets the AI gameplay input and processes it
 bool GamePlay::aiPlayOption()
 {
     AI_Player *ai_player = (AI_Player *)currentPlayer;
@@ -461,4 +474,64 @@ bool GamePlay::checkEndGame()
 
     this->currentPlayer->addScore(6);
     return true;
+}
+
+// Determines and prints the highest scoring location for the passed in tile
+void GamePlay::getHint(std::string tile)
+{
+    std::string userSelectionTileColour = tile.substr(0, 1);
+    std::string userSelectionTileShape = tile.substr(1, 1);
+
+    Colour colour = Tile::convertToColour(userSelectionTileColour);
+    Shape shape = Tile::convertToShape(userSelectionTileShape);
+    Tile *tempTile = new Tile(colour, shape);
+
+    if (this->currentPlayer->getHandPtr()->isTileInList(tempTile))
+    {
+        int topScore = 0;
+        std::string location = "";
+
+        // Loop through all board positions
+        for (int x = 0; x < gameState->getGameBoard()->getHeight(); x++)
+        {
+            for (int y = 0; y < gameState->getGameBoard()->getWidth(); y++)
+            {
+                // Find board position that is adjacent
+                if (gameState->getGameBoard()->validateAdjacent(x, y))
+                {
+                    // Checks if this tile can be placed in this location
+                    if (gameState->getGameBoard()->validateValidPlacement(x, y, *tempTile))
+                    {
+                        int score = gameState->getGameBoard()->getScore(x, y, *tempTile);
+                        // Save the data if it is the highest scoring placement
+                        if (score > topScore)
+                        {
+                            topScore = score;
+                            location = char(65 + x) + std::to_string(y + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (topScore > 0)
+        {
+            std::cout << "\nHint: place " << tempTile->getColour() << tempTile->getShape()
+                      << " at " << location << " to score " << topScore << "\n"
+                      << std::endl;
+        }
+        else
+        {
+            std::cout << "\nHint: cannot place " << tempTile->getColour() << tempTile->getShape()
+                      << " at the moment\n"
+                      << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "\n*** No such tile in your hand ***\n"
+                  << std::endl;
+    }
+
+    delete tempTile;
 }

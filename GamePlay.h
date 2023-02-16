@@ -31,10 +31,14 @@ private:
     // Prints the results at the end of a game
     void printEndGame();
 
-    // Gets and validates user gameplay input
+    // Gets and validates user gameplay input and processes it
     bool gamePlayOption();
 
+    // Gets the AI gameplay input and processes it
     bool aiPlayOption();
+
+    // Determines and prints the highest scoring location for the passed in tile
+    void getHint(std::string tile);
 
     // Validates and returns the number of players
     int validatePlayerNum();
