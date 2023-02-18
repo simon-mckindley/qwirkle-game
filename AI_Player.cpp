@@ -39,21 +39,13 @@ std::string AI_Player::gamePlay(GameBoard *board)
                         currentPlacement.y = y;
                         currentPlacement.score = board->getScore(x, y, *tile);
                         valid_moves.push_back(currentPlacement);
-                        std::cout << tile->getColour() << tile->getShape() << ":" << x << y << ", ";
-                        // // If the score is the largest so far
-                        // if (newScore > topScore)
-                        // {
-                        //     // Save placement info
-                        //     topScore = newScore;
-                        //     tileCode = tile->getColour() + std::to_string(tile->getShape());
-                        //     location = char(65 + x) + std::to_string(y + 1);
-                        // }
+                        // std::cout << valid_moves[valid_moves.size() - 1].tile.getColour() << valid_moves[valid_moves.size() - 1].tile.getShape() << ":" << x << "-" << y << ", ";
                     }
                 }
             }
         }
     }
-    std::cout << "\n1, ";
+
     placement choice = choosePlacement(board, valid_moves);
     cmd = createCmd(choice);
     return cmd;
@@ -66,7 +58,7 @@ were followed to create these placement/replacement choice algorithms:
 1. Don't set up Qwirkle-scores for the other players.
 2. Rack Management - The WORST thing you can do is hold onto an identical pair of tiles for any time whatsoever.
 3. Count tiles.
-4. Blocking.
+4. Blocking - Place tiles to block other players moves.
 */
 
 placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> valid_moves)
@@ -74,28 +66,61 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
     const int min_qwirkle_score = 12;
     std::vector<placement> ordered_moves = {};
     bool found = false;
+    int dupIndex = hasDuplicates();
     placement choice;
     choice.score = 0;
 
-    // do
-    // {
-    //     for (int i = 0; i < valid_moves.size(); i++)
-    //     {
-    //         for (int j = 0; j < ordered_moves.size(); j++)
-    //         {
-    //             if (valid_moves[i].score > ordered_moves[j].score)
-    //             {
-    //                 ordered_moves.insert(ordered_moves.begin() + j, valid_moves[i]);
-    //             }
-    //         }
-    //     }
+    // Creates a vector of placements ordered by score (highest to lowest)
+    bool added;
+    ordered_moves.push_back(valid_moves[0]);
+    for (int i = 1; i < valid_moves.size(); i++)
+    {
+        added = false;
+        for (int j = 0; j < ordered_moves.size(); j++)
+        {
+            if (valid_moves[i].score > ordered_moves[j].score)
+            {
+                ordered_moves.insert(ordered_moves.begin() + j, valid_moves[i]);
+                added = true;
+                break;
+            }
+        }
 
-    //     if (ordered_moves[0].score >= min_qwirkle_score)
-    //     {
-    //         found = true;
-    //     }
+        if (!added)
+        {
+            ordered_moves.push_back(valid_moves[i]);
+        }
+    }
 
-    // } while (!found);
+    for (placement p : ordered_moves)
+    {
+        std::cout << p.tile.getColour() << p.tile.getShape() << ":" << p.x << "-" << p.y << ":" << p.score << ", ";
+    }
+
+    // If qwirkle has been scored make it the choice
+    if (ordered_moves[0].score >= min_qwirkle_score)
+    {
+        choice = ordered_moves[0];
+        found = true;
+    }
+    // If there's duplicate tiles in the hand
+    else if (dupIndex > 0)
+    {
+        for (placement p : ordered_moves)
+        {
+            // If the duplicate tile is able to be played make it the choice.
+            // Otherwise return no choice to get it replaced.
+            if (p.tile.getColour() == this->playerHand->getTileAtIndex(dupIndex)->getColour() && p.tile.getShape() == this->playerHand->getTileAtIndex(dupIndex)->getShape())
+            {
+                choice = p;
+            }
+        }
+        found = true;
+    }
+
+    while (!found)
+    {
+    };
 
     // std::vector<Tile> rowTiles = board->getTilesOnRow(x, y);
     // std::vector<Tile> colTiles = board->getTilesOnCol(x, y);
