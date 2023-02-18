@@ -21,16 +21,10 @@ private:
     // Helper method that returns all the tiles in a row or column that are
     // in play with a tile in the given x, y space. This does NOT include tiles
     // that share a row or column, but are seperated by an empty tiles space
-    vector<Tile> getTilesOnAxis(int x, int y, bool rowAxis);
+    std::vector<Tile> getTilesOnAxis(int x, int y, bool rowAxis);
 
     // Helper method to calculate either a row or column
     bool validateTileAgainstSet(std::vector<Tile> tileSet, Tile tile);
-
-    // Gets a vector of tiles that share the same row as the x, y coords given
-    std::vector<Tile> getTilesOnRow(int x, int y);
-
-    // Gets a vector of tiles that share the same col as the x, y corrds given
-    std::vector<Tile> getTilesOnCol(int x, int y);
 
     // Validates the given tiles colour against the given colour
     bool checkColourMatch(Colour colour, Tile adjacentTile);
@@ -70,6 +64,12 @@ public:
 
     // Validate that either Colour or Shape match both the row and column, and that no duplicate tile exists
     bool validateValidPlacement(int x, int y, Tile tile);
+
+    // Gets a vector of tiles that share the same row as the x, y coords given
+    std::vector<Tile> getTilesOnRow(int x, int y);
+
+    // Gets a vector of tiles that share the same col as the x, y corrds given
+    std::vector<Tile> getTilesOnCol(int x, int y);
 
     // Calculates the score achieved by the tile placement
     int getScore(int x, int y, Tile tile);

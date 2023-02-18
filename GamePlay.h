@@ -1,11 +1,15 @@
 #ifndef ASSIGN2_GAMEPLAY_H
 #define ASSIGN2_GAMEPLAY_H
 
-#include "GamePlay.h"
 #include "GameState.h"
 #include "Tile.h"
 #include "TileCodes.h"
 #include "UserPrompt.h"
+#include "TileBag.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string>
 
 class GamePlay
 {
@@ -41,7 +45,7 @@ private:
     void getHint(std::string tile);
 
     // Validates and returns the number of players
-    int validatePlayerNum();
+    int getPlayerNum();
 
     // Accepts and validates player names
     std::string getPlayerName();

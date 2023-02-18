@@ -1,9 +1,4 @@
 #include "GamePlay.h"
-#include "TileBag.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
-#include <string>
 
 // Main gameplay function
 void GamePlay::gamePlay()
@@ -50,7 +45,7 @@ void GamePlay::createNewGame()
     GameBoard *gameBoard = new GameBoard();
     tileBag->fillTileBag();
 
-    int numPlayers = validatePlayerNum();
+    int numPlayers = getPlayerNum();
 
     // Create new players
     for (int i = 1; i <= numPlayers; i++)
@@ -132,7 +127,7 @@ void GamePlay::loadGame()
 }
 
 // Validates and returns the number of players
-int GamePlay::validatePlayerNum()
+int GamePlay::getPlayerNum()
 {
     int numPlayers = 0;
     const int minPlayers = 2;
@@ -356,7 +351,7 @@ bool GamePlay::aiPlayOption()
     else if (cmdStr[0] == REPLACE_CMD)
     {
         std::string tile = cmdStr.substr(1);
-        std::cout << "replace:" << tile << std::endl;
+        std::cout << "replace: " << tile << std::endl;
         replaceTile(tile);
     }
 
