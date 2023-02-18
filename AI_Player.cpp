@@ -46,7 +46,14 @@ std::string AI_Player::gamePlay(GameBoard *board)
         }
     }
 
-    placement choice = choosePlacement(board, valid_moves);
+    placement choice;
+    choice.score = 0;
+
+    if (valid_moves.size() > 0)
+    {
+        choice = choosePlacement(board, valid_moves);
+    }
+
     cmd = createCmd(choice);
     return cmd;
 }
@@ -120,11 +127,43 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
 
     while (!found)
     {
+        int index = 0;
+        int rowTiles = board->getTilesOnRow(ordered_moves[index].x, ordered_moves[index].y).size();
+        int colTiles = board->getTilesOnCol(ordered_moves[index].x, ordered_moves[index].y).size();
+        std::cout << "\n1 index: " << index << std::endl;
+        // Don't make a line of 5
+        if (rowTiles == 4 || colTiles == 4)
+        {
+            index++;
+            std::cout << "2 index: " << index << std::endl;
+        }
+        else
+        {
+            std::cout << "3 index: " << index << std::endl;
+            // Corner placements have a better chance of blocking your opponent
+            // If it's not the last tile and it's not in a corner
+            if ((rowTiles == 0 || colTiles == 0) && (index < ordered_moves.size() - 2))
+            {
+                std::cout << "4 index: " << index << std::endl;
+                // Check if the next placement gets the same score
+                if (ordered_moves[index].score == ordered_moves[index + 1].score)
+                {
+                    std::cout << "5 index: " << index << std::endl;
+                    // If it gets the same score and is in a corner make this the choice
+                    rowTiles = board->getTilesOnRow(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
+                    colTiles = board->getTilesOnCol(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
+                    if (rowTiles > 0 && colTiles > 0)
+                    {
+                        index++;
+                    }
+                }
+            }
+            std::cout << "6 index: " << index << std::endl;
+            choice = ordered_moves[index];
+            found = true;
+        }
     };
-
-    // std::vector<Tile> rowTiles = board->getTilesOnRow(x, y);
-    // std::vector<Tile> colTiles = board->getTilesOnCol(x, y);
-
+    std::cout << "Choice: " << choice.score << std::endl;
     return choice;
 }
 
