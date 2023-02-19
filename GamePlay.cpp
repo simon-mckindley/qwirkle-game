@@ -21,18 +21,14 @@ void GamePlay::gamePlay()
             endGame = gamePlayOption();
         }
 
-        if (endGame)
-        {
-            printEndGame();
-        }
-        else
-        {
-            currentPlayer = gameState->getPlayers()->nextPlayer();
-        }
-
         std::cout << "Press <Enter> to continue...";
         std::string str;
         std::getline(std::cin, str);
+
+        if (!endGame)
+        {
+            currentPlayer = gameState->getPlayers()->nextPlayer();
+        }
 
     } while (!endGame);
 
@@ -325,10 +321,10 @@ bool GamePlay::gamePlayOption()
     } while (loopAgain);
 
     endGame = checkEndGame();
-    // if (endGame)
-    // {
-    //     printEndGame();
-    // }
+    if (endGame)
+    {
+        printEndGame();
+    }
 
     return endGame;
 }
@@ -364,10 +360,10 @@ bool GamePlay::aiPlayOption()
     }
 
     endGame = checkEndGame();
-    // if (endGame)
-    // {
-    //     printEndGame();
-    // }
+    if (endGame)
+    {
+        printEndGame();
+    }
 
     return endGame;
 }
