@@ -194,7 +194,13 @@ void GamePlay::printGameStatus()
     std::cout << "\n"
               << gameState->getGameBoard()->toString() << std::endl;
 
-    if (!currentPlayer->getIsAI())
+    if (currentPlayer->getIsAI())
+    {
+        std::cout << "Tiles in hand: "
+                  << currentPlayer->getHandPtr()->getSize() << "\n"
+                  << std::endl;
+    }
+    else
     {
         std::cout << "Your hand is:\n"
                   << currentPlayer->getHand() << "\n"

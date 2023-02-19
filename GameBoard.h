@@ -16,7 +16,7 @@ class GameBoard
 private:
     // Each vector is a row, and the nested vector of TileBag
     // within is the existing columns and their values
-    std::vector<std::vector<Tile>> board{26, std::vector<Tile>{26, Tile(NO_COL, NO_SHAPE)}};
+    std::vector<std::vector<Tile>> board{20, std::vector<Tile>{20, Tile(NO_COL, NO_SHAPE)}};
 
     // Helper method that returns all the tiles in a row or column that are
     // in play with a tile in the given x, y space. This does NOT include tiles
