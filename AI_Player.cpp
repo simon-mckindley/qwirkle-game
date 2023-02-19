@@ -11,7 +11,7 @@ AI_Player::AI_Player(TileBag *tileBag)
     this->isAI = true;
 }
 
-std::string AI_Player::gamePlay(GameBoard *board)
+std::string AI_Player::gamePlay(GameBoard *board, bool emptyTileBag)
 {
     std::string tileCode = "";
     std::string location = "";
@@ -37,7 +37,7 @@ std::string AI_Player::gamePlay(GameBoard *board)
                         currentPlacement.tile = (*tile);
                         currentPlacement.x = x;
                         currentPlacement.y = y;
-                        currentPlacement.score = board->getScore(x, y, *tile);
+                        currentPlacement.score = board->getScore(x, y, *tile, true);
                         valid_moves.push_back(currentPlacement);
                         // std::cout << valid_moves[valid_moves.size() - 1].tile.getColour() << valid_moves[valid_moves.size() - 1].tile.getShape() << ":" << x << "-" << y << ", ";
                     }
@@ -51,7 +51,7 @@ std::string AI_Player::gamePlay(GameBoard *board)
 
     if (valid_moves.size() > 0)
     {
-        choice = choosePlacement(board, valid_moves);
+        choice = choosePlacement(board, valid_moves, emptyTileBag);
     }
 
     cmd = createCmd(choice);
@@ -68,18 +68,105 @@ were followed to create these placement/replacement choice algorithms:
 4. Blocking - Place tiles to block other players moves.
 */
 
-placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> valid_moves)
+placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> valid_moves, bool emptyTileBag)
 {
     const int min_qwirkle_score = 12;
     std::vector<placement> ordered_moves = {};
     bool found = false;
     int dupIndex = hasDuplicates();
     placement choice;
-    choice.score = 0;
 
-    // Creates a vector of placements ordered by score (highest to lowest)
+    ordered_moves = createOrderedList(valid_moves);
+
+    if (emptyTileBag)
+    {
+        choice = ordered_moves[0];
+    }
+    else
+    {
+        choice.score = 0;
+    }
+
+    // Print ordered_moves for testing
+    // for (placement p : ordered_moves)
+    // {
+    //     std::cout << p.tile.getColour() << p.tile.getShape() << ":" << p.x << "-" << p.y << ":" << p.score << ", ";
+    // }
+
+    // If qwirkle can be scored make it the choice
+    if (ordered_moves[0].score >= min_qwirkle_score)
+    {
+        choice = ordered_moves[0];
+        found = true;
+    }
+    // If there's duplicate tiles in the hand
+    else if (dupIndex > 0)
+    {
+        for (placement p : ordered_moves)
+        {
+            // If the duplicate tile is able to be played make it the choice.
+            // Otherwise return no choice to get it replaced.
+            if (p.tile.getColour() == this->playerHand->getTileAtIndex(dupIndex)->getColour() && p.tile.getShape() == this->playerHand->getTileAtIndex(dupIndex)->getShape())
+            {
+                choice = p;
+                break;
+            }
+        }
+        found = true;
+    }
+
+    int index = 0;
+    while (!found)
+    {
+        int rowTiles = board->getTilesOnRow(ordered_moves[index].x, ordered_moves[index].y).size();
+        int colTiles = board->getTilesOnCol(ordered_moves[index].x, ordered_moves[index].y).size();
+
+        // Don't make a line of 5
+        if (rowTiles == 4 || colTiles == 4)
+        {
+            // If it's not the last tile
+            if (index < ordered_moves.size() - 1)
+            {
+                index++;
+            }
+            else
+            {
+                found = true;
+            }
+        }
+        else
+        {
+            // Corner placements have a better chance of blocking your opponent
+            // If it's not the last tile and it's not in a corner
+            if ((rowTiles == 0 || colTiles == 0) && (index < ordered_moves.size() - 2))
+            {
+                // Check if the next placement gets the same score
+                if (ordered_moves[index].score == ordered_moves[index + 1].score)
+                {
+                    // If it gets the same score and is in a corner make this the choice
+                    rowTiles = board->getTilesOnRow(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
+                    colTiles = board->getTilesOnCol(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
+                    if (rowTiles > 0 && colTiles > 0)
+                    {
+                        index++;
+                    }
+                }
+            }
+            choice = ordered_moves[index];
+            found = true;
+        }
+    };
+
+    return choice;
+}
+
+// Creates a vector of placements ordered by score (highest to lowest)
+std::vector<placement> AI_Player::createOrderedList(std::vector<placement> valid_moves)
+{
+    std::vector<placement> ordered_moves = {};
     bool added;
     ordered_moves.push_back(valid_moves[0]);
+
     for (int i = 1; i < valid_moves.size(); i++)
     {
         added = false;
@@ -99,72 +186,7 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
         }
     }
 
-    for (placement p : ordered_moves)
-    {
-        std::cout << p.tile.getColour() << p.tile.getShape() << ":" << p.x << "-" << p.y << ":" << p.score << ", ";
-    }
-
-    // If qwirkle has been scored make it the choice
-    if (ordered_moves[0].score >= min_qwirkle_score)
-    {
-        choice = ordered_moves[0];
-        found = true;
-    }
-    // If there's duplicate tiles in the hand
-    else if (dupIndex > 0)
-    {
-        for (placement p : ordered_moves)
-        {
-            // If the duplicate tile is able to be played make it the choice.
-            // Otherwise return no choice to get it replaced.
-            if (p.tile.getColour() == this->playerHand->getTileAtIndex(dupIndex)->getColour() && p.tile.getShape() == this->playerHand->getTileAtIndex(dupIndex)->getShape())
-            {
-                choice = p;
-            }
-        }
-        found = true;
-    }
-
-    while (!found)
-    {
-        int index = 0;
-        int rowTiles = board->getTilesOnRow(ordered_moves[index].x, ordered_moves[index].y).size();
-        int colTiles = board->getTilesOnCol(ordered_moves[index].x, ordered_moves[index].y).size();
-        std::cout << "\n1 index: " << index << std::endl;
-        // Don't make a line of 5
-        if (rowTiles == 4 || colTiles == 4)
-        {
-            index++;
-            std::cout << "2 index: " << index << std::endl;
-        }
-        else
-        {
-            std::cout << "3 index: " << index << std::endl;
-            // Corner placements have a better chance of blocking your opponent
-            // If it's not the last tile and it's not in a corner
-            if ((rowTiles == 0 || colTiles == 0) && (index < ordered_moves.size() - 2))
-            {
-                std::cout << "4 index: " << index << std::endl;
-                // Check if the next placement gets the same score
-                if (ordered_moves[index].score == ordered_moves[index + 1].score)
-                {
-                    std::cout << "5 index: " << index << std::endl;
-                    // If it gets the same score and is in a corner make this the choice
-                    rowTiles = board->getTilesOnRow(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
-                    colTiles = board->getTilesOnCol(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
-                    if (rowTiles > 0 && colTiles > 0)
-                    {
-                        index++;
-                    }
-                }
-            }
-            std::cout << "6 index: " << index << std::endl;
-            choice = ordered_moves[index];
-            found = true;
-        }
-    };
-    std::cout << "Choice: " << choice.score << std::endl;
-    return choice;
+    return ordered_moves;
 }
 
 // Creates the command string to send to the GamePlay function
@@ -208,9 +230,9 @@ int AI_Player::hasDuplicates()
     for (int i = 0; i < this->playerHand->getSize(); i++)
     {
         i_tile = this->playerHand->getTileAtIndex(i);
-        for (int j = 1; j < this->playerHand->getSize(); j++)
+        for (int j = i + 1; j < this->playerHand->getSize(); j++)
         {
-            j_tile = this->playerHand->getTileAtIndex(0);
+            j_tile = this->playerHand->getTileAtIndex(j);
             if (j_tile->getColour() == i_tile->getColour() && j_tile->getShape() == i_tile->getShape())
             {
                 index = i;

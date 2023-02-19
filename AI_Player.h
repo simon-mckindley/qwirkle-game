@@ -11,7 +11,8 @@
 #define PLACE_CMD 'P'
 #define REPLACE_CMD 'R'
 
-struct placement {
+struct placement
+{
     Tile tile;
     int x;
     int y;
@@ -27,11 +28,14 @@ public:
     // Constructor to assign name and hand at creation.
     AI_Player(TileBag *tileBag);
 
-    std::string gamePlay(GameBoard *board);
+    std::string gamePlay(GameBoard *board, bool emptyTileBag);
 
 private:
     // Returns True if this is the best tile to place, so far
-    placement choosePlacement(GameBoard *board, std::vector<placement> valid_moves);
+    placement choosePlacement(GameBoard *board, std::vector<placement> valid_moves, bool emptyTileBag);
+
+    // Creates a vector of placements ordered by score (highest to lowest)
+    std::vector<placement> createOrderedList(std::vector<placement> valid_moves);
 
     // Creates the command string to send to the GamePlay function
     std::string createCmd(placement choice);

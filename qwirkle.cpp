@@ -41,8 +41,8 @@ int main(void)
 void printMainMenu()
 {
     std::cout << "\n--- Main Menu ---\n"
-              << NEW_GAME << ". New Game (2-4 Players) \n"
-              << AI_GAME << ". New AI Game (You vs AI player)\n"
+              << NEW_GAME << ". New Multi-Player Game (2-4 Players) \n"
+              << AI_GAME << ". New Single-Player Game (You vs AI player)\n"
               << LOAD_GAME << ". Load Game\n"
               << CREDITS << ". Credits\n"
               << QUIT << ". Exit\n"

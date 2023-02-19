@@ -72,7 +72,7 @@ public:
     std::vector<Tile> getTilesOnCol(int x, int y);
 
     // Calculates the score achieved by the tile placement
-    int getScore(int x, int y, Tile tile);
+    int getScore(int x, int y, Tile tile, bool isCheck);
 
     // Converts alphabet character to row number
     static int alphabetToNumber(char letter);

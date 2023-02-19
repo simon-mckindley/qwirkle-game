@@ -192,7 +192,7 @@ bool GameBoard::validateValidPlacement(int x, int y, Tile tile)
 // Takes the tile and coordinates of a players set tile and returns the resulting score. Uses the
 // currentTiles list to exclude tiles already placed this turn. Assumes input has already been
 // validated as within the rules
-int GameBoard::getScore(int x, int y, Tile tile)
+int GameBoard::getScore(int x, int y, Tile tile, bool isCheck)
 {
     int score = 0;
 
@@ -215,7 +215,10 @@ int GameBoard::getScore(int x, int y, Tile tile)
     // Any row of 6 elements must be a qwirkle (as no duplicate tiles can occur)
     if (colTiles.size() >= 6 or rowTiles.size() >= 6)
     {
-        std::cout << "\n*** QWIRKLE!!! ***" << std::endl;
+        if (!isCheck)
+        {
+            std::cout << "\n*** QWIRKLE!!! ***" << std::endl;
+        }
         score += 6;
     }
 
@@ -231,7 +234,7 @@ int GameBoard::setTile(int x, int y, Tile tile)
     {
         board[x][y] = tile;
 
-        score = getScore(x, y, tile);
+        score = getScore(x, y, tile, false);
     }
     catch (const std::exception &e)
     {

@@ -38,6 +38,7 @@ TileBag *TileBag::fillTileBag()
         }
     }
 
+    // For testing
     // this->addTileToBack(new Tile(RED, CIRCLE));
     // this->addTileToBack(new Tile(ORANGE, CIRCLE));
     // this->addTileToBack(new Tile(YELLOW, CIRCLE));

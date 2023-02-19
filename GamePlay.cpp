@@ -21,14 +21,18 @@ void GamePlay::gamePlay()
             endGame = gamePlayOption();
         }
 
-        if (!endGame)
+        if (endGame)
         {
-            std::cout << "Press <Enter> to continue...";
-            std::string str;
-            std::getline(std::cin, str);
-
+            printEndGame();
+        }
+        else
+        {
             currentPlayer = gameState->getPlayers()->nextPlayer();
         }
+
+        std::cout << "Press <Enter> to continue...";
+        std::string str;
+        std::getline(std::cin, str);
 
     } while (!endGame);
 
@@ -38,7 +42,7 @@ void GamePlay::gamePlay()
 // Creates a new 2-4 (human) player game
 void GamePlay::createNewGame()
 {
-    std::cout << "\nStarting a new game." << std::endl;
+    std::cout << "\nStarting a new multi-player game." << std::endl;
 
     Players *players = new Players();
     TileBag *tileBag = new TileBag();
@@ -79,7 +83,7 @@ void GamePlay::createNewGame()
 // Creates a new AI versus (human) player game
 void GamePlay::createAIGame()
 {
-    std::cout << "\nStarting a new game." << std::endl;
+    std::cout << "\nStarting a new single-player game." << std::endl;
 
     std::string playerName;
     std::cout << "\nEnter your player name (Uppercase characters only)" << std::endl;
@@ -193,9 +197,13 @@ void GamePlay::printGameStatus()
               << gameState->getTileBag()->getSize() << std::endl;
     std::cout << "\n"
               << gameState->getGameBoard()->toString() << std::endl;
-    std::cout << "Your hand is:\n"
-              << currentPlayer->getHand() << "\n"
-              << std::endl;
+
+    if (!currentPlayer->getIsAI())
+    {
+        std::cout << "Your hand is:\n"
+                  << currentPlayer->getHand() << "\n"
+                  << std::endl;
+    }
 }
 
 // Prints the results at the end of a game
@@ -223,12 +231,12 @@ void GamePlay::printEndGame()
 
     if (winner == "tied")
     {
-        std::cout << "The game is a tie!\n"
+        std::cout << "\nThe game is a tie!\n"
                   << std::endl;
     }
     else
     {
-        std::cout << "Player " << winner << " has won!\n"
+        std::cout << "\nPlayer " << winner << " has won!\n"
                   << std::endl;
     }
 }
@@ -317,10 +325,10 @@ bool GamePlay::gamePlayOption()
     } while (loopAgain);
 
     endGame = checkEndGame();
-    if (endGame)
-    {
-        printEndGame();
-    }
+    // if (endGame)
+    // {
+    //     printEndGame();
+    // }
 
     return endGame;
 }
@@ -329,7 +337,7 @@ bool GamePlay::gamePlayOption()
 bool GamePlay::aiPlayOption()
 {
     AI_Player *ai_player = (AI_Player *)currentPlayer;
-    std::string cmdStr = ai_player->gamePlay(gameState->getGameBoard());
+    std::string cmdStr = ai_player->gamePlay(gameState->getGameBoard(), this->gameState->getTileBag()->getSize() == 0);
 
     /* cmdStr format:
     To place:   P<tile><location>
@@ -356,10 +364,10 @@ bool GamePlay::aiPlayOption()
     }
 
     endGame = checkEndGame();
-    if (endGame)
-    {
-        printEndGame();
-    }
+    // if (endGame)
+    // {
+    //     printEndGame();
+    // }
 
     return endGame;
 }
@@ -497,7 +505,7 @@ void GamePlay::getHint(std::string tile)
                     // Checks if this tile can be placed in this location
                     if (gameState->getGameBoard()->validateValidPlacement(x, y, *tempTile))
                     {
-                        int score = gameState->getGameBoard()->getScore(x, y, *tempTile);
+                        int score = gameState->getGameBoard()->getScore(x, y, *tempTile, true);
                         // Save the data if it is the highest scoring placement
                         if (score > topScore)
                         {
