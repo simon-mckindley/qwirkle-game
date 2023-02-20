@@ -70,7 +70,6 @@ were followed to create these placement/replacement choice algorithms:
 
 placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> valid_moves, bool emptyTileBag)
 {
-    std::cout << "START" << std::endl;
     const int min_qwirkle_score = 12;
     std::vector<placement> ordered_moves = {};
     bool found = false;
@@ -124,7 +123,7 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
     {
         rowTiles = board->getTilesOnRow(ordered_moves[index].x, ordered_moves[index].y).size();
         colTiles = board->getTilesOnCol(ordered_moves[index].x, ordered_moves[index].y).size();
-        
+
         // Don't make a line of 5
         if (rowTiles == 4 || colTiles == 4)
         {
@@ -142,7 +141,6 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
         {
             found = true;
         }
-        std::cout << "Index: " << index << std::endl;
     };
 
     // Corner placements have a better chance of blocking your opponent
@@ -163,7 +161,6 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
     }
 
     choice = ordered_moves[index];
-    std::cout << "END" << std::endl;
     return choice;
 }
 
