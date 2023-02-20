@@ -121,7 +121,7 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
 
     while (!found)
     {
-        // Don't make a line of 5
+        // Don't make a line of 5 
         if (rowTiles == 4 || colTiles == 4)
         {
             // If it's not the last tile
