@@ -75,12 +75,13 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
     bool found = false;
     int dupIndex = hasDuplicates();
     placement choice;
+    int index = 0;
 
     ordered_moves = createOrderedList(valid_moves);
 
     if (emptyTileBag)
     {
-        choice = ordered_moves[0];
+        choice = ordered_moves[index];
     }
     else
     {
@@ -115,12 +116,11 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
         found = true;
     }
 
-    int index = 0;
+    int rowTiles = board->getTilesOnRow(ordered_moves[index].x, ordered_moves[index].y).size();
+    int colTiles = board->getTilesOnCol(ordered_moves[index].x, ordered_moves[index].y).size();
+
     while (!found)
     {
-        int rowTiles = board->getTilesOnRow(ordered_moves[index].x, ordered_moves[index].y).size();
-        int colTiles = board->getTilesOnCol(ordered_moves[index].x, ordered_moves[index].y).size();
-
         // Don't make a line of 5
         if (rowTiles == 4 || colTiles == 4)
         {
@@ -134,28 +134,26 @@ placement AI_Player::choosePlacement(GameBoard *board, std::vector<placement> va
                 found = true;
             }
         }
-        else
-        {
-            // Corner placements have a better chance of blocking your opponent
-            // If it's not the last tile and it's not in a corner
-            if ((rowTiles == 0 || colTiles == 0) && (index < ordered_moves.size() - 2))
-            {
-                // Check if the next placement gets the same score
-                if (ordered_moves[index].score == ordered_moves[index + 1].score)
-                {
-                    // If it gets the same score and is in a corner make this the choice
-                    rowTiles = board->getTilesOnRow(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
-                    colTiles = board->getTilesOnCol(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
-                    if (rowTiles > 0 && colTiles > 0)
-                    {
-                        index++;
-                    }
-                }
-            }
-            choice = ordered_moves[index];
-            found = true;
-        }
     };
+
+    // Corner placements have a better chance of blocking your opponent
+    // If it's not the last tile and it's not in a corner
+    if ((rowTiles == 0 || colTiles == 0) && (index < ordered_moves.size() - 2))
+    {
+        // Check if the next placement gets the same score
+        if (ordered_moves[index].score == ordered_moves[index + 1].score)
+        {
+            // If it gets the same score and is in a corner make this the choice
+            rowTiles = board->getTilesOnRow(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
+            colTiles = board->getTilesOnCol(ordered_moves[index + 1].x, ordered_moves[index + 1].y).size();
+            if (rowTiles > 0 && colTiles > 0)
+            {
+                index++;
+            }
+        }
+    }
+
+    choice = ordered_moves[index];
 
     return choice;
 }
